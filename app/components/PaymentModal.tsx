@@ -46,6 +46,10 @@ export default function PaymentModal({
         // 在新窗口中打开 PayPal 支付
         const paypalWindow = window.open(orderData.approvalURL, '_blank', 'width=500,height=600')
         
+        if (!paypalWindow) {
+          throw new Error('Failed to open payment window. Please allow popups.')
+        }
+        
         // 监听支付完成
         const checkPaymentStatus = setInterval(async () => {
           try {
@@ -60,7 +64,7 @@ export default function PaymentModal({
               const statusData = await statusResponse.json()
               if (statusData.status === 'COMPLETED') {
                 clearInterval(checkPaymentStatus)
-                paypalWindow?.close()
+                paypalWindow.close()
                 
                 // 支付成功
                 setPaymentSuccess(true)

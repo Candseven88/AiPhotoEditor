@@ -119,7 +119,8 @@ export default function ImageToImageGenerator() {
         const newImages = data.artifacts.map((artifact: any) => 
           `data:image/png;base64,${artifact.base64}`
         )
-        setGeneratedImages(prev => [...newImages, ...prev])
+        console.log('Generated new images:', newImages.length)
+        setGeneratedImages(newImages) // 直接设置新图片，不使用 prev
         setError('')
       } else {
         throw new Error('No images generated')
@@ -178,7 +179,13 @@ export default function ImageToImageGenerator() {
   }
 
   const handlePaymentSuccess = () => {
-    setUnlockedImages(prev => new Set(Array.from(prev).concat(selectedImageIndex)))
+    console.log('Payment success for image index:', selectedImageIndex)
+    setUnlockedImages(prev => {
+      const newSet = new Set(prev)
+      newSet.add(selectedImageIndex)
+      console.log('Updated unlocked images:', Array.from(newSet))
+      return newSet
+    })
   }
 
 
@@ -451,6 +458,11 @@ export default function ImageToImageGenerator() {
               
               {/* 图像展示区域 */}
               <div className="flex-1">
+                {/* 调试信息 */}
+                <div className="text-xs text-gray-400 mb-2 text-center">
+                  Debug: {generatedImages.length} images, {unlockedImages.size} unlocked
+                </div>
+                
                 {generatedImages.length === 0 ? (
                   <div className="h-full flex items-center justify-center">
                     <div className="text-center text-gray-500">
