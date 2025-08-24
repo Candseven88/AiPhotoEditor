@@ -6,14 +6,6 @@ interface ImageToImageRequest {
     weight: number
   }>
   init_image: string // base64 encoded image
-  init_image_mode?: 'IMAGE_STRENGTH' | 'STEP_SCHEDULE'
-  image_strength?: number
-  step_schedule_start?: number
-  step_schedule_end?: number
-  cfg_scale: number
-  steps: number
-  samples: number
-  style_preset?: string
 }
 
 export async function POST(request: NextRequest) {
@@ -44,22 +36,22 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // 构建 BigModel 请求参数
+    // 使用默认参数构建 BigModel 请求
     const bigModelRequest = {
       prompt: body.text_prompts[0].text,
       negative_prompt: body.text_prompts.find(p => p.weight < 0)?.text || '',
-      width: 1024, // SDXL 1.0 标准尺寸
+      width: 1024, // 默认尺寸
       height: 1024,
-      steps: body.steps || 30,
-      cfg_scale: body.cfg_scale || 7,
+      steps: 30, // 默认步数，平衡质量和速度
+      cfg_scale: 7, // 默认 CFG 比例
       seed: -1, // 随机种子
       init_image: body.init_image,
-      image_strength: body.image_strength || 0.35
+      image_strength: 0.35 // 默认图像强度，保持原图特征的同时进行转换
     }
 
-    console.log('Sending image-to-image request to BigModel...')
+    console.log('Sending image-to-image request to BigModel with default parameters...')
 
-    // 调用 BigModel API (这里需要根据实际的 BigModel 图生图 API 调整)
+    // 调用 BigModel API
     const response = await fetch(
       'https://open.bigmodel.cn/api/paas/v4/images/generations',
       {
@@ -86,7 +78,7 @@ export async function POST(request: NextRequest) {
     }
 
     const data = await response.json()
-    console.log('Image-to-image generation successful')
+    console.log('Image-to-image generation successful with default parameters')
     return NextResponse.json(data)
     
   } catch (error) {

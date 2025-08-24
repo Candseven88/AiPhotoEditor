@@ -10,24 +10,12 @@ interface ImageToImageRequest {
     weight: number
   }>
   init_image: string
-  init_image_mode?: 'IMAGE_STRENGTH' | 'STEP_SCHEDULE'
-  image_strength?: number
-  step_schedule_start?: number
-  step_schedule_end?: number
-  cfg_scale: number
-  steps: number
-  samples: number
-  style_preset?: string
 }
 
 export default function ImageToImageGenerator() {
   const [prompt, setPrompt] = useState('')
   const [negativePrompt, setNegativePrompt] = useState('')
   const [uploadedImage, setUploadedImage] = useState<string | null>(null)
-  const [imageStrength, setImageStrength] = useState(0.35)
-  const [cfgScale, setCfgScale] = useState(7)
-  const [steps, setSteps] = useState(30)
-  const [stylePreset, setStylePreset] = useState('')
   const [isGenerating, setIsGenerating] = useState(false)
   const [generatedImages, setGeneratedImages] = useState<string[]>([])
   const [error, setError] = useState('')
@@ -92,13 +80,7 @@ export default function ImageToImageGenerator() {
           { text: prompt, weight: 1.0 },
           ...(negativePrompt.trim() ? [{ text: negativePrompt, weight: -1.0 }] : [])
         ],
-        init_image: base64Image,
-        init_image_mode: 'IMAGE_STRENGTH',
-        image_strength: imageStrength,
-        cfg_scale: cfgScale,
-        steps,
-        samples: 1,
-        ...(stylePreset && { style_preset: stylePreset })
+        init_image: base64Image
       }
 
       // 创建超时控制器
@@ -211,7 +193,7 @@ export default function ImageToImageGenerator() {
             </span>
           </h1>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Upload an image and describe how you want to transform it. Our Nano Banana model will create amazing variations based on your vision.
+            Upload an image and describe how you want to transform it. Our Nano Banana model will create amazing variations using optimized default parameters.
           </p>
         </motion.div>
 
@@ -356,86 +338,6 @@ export default function ImageToImageGenerator() {
                 </div>
               </div>
 
-              {/* 参数控制 */}
-              <div className="space-y-4 pt-4">
-                {/* Image Strength */}
-                <div>
-                  <motion.label 
-                    className="block text-sm font-medium text-gray-700 mb-2"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 2.0 }}
-                  >
-                    Image Strength: {(imageStrength * 100).toFixed(0)}%
-                  </motion.label>
-                  <motion.input
-                    type="range"
-                    min="0"
-                    max="1"
-                    step="0.05"
-                    value={imageStrength}
-                    onChange={(e) => setImageStrength(Number(e.target.value))}
-                    className="w-full h-2 bg-orange-200 rounded-lg appearance-none cursor-pointer slider"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 2.2 }}
-                  />
-                  <div className="flex justify-between text-xs text-gray-500 mt-1">
-                    <span>Preserve Original</span>
-                    <span>Transform Completely</span>
-                  </div>
-                </div>
-
-                {/* CFG Scale */}
-                <div>
-                  <motion.label 
-                    className="block text-sm font-medium text-gray-700 mb-2"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 2.4 }}
-                  >
-                    CFG Scale: {cfgScale}
-                  </motion.label>
-                  <motion.input
-                    type="range"
-                    min="1"
-                    max="35"
-                    value={cfgScale}
-                    onChange={(e) => setCfgScale(Number(e.target.value))}
-                    className="w-full h-2 bg-orange-200 rounded-lg appearance-none cursor-pointer slider"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 2.6 }}
-                  />
-                </div>
-
-                {/* Steps */}
-                <div>
-                  <motion.label 
-                    className="block text-sm font-medium text-gray-700 mb-2"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 2.8 }}
-                  >
-                    Steps: {steps}
-                  </motion.label>
-                  <motion.input
-                    type="range"
-                    min="10"
-                    max="50"
-                    value={steps}
-                    onChange={(e) => setSteps(Number(e.target.value))}
-                    className="w-full h-2 bg-orange-200 rounded-lg appearance-none cursor-pointer slider"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 3.0 }}
-                  />
-                  <p className="text-xs text-gray-500 mt-1">
-                    Higher steps = Better quality, Longer generation time
-                  </p>
-                </div>
-              </div>
-
               {/* 生成按钮 */}
               <div className="pt-4">
                 <motion.button
@@ -446,7 +348,7 @@ export default function ImageToImageGenerator() {
                   whileTap={{ scale: 0.98 }}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 3.2 }}
+                  transition={{ delay: 2.0 }}
                 >
                   {isGenerating ? (
                     <>
@@ -467,7 +369,7 @@ export default function ImageToImageGenerator() {
                 <p className="text-xs text-gray-500 text-center leading-relaxed">
                   <span className="font-medium text-orange-600">Nano Banana Model</span>
                   <br />
-                  Advanced image transformation with AI, supports various styles and effects
+                  Advanced image transformation with AI, optimized default parameters for best results
                 </p>
               </div>
             </div>
@@ -523,7 +425,7 @@ export default function ImageToImageGenerator() {
                             }}
                             onError={(e) => {
                               const target = e.target as HTMLImageElement
-                              target.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZmZmN2VkIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgZmlsbD09IiNmOTczMTYiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5JbWFnZSBMb2FkIEVycm9yPC90ZXh0Pjwvc3ZnPg=='
+                              target.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZmZmN2VkIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgZmlsbD0iI2Y5NzMxNiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkltYWdlIExvYWQgRXJyb3I8L3RleHQ+PC9zdmc+'
                             }}
                             style={{ 
                               minHeight: '200px',
