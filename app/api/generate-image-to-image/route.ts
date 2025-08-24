@@ -47,7 +47,7 @@ export async function POST(request: NextRequest) {
       samples: 1
     }
 
-    console.log('Sending image-to-image request to Stability AI with default parameters...')
+    console.log('Sending image-to-image request to Nano Banana AI model...')
 
     // 调用 Stability AI API
     const response = await fetch(
@@ -67,7 +67,7 @@ export async function POST(request: NextRequest) {
 
     if (!response.ok) {
       const errorData = await response.json()
-      console.error('Stability AI API error:', errorData)
+      console.error('Nano Banana AI model error:', errorData)
       
       // 处理特定错误
       if (errorData.name === 'content_moderation') {
@@ -91,11 +91,11 @@ export async function POST(request: NextRequest) {
     }
 
     const data = await response.json()
-    console.log('Image-to-image generation successful with Stability AI')
+    console.log('Nano Banana AI image-to-image generation successful')
     return NextResponse.json(data)
     
   } catch (error) {
-    console.error('Image-to-image generation error:', error)
+    console.error('Nano Banana AI model error:', error)
     return NextResponse.json(
       { 
         error: 'Internal server error',

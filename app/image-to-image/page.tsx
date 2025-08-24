@@ -193,7 +193,7 @@ export default function ImageToImageGenerator() {
             </span>
           </h1>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Upload an image and describe how you want to transform it. Our Nano Banana model will create amazing variations using optimized default parameters.
+            Upload an image and describe how you want to transform it. Our Nano Banana AI model will create amazing variations using optimized default parameters.
           </p>
         </motion.div>
 
@@ -367,7 +367,7 @@ export default function ImageToImageGenerator() {
               {/* 模型信息提示 */}
               <div className="pt-2">
                 <p className="text-xs text-gray-500 text-center leading-relaxed">
-                  <span className="font-medium text-orange-600">Nano Banana Model</span>
+                  <span className="font-medium text-orange-600">Nano Banana AI Model</span>
                   <br />
                   Advanced image transformation with AI, optimized default parameters for best results
                 </p>

@@ -51,7 +51,7 @@ export default function ImageGenerator() {
         size: selectedSize.value
       }
 
-      setGenerationProgress('Sending request to BigModel API...')
+      setGenerationProgress('Sending request to Nano Banana AI model...')
 
       const response = await fetch('/api/generate', {
         method: 'POST',
@@ -70,7 +70,7 @@ export default function ImageGenerator() {
       const data: GenerationResponse = await response.json()
 
       if (data.artifacts && data.artifacts.length > 0) {
-        // 处理 BigModel 响应 - 图像以 URL 形式返回
+        // 处理 Nano Banana AI 响应 - 图像以 URL 形式返回
         const newImages = data.artifacts.map(artifact => {
           if (artifact.url) {
             return artifact.url // 直接使用 URL
@@ -247,7 +247,7 @@ export default function ImageGenerator() {
               {/* 模型信息提示 */}
               <div className="pt-2">
                 <p className="text-xs text-gray-500 text-center leading-relaxed">
-                  <span className="font-medium text-orange-600">Nano Banana Model</span>
+                  <span className="font-medium text-orange-600">Nano Banana AI Model</span>
                   <br />
                   Fast high-quality image generation, supports English and Chinese prompts, generates in 5-10 seconds
                 </p>

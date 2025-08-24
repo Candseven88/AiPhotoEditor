@@ -40,7 +40,7 @@ export async function POST(request: NextRequest) {
       size: body.size
     }
 
-    console.log('Sending request to BigModel API...')
+    console.log('Sending request to Nano Banana AI model...')
 
     // 调用 BigModel API
     const response = await fetch(
@@ -57,7 +57,7 @@ export async function POST(request: NextRequest) {
 
     if (!response.ok) {
       const errorData = await response.json()
-      console.error('BigModel API error:', errorData)
+      console.error('Nano Banana AI model error:', errorData)
       
       return NextResponse.json(
         { 
@@ -69,7 +69,7 @@ export async function POST(request: NextRequest) {
     }
 
     const data = await response.json()
-    console.log('Generation successful')
+    console.log('Nano Banana AI generation successful')
     
     // 转换 BigModel 响应格式
     if (data.data && data.data.length > 0) {
@@ -84,7 +84,7 @@ export async function POST(request: NextRequest) {
     }
 
   } catch (error) {
-    console.error('Error generating image:', error)
+    console.error('Nano Banana AI model error:', error)
     
     return NextResponse.json(
       { 
