@@ -27,46 +27,59 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // 获取 API Key
-    const apiKey = process.env.BIGMODEL_API_KEY
+    // 获取 Stability AI API Key
+    const apiKey = process.env.STABILITY_API_KEY
     if (!apiKey) {
       return NextResponse.json(
-        { error: 'BIGMODEL_API_KEY is not configured' },
+        { error: 'STABILITY_API_KEY is not configured' },
         { status: 500 }
       )
     }
 
-    // 使用默认参数构建 BigModel 请求
-    const bigModelRequest = {
-      prompt: body.text_prompts[0].text,
-      negative_prompt: body.text_prompts.find(p => p.weight < 0)?.text || '',
-      width: 1024, // 默认尺寸
-      height: 1024,
-      steps: 30, // 默认步数，平衡质量和速度
-      cfg_scale: 7, // 默认 CFG 比例
-      seed: -1, // 随机种子
+    // 使用默认参数构建 Stability AI 请求
+    const stabilityRequest = {
+      text_prompts: body.text_prompts,
       init_image: body.init_image,
-      image_strength: 0.35 // 默认图像强度，保持原图特征的同时进行转换
+      init_image_mode: 'IMAGE_STRENGTH',
+      image_strength: 0.35, // 默认图像强度，保持原图特征的同时进行转换
+      cfg_scale: 7, // 默认 CFG 比例
+      steps: 30, // 默认步数，平衡质量和速度
+      samples: 1
     }
 
-    console.log('Sending image-to-image request to BigModel with default parameters...')
+    console.log('Sending image-to-image request to Stability AI with default parameters...')
 
-    // 调用 BigModel API
+    // 调用 Stability AI API
     const response = await fetch(
-      'https://open.bigmodel.cn/api/paas/v4/images/generations',
+      'https://api.stability.ai/v1/generation/stable-diffusion-xl-1024-v1-0/image-to-image',
       {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Accept': 'application/json',
           'Authorization': `Bearer ${apiKey}`,
+          'Stability-Client-ID': 'nano-banana-app',
+          'Stability-Client-Version': '1.0.0'
         },
-        body: JSON.stringify(bigModelRequest)
+        body: JSON.stringify(stabilityRequest)
       }
     )
 
     if (!response.ok) {
       const errorData = await response.json()
-      console.error('BigModel API error:', errorData)
+      console.error('Stability AI API error:', errorData)
+      
+      // 处理特定错误
+      if (errorData.name === 'content_moderation') {
+        return NextResponse.json(
+          { 
+            error: 'Content flagged by moderation',
+            details: errorData.message,
+            type: 'content_moderation'
+          },
+          { status: 403 }
+        )
+      }
       
       return NextResponse.json(
         { 
@@ -78,7 +91,7 @@ export async function POST(request: NextRequest) {
     }
 
     const data = await response.json()
-    console.log('Image-to-image generation successful with default parameters')
+    console.log('Image-to-image generation successful with Stability AI')
     return NextResponse.json(data)
     
   } catch (error) {

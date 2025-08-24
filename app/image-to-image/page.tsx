@@ -105,10 +105,10 @@ export default function ImageToImageGenerator() {
 
       const data = await response.json()
 
-      // 处理 BigModel 的响应格式
-      if (data.data && data.data.length > 0) {
-        const newImages = data.data.map((item: any) => 
-          item.url || `data:image/png;base64,${item.base64 || ''}`
+      // 处理 Stability AI 的响应格式
+      if (data.artifacts && data.artifacts.length > 0) {
+        const newImages = data.artifacts.map((artifact: any) => 
+          `data:image/png;base64,${artifact.base64}`
         )
         setGeneratedImages(prev => [...newImages, ...prev])
         setError('')

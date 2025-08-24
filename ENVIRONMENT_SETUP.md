@@ -6,9 +6,12 @@
 
 | 变量名 | 描述 | 必需 | 示例值 |
 |--------|------|------|--------|
-| `BIGMODEL_API_KEY` | BigModel API 密钥 | ✅ | `sk-xxxxxxxxxxxxxxxxxxxxxxxx` |
+| `BIGMODEL_API_KEY` | BigModel API 密钥（文生图） | ✅ | `sk-xxxxxxxxxxxxxxxxxxxxxxxx` |
+| `STABILITY_API_KEY` | Stability AI API 密钥（图生图） | ✅ | `sk-xxxxxxxxxxxxxxxxxxxxxxxx` |
 
-## 🔑 BigModel API 密钥配置
+## 🔑 API 密钥配置
+
+### BigModel API 密钥（文生图功能）
 
 ### 1. 获取 API 密钥
 
@@ -49,12 +52,41 @@ BIGMODEL_API_KEY=your_actual_api_key_here
 
 1. 在 Vercel 项目设置中添加环境变量：
    - 变量名：`BIGMODEL_API_KEY`
-   - 变量值：你的真实 API 密钥
+   - 变量值：你的真实 BigModel API 密钥
 
 2. 或者使用 Vercel CLI：
    ```bash
    vercel env add BIGMODEL_API_KEY
    ```
+
+### Stability AI API 密钥（图生图功能）
+
+#### 1. 获取 API 密钥
+
+1. 访问 [Stability AI 平台](https://platform.stability.ai/)
+2. 注册账户并登录
+3. 在 API Keys 页面生成新的 API Key
+4. 复制生成的密钥
+
+#### 2. 本地开发环境
+
+在 `.env.local` 文件中添加：
+
+```env
+# Stability AI API 配置
+STABILITY_API_KEY=your_actual_stability_api_key_here
+```
+
+#### 3. 生产环境配置
+
+在 Vercel 项目设置中添加环境变量：
+- 变量名：`STABILITY_API_KEY`
+- 变量值：你的真实 Stability AI API 密钥
+
+或使用 Vercel CLI：
+```bash
+vercel env add STABILITY_API_KEY
+```
 
 #### 其他平台
 
@@ -80,7 +112,18 @@ npm run dev
 - Environments: .env.local
 ```
 
-### 2. API 测试
+### 2. 功能测试
+
+#### 文生图功能测试
+- 访问首页，输入提示词生成图像
+- 如果成功生成，说明 `BIGMODEL_API_KEY` 配置正确
+
+#### 图生图功能测试
+- 访问 `/image-to-image` 页面
+- 上传图像并输入转换提示词
+- 如果成功生成，说明 `STABILITY_API_KEY` 配置正确
+
+### 3. API 测试
 
 访问图生图页面，上传图像并输入提示词，如果 API 调用成功，说明配置正确。
 
@@ -91,6 +134,7 @@ npm run dev
 **错误信息：**
 ```
 Error: BIGMODEL_API_KEY is not configured
+Error: STABILITY_API_KEY is not configured
 ```
 
 **解决方案：**
@@ -111,7 +155,19 @@ Details: Unauthorized
 - 确认 API 密钥是否已激活
 - 检查账户余额和权限
 
-### 3. 环境变量不生效
+### 3. 内容审核错误
+
+**错误信息：**
+```
+Error: Content flagged by moderation
+```
+
+**解决方案：**
+- 尝试使用更安全的提示词
+- 避免可能触发内容审核的内容
+- 检查图像内容是否合规
+
+### 4. 环境变量不生效
 
 **问题：** 修改 `.env.local` 后，环境变量没有更新
 
@@ -129,6 +185,12 @@ Details: Unauthorized
 ├── .gitignore              # Git 忽略文件
 └── ENVIRONMENT_SETUP.md    # 本文档
 ```
+
+## 🔄 双平台架构
+
+- **文生图功能**: 使用 BigModel 平台
+- **图生图功能**: 使用 Stability AI 平台
+- **统一界面**: 两个功能在同一个应用中无缝集成
 
 ## 🔒 安全最佳实践
 
