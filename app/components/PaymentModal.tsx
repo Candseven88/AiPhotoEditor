@@ -26,18 +26,31 @@ export default function PaymentModal({
     setIsProcessing(true)
     
     try {
-      // 这里会集成 PayPal 支付逻辑
-      // 目前模拟支付成功
-      await new Promise(resolve => setTimeout(resolve, 2000))
+      // 创建 PayPal 订单
+      const orderResponse = await fetch('/api/paypal/create-order', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ imageIndex })
+      })
+
+      if (!orderResponse.ok) {
+        throw new Error('Failed to create payment order')
+      }
+
+      const orderData = await orderResponse.json()
       
-      setPaymentSuccess(true)
-      setTimeout(() => {
-        onPaymentSuccess()
-        onClose()
-      }, 1500)
+      // 重定向到 PayPal 支付页面
+      if (orderData.approvalURL) {
+        window.location.href = orderData.approvalURL
+      } else {
+        throw new Error('No approval URL received')
+      }
       
     } catch (error) {
       console.error('Payment failed:', error)
+      alert('Payment failed. Please try again.')
     } finally {
       setIsProcessing(false)
     }

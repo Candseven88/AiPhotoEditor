@@ -532,7 +532,7 @@ export default function ImageToImageGenerator() {
                               whileTap={{ scale: 0.98 }}
                             >
                               <Lock className="w-4 h-4 mr-2" />
-                              Unlock Image ($2.99)
+                              Unlock Image ($0.80)
                             </motion.button>
                           )}
                         </div>
@@ -563,7 +563,7 @@ export default function ImageToImageGenerator() {
           onClose={() => setPaymentModalOpen(false)}
           onPaymentSuccess={handlePaymentSuccess}
           imageIndex={selectedImageIndex}
-          price={2.99}
+          price={0.80}
         />
       </div>
     </div>

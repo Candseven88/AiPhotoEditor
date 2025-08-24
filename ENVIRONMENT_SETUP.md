@@ -8,6 +8,8 @@
 |--------|------|------|--------|
 | `BIGMODEL_API_KEY` | BigModel API 密钥（文生图） | ✅ | `sk-xxxxxxxxxxxxxxxxxxxxxxxx` |
 | `STABILITY_API_KEY` | Stability AI API 密钥（图生图） | ✅ | `sk-xxxxxxxxxxxxxxxxxxxxxxxx` |
+| `PAYPAL_CLIENT_ID` | PayPal 客户端 ID | ✅ | `Abc123...` |
+| `PAYPAL_CLIENT_SECRET` | PayPal 客户端密钥 | ✅ | `EFG456...` |
 
 ## 🔑 API 密钥配置
 
@@ -87,6 +89,46 @@ STABILITY_API_KEY=your_actual_stability_api_key_here
 ```bash
 vercel env add STABILITY_API_KEY
 ```
+
+### PayPal API 密钥配置（支付功能）
+
+#### 1. 获取 API 密钥
+
+1. 访问 [PayPal Developer Portal](https://developer.paypal.com/)
+2. 注册开发者账户并登录
+3. 在 "My Apps & Credentials" 页面创建新应用
+4. 选择应用类型（Web 应用）
+5. 获取 Client ID 和 Client Secret
+
+#### 2. 本地开发环境
+
+在 `.env.local` 文件中添加：
+
+```env
+# PayPal API 配置
+PAYPAL_CLIENT_ID=your_paypal_client_id_here
+PAYPAL_CLIENT_SECRET=your_paypal_client_secret_here
+```
+
+#### 3. 生产环境配置
+
+在 Vercel 项目设置中添加环境变量：
+- 变量名：`PAYPAL_CLIENT_ID`
+- 变量值：你的 PayPal Client ID
+
+- 变量名：`PAYPAL_CLIENT_SECRET`
+- 变量值：你的 PayPal Client Secret
+
+或使用 Vercel CLI：
+```bash
+vercel env add PAYPAL_CLIENT_ID
+vercel env add PAYPAL_CLIENT_SECRET
+```
+
+#### 4. 环境选择
+
+- **Sandbox**: 用于测试，使用测试账户
+- **Live**: 用于生产，处理真实支付
 
 #### 其他平台
 
