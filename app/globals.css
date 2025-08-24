@@ -60,4 +60,30 @@
 
 ::-moz-selection {
   @apply bg-orange-200 text-orange-900;
+}
+
+/* 自定义滑块样式 */
+.slider::-webkit-slider-thumb {
+  @apply appearance-none w-5 h-5 bg-orange-500 rounded-full cursor-pointer shadow-lg;
+}
+
+.slider::-moz-range-thumb {
+  @apply appearance-none w-5 h-5 bg-orange-500 rounded-full cursor-pointer border-0 shadow-lg;
+}
+
+.slider::-ms-thumb {
+  @apply appearance-none w-5 h-5 bg-orange-500 rounded-full cursor-pointer shadow-lg;
+}
+
+/* 文件上传区域样式 */
+.file-upload-area {
+  @apply transition-all duration-200;
+}
+
+.file-upload-area:hover {
+  @apply border-orange-400 bg-orange-50/50;
+}
+
+.file-upload-area.dragover {
+  @apply border-orange-500 bg-orange-100/50;
 } 
