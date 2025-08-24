@@ -138,33 +138,46 @@ export default function ImageToImageGenerator() {
       return
     }
     
-    const link = document.createElement('a')
-    link.href = imageData
-    link.download = `nano-banana-transformed-${Date.now()}-${index}.png`
-    document.body.appendChild(link)
-    link.click()
-    document.body.removeChild(link)
+    try {
+      // 创建下载链接
+      const link = document.createElement('a')
+      link.href = imageData
+      link.download = `nano-banana-transformed-${Date.now()}-${index}.png`
+      
+      // 对于 base64 数据，需要特殊处理
+      if (imageData.startsWith('data:image/')) {
+        // 如果是 base64 数据，直接下载
+        document.body.appendChild(link)
+        link.click()
+        document.body.removeChild(link)
+      } else {
+        // 如果是 URL，先获取图片再下载
+        fetch(imageData)
+          .then(response => response.blob())
+          .then(blob => {
+            const url = window.URL.createObjectURL(blob)
+            link.href = url
+            document.body.appendChild(link)
+            link.click()
+            document.body.removeChild(link)
+            window.URL.revokeObjectURL(url)
+          })
+          .catch(error => {
+            console.error('Download failed:', error)
+            alert('Download failed. Please try again.')
+          })
+      }
+    } catch (error) {
+      console.error('Download error:', error)
+      alert('Download failed. Please try again.')
+    }
   }
 
   const handlePaymentSuccess = () => {
     setUnlockedImages(prev => new Set(Array.from(prev).concat(selectedImageIndex)))
   }
 
-  // 监听支付成功消息
-  useEffect(() => {
-    const handlePaymentMessage = (event: MessageEvent) => {
-      if (event.data.type === 'PAYMENT_SUCCESS') {
-        const { imageIndex } = event.data
-        setUnlockedImages(prev => new Set(Array.from(prev).concat(imageIndex)))
-        
-        // 显示成功提示
-        alert(`Payment successful! Image #${imageIndex + 1} is now unlocked.`)
-      }
-    }
 
-    window.addEventListener('message', handlePaymentMessage)
-    return () => window.removeEventListener('message', handlePaymentMessage)
-  }, [])
 
   // 快速提示词建议
   const quickPrompts = [

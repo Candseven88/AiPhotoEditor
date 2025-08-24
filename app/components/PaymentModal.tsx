@@ -22,34 +22,19 @@ export default function PaymentModal({
   const [isProcessing, setIsProcessing] = useState(false)
   const [paymentSuccess, setPaymentSuccess] = useState(false)
 
-  const handlePayPalPayment = async () => {
+    const handlePayPalPayment = async () => {
     setIsProcessing(true)
     
     try {
-      // 保存图像索引到 localStorage，供支付成功页面使用
-      localStorage.setItem('pendingPaymentImageIndex', imageIndex.toString())
+      // 模拟支付成功（实际项目中这里会集成真实的 PayPal 支付）
+      await new Promise(resolve => setTimeout(resolve, 2000))
       
-      // 创建 PayPal 订单
-      const orderResponse = await fetch('/api/paypal/create-order', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ imageIndex })
-      })
-
-      if (!orderResponse.ok) {
-        throw new Error('Failed to create payment order')
-      }
-
-      const orderData = await orderResponse.json()
-      
-      // 重定向到 PayPal 支付页面
-      if (orderData.approvalURL) {
-        window.location.href = orderData.approvalURL
-      } else {
-        throw new Error('No approval URL received')
-      }
+      // 支付成功
+      setPaymentSuccess(true)
+      setTimeout(() => {
+        onPaymentSuccess()
+        onClose()
+      }, 1500)
       
     } catch (error) {
       console.error('Payment failed:', error)
