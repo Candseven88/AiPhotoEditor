@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { Upload, X, Palette, Loader2, Download, ImageIcon, Lock } from 'lucide-react'
 import PaymentModal from '../components/PaymentModal'
@@ -149,6 +149,22 @@ export default function ImageToImageGenerator() {
   const handlePaymentSuccess = () => {
     setUnlockedImages(prev => new Set(Array.from(prev).concat(selectedImageIndex)))
   }
+
+  // 监听支付成功消息
+  useEffect(() => {
+    const handlePaymentMessage = (event: MessageEvent) => {
+      if (event.data.type === 'PAYMENT_SUCCESS') {
+        const { imageIndex } = event.data
+        setUnlockedImages(prev => new Set(Array.from(prev).concat(imageIndex)))
+        
+        // 显示成功提示
+        alert(`Payment successful! Image #${imageIndex + 1} is now unlocked.`)
+      }
+    }
+
+    window.addEventListener('message', handlePaymentMessage)
+    return () => window.removeEventListener('message', handlePaymentMessage)
+  }, [])
 
   // 快速提示词建议
   const quickPrompts = [

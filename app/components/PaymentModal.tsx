@@ -26,6 +26,9 @@ export default function PaymentModal({
     setIsProcessing(true)
     
     try {
+      // 保存图像索引到 localStorage，供支付成功页面使用
+      localStorage.setItem('pendingPaymentImageIndex', imageIndex.toString())
+      
       // 创建 PayPal 订单
       const orderResponse = await fetch('/api/paypal/create-order', {
         method: 'POST',
