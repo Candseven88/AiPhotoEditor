@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
+import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
 
 const inter = Inter({ subsets: ['latin'] })
@@ -12,6 +13,9 @@ export const metadata: Metadata = {
   creator: 'NanoBanana AI',
   publisher: 'NanoBanana AI',
   robots: 'index, follow',
+  verification: {
+    google: 'Uh1npyWxh6BGlOKaSh88UFliniROrG0pgsD7fQHkahw',
+  },
   openGraph: {
     title: 'NanoBanana AI - Revolutionary Lightweight AI Image Generator',
     description: 'Transform your ideas into stunning images with our nano banana ai technology. Fast, efficient, and professional-quality AI image generation.',
@@ -38,8 +42,37 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+        {/* Google Analytics */}
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-7J29Q5J6PN"></script>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-7J29Q5J6PN');
+            `,
+          }}
+        />
+        
+        {/* Microsoft Clarity */}
+        <script
+          type="text/javascript"
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function(c,l,a,r,i,t,y){
+                  c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+                  t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+                  y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+              })(window, document, "clarity", "script", "szvlz82tjd");
+            `,
+          }}
+        />
+      </head>
       <body className={inter.className}>
         {children}
+        <Analytics />
       </body>
     </html>
   )
