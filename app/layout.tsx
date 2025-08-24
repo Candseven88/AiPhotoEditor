@@ -5,12 +5,29 @@ import './globals.css'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'NanoBanana AI Image Generator',
-  description: 'Transform your ideas into stunning images with BigModel Cogview-3',
+  title: 'NanoBanana AI - Lightweight AI Image Generator | Text to Image & Image to Image',
+  description: 'Experience the power of nano banana ai technology with our lightweight AI image generator. Create stunning visuals from text descriptions or transform existing images with natural language editing powered by Google nano-banana model.',
+  keywords: 'nano banana ai, AI image generator, text-to-image, image-to-image, lightweight image ai, Google nano-banana model, natural language editing, photo editing AI',
+  authors: [{ name: 'NanoBanana AI Team' }],
+  creator: 'NanoBanana AI',
+  publisher: 'NanoBanana AI',
+  robots: 'index, follow',
+  openGraph: {
+    title: 'NanoBanana AI - Revolutionary Lightweight AI Image Generator',
+    description: 'Transform your ideas into stunning images with our nano banana ai technology. Fast, efficient, and professional-quality AI image generation.',
+    type: 'website',
+    locale: 'en_US',
+    siteName: 'NanoBanana AI',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'NanoBanana AI - Lightweight AI Image Generator',
+    description: 'Create stunning visuals with our revolutionary nano banana ai technology',
+  },
   icons: {
-    icon: '/logo.png',
-    shortcut: '/logo.png',
-    apple: '/logo.png',
+    icon: '/Logo.png',
+    shortcut: '/Logo.png',
+    apple: '/Logo.png',
   },
 }
 

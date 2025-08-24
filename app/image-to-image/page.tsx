@@ -221,13 +221,19 @@ export default function ImageToImageGenerator() {
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
           <div className="flex items-center space-x-3">
             <img 
-              src="/logo.png" 
+              src="/Logo.png" 
               alt="NanoBanana Logo" 
               className="w-8 h-8 rounded-lg"
             />
             <span className="text-xl font-bold text-gray-800">NanoBanana</span>
           </div>
           <div className="flex items-center space-x-4">
+            <a 
+              href="/home" 
+              className="px-4 py-2 text-orange-600 hover:text-orange-700 font-medium transition-colors"
+            >
+              Home
+            </a>
             <a 
               href="/" 
               className="px-4 py-2 text-orange-600 hover:text-orange-700 font-medium transition-colors"
