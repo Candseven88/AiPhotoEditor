@@ -26,20 +26,72 @@ export default function PaymentModal({
     setIsProcessing(true)
     
     try {
-      // 模拟支付成功（实际项目中这里会集成真实的 PayPal 支付）
-      await new Promise(resolve => setTimeout(resolve, 2000))
+      // 创建 PayPal 订单
+      const orderResponse = await fetch('/api/paypal/create-order', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ imageIndex })
+      })
+
+      if (!orderResponse.ok) {
+        throw new Error('Failed to create payment order')
+      }
+
+      const orderData = await orderResponse.json()
       
-      // 支付成功
-      setPaymentSuccess(true)
-      setTimeout(() => {
-        onPaymentSuccess()
-        onClose()
-      }, 1500)
+      // 重定向到 PayPal 支付页面
+      if (orderData.approvalURL) {
+        // 在新窗口中打开 PayPal 支付
+        const paypalWindow = window.open(orderData.approvalURL, '_blank', 'width=500,height=600')
+        
+        // 监听支付完成
+        const checkPaymentStatus = setInterval(async () => {
+          try {
+            // 检查支付状态
+            const statusResponse = await fetch('/api/paypal/check-status', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ orderID: orderData.orderID })
+            })
+            
+            if (statusResponse.ok) {
+              const statusData = await statusResponse.json()
+              if (statusData.status === 'COMPLETED') {
+                clearInterval(checkPaymentStatus)
+                paypalWindow?.close()
+                
+                // 支付成功
+                setPaymentSuccess(true)
+                setTimeout(() => {
+                  onPaymentSuccess()
+                  onClose()
+                }, 1500)
+              }
+            }
+          } catch (error) {
+            console.error('Payment status check failed:', error)
+          }
+        }, 2000) // 每2秒检查一次
+        
+        // 超时处理
+        setTimeout(() => {
+          clearInterval(checkPaymentStatus)
+          if (paypalWindow && !paypalWindow.closed) {
+            paypalWindow.close()
+            alert('Payment timeout. Please try again.')
+            setIsProcessing(false)
+          }
+        }, 300000) // 5分钟超时
+        
+      } else {
+        throw new Error('No approval URL received')
+      }
       
     } catch (error) {
       console.error('Payment failed:', error)
       alert('Payment failed. Please try again.')
-    } finally {
       setIsProcessing(false)
     }
   }

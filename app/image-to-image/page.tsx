@@ -75,6 +75,10 @@ export default function ImageToImageGenerator() {
 
     setIsGenerating(true)
     setError('')
+    
+    // 清除之前的图片和支付状态
+    setGeneratedImages([])
+    setUnlockedImages(new Set())
 
     try {
       // 转换 data URL 为 base64
@@ -501,42 +505,50 @@ export default function ImageToImageGenerator() {
                                 <Lock className="w-12 h-12 mx-auto mb-2" />
                                 <p className="font-semibold">Image Locked</p>
                                 <p className="text-sm opacity-90">Pay $0.80 to unlock</p>
-                                <p className="text-xs opacity-75 mt-1">Hover to see more details</p>
                               </div>
                             </motion.div>
                           )}
                           
-                          {/* 悬停时的操作按钮 */}
-                          <motion.div 
-                            className="absolute inset-0 bg-black/20 backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300"
-                            initial={{ opacity: 0 }}
-                            whileHover={{ opacity: 1 }}
-                          >
-                            {unlockedImages.has(index) ? (
-                              <motion.button
-                                onClick={() => downloadImage(image, index)}
-                                className="bg-white text-orange-700 px-4 py-2 rounded-lg shadow-xl hover:bg-orange-50 transition-colors font-semibold flex items-center space-x-2"
-                                whileHover={{ scale: 1.05 }}
-                                whileTap={{ scale: 0.95 }}
-                              >
-                                <Download className="w-4 h-4" />
-                                <span>Download</span>
-                              </motion.button>
-                            ) : (
+                          {/* 悬停时的操作按钮 - 只在未解锁时显示 */}
+                          {!unlockedImages.has(index) && (
+                            <motion.div 
+                              className="absolute inset-0 bg-black/20 backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300"
+                              initial={{ opacity: 0 }}
+                              whileHover={{ opacity: 1 }}
+                            >
                               <motion.button
                                 onClick={() => {
                                   setSelectedImageIndex(index)
                                   setPaymentModalOpen(true)
                                 }}
-                                className="bg-orange-500 text-white px-4 py-2 rounded-lg shadow-xl hover:bg-orange-600 transition-colors font-semibold flex items-center space-x-2"
+                                className="bg-orange-500 text-white px-4 py-2 rounded-lg shadow-xl hover:bg-orange-600 transition-colors font-semibold flex items-center justify-center space-x-2"
                                 whileHover={{ scale: 1.05 }}
                                 whileTap={{ scale: 0.95 }}
                               >
                                 <Lock className="w-4 h-4" />
                                 <span>Unlock Image</span>
                               </motion.button>
-                            )}
-                          </motion.div>
+                            </motion.div>
+                          )}
+                          
+                          {/* 已解锁图片的悬停下载按钮 */}
+                          {unlockedImages.has(index) && (
+                            <motion.div 
+                              className="absolute inset-0 bg-black/10 backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300"
+                              initial={{ opacity: 0 }}
+                              whileHover={{ opacity: 1 }}
+                            >
+                              <motion.button
+                                onClick={() => downloadImage(image, index)}
+                                className="bg-white text-orange-700 px-4 py-2 rounded-lg shadow-xl hover:bg-orange-50 transition-colors font-semibold flex items-center justify-center space-x-2"
+                                whileHover={{ scale: 1.05 }}
+                                whileTap={{ scale: 0.95 }}
+                              >
+                                <Download className="w-4 h-4" />
+                                <span>Download</span>
+                              </motion.button>
+                            </motion.div>
+                          )}
                         </div>
                         
                         {/* 图像信息 */}
