@@ -86,4 +86,19 @@
 
 .file-upload-area.dragover {
   @apply border-orange-500 bg-orange-100/50;
+}
+
+/* 自定义模糊效果 */
+.image-preview-blur {
+  filter: blur(8px);
+  transition: filter 0.3s ease-in-out;
+}
+
+.image-preview-blur:hover {
+  filter: blur(6px);
+}
+
+.image-preview-unlocked {
+  filter: none;
+  transition: filter 0.3s ease-in-out;
 } 

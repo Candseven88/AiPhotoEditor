@@ -227,6 +227,10 @@ export default function ImageToImageGenerator() {
             Upload an image and describe how you want to transform it. Our Nano Banana AI model will create amazing variations using optimized default parameters.
           </p>
           
+          <p className="text-sm text-gray-500 max-w-2xl mx-auto mt-2">
+            💡 Generated images show a preview - pay $0.80 to unlock and download in full quality
+          </p>
+          
           {/* 环境指示器 */}
           <div className="flex justify-center mt-4">
             <EnvironmentIndicator />
@@ -455,7 +459,7 @@ export default function ImageToImageGenerator() {
                             src={image}
                             alt={`Transformed image ${index + 1}`}
                             className={`w-full h-auto max-h-96 object-contain rounded-t-xl transition-all duration-300 ${
-                              unlockedImages.has(index) ? '' : 'filter blur-lg'
+                              unlockedImages.has(index) ? 'image-preview-unlocked' : 'image-preview-blur'
                             }`}
                             onLoad={(e) => {
                               const target = e.target as HTMLImageElement
@@ -475,7 +479,7 @@ export default function ImageToImageGenerator() {
                           {/* 未解锁时的锁定覆盖层 */}
                           {!unlockedImages.has(index) && (
                             <motion.div 
-                              className="absolute inset-0 bg-black/30 backdrop-blur-sm flex items-center justify-center"
+                              className="absolute inset-0 bg-black/20 backdrop-blur-sm flex items-center justify-center"
                               initial={{ opacity: 0 }}
                               animate={{ opacity: 1 }}
                               transition={{ duration: 0.3 }}
@@ -483,7 +487,8 @@ export default function ImageToImageGenerator() {
                               <div className="text-center text-white">
                                 <Lock className="w-12 h-12 mx-auto mb-2" />
                                 <p className="font-semibold">Image Locked</p>
-                                <p className="text-sm opacity-90">Pay to unlock</p>
+                                <p className="text-sm opacity-90">Pay $0.80 to unlock</p>
+                                <p className="text-xs opacity-75 mt-1">Hover to see more details</p>
                               </div>
                             </motion.div>
                           )}
