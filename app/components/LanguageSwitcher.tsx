@@ -1,6 +1,5 @@
 'use client'
 
-import { useLocale } from 'next-intl'
 import { useRouter, usePathname } from 'next/navigation'
 import { motion } from 'framer-motion'
 import { Globe, ChevronDown } from 'lucide-react'
@@ -12,16 +11,17 @@ const languages = [
 ]
 
 export default function LanguageSwitcher() {
-  const locale = useLocale()
   const router = useRouter()
   const pathname = usePathname()
   const [isOpen, setIsOpen] = useState(false)
+  const [currentLocale, setCurrentLocale] = useState('en')
 
-  const currentLanguage = languages.find(lang => lang.code === locale) || languages[0]
+  const currentLanguage = languages.find(lang => lang.code === currentLocale) || languages[0]
 
   const switchLanguage = (newLocale: string) => {
-    const newPath = pathname.replace(`/${locale}`, `/${newLocale}`)
-    router.push(newPath)
+    setCurrentLocale(newLocale)
+    // For now, we'll just update the local state
+    // In the future, you can implement actual language switching
     setIsOpen(false)
   }
 
@@ -62,14 +62,14 @@ export default function LanguageSwitcher() {
             key={language.code}
             onClick={() => switchLanguage(language.code)}
             className={`w-full px-4 py-3 text-left hover:bg-orange-50 transition-colors duration-150 flex items-center space-x-3 ${
-              locale === language.code ? 'bg-orange-50 text-orange-700' : 'text-gray-700'
+              currentLocale === language.code ? 'bg-orange-50 text-orange-700' : 'text-gray-700'
             }`}
             whileHover={{ x: 4 }}
             whileTap={{ scale: 0.98 }}
           >
             <span className="text-lg">{language.flag}</span>
             <span className="font-medium">{language.name}</span>
-            {locale === language.code && (
+            {currentLocale === language.code && (
               <motion.div
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}

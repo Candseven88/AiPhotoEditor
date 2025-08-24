@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Star, Quote, Users, Award, CheckCircle, ThumbsUp, Heart, Zap } from 'lucide-react'
+import { Star, Quote, Users, Award, CheckCircle, ThumbsUp, Heart, Zap, Shield, Globe } from 'lucide-react'
 import Link from 'next/link'
 
 export default function TestimonialsPage() {
