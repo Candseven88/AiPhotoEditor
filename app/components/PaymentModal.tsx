@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { X, Lock, CreditCard, CheckCircle } from 'lucide-react'
 
@@ -21,6 +21,14 @@ export default function PaymentModal({
 }: PaymentModalProps) {
   const [isProcessing, setIsProcessing] = useState(false)
   const [paymentSuccess, setPaymentSuccess] = useState(false)
+
+  // 当弹窗打开时，重置所有状态
+  useEffect(() => {
+    if (isOpen) {
+      setIsProcessing(false)
+      setPaymentSuccess(false)
+    }
+  }, [isOpen])
 
     const handlePayPalPayment = async () => {
     setIsProcessing(true)

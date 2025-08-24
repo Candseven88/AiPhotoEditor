@@ -76,9 +76,11 @@ export default function ImageToImageGenerator() {
     setIsGenerating(true)
     setError('')
     
-    // 清除之前的图片和支付状态
+    // 清除之前的图片和支付状态，确保每次生成都是全新开始
     setGeneratedImages([])
     setUnlockedImages(new Set())
+    setSelectedImageIndex(0) // 重置选中的图片索引
+    setPaymentModalOpen(false) // 关闭任何可能打开的支付弹窗
 
     try {
       // 转换 data URL 为 base64
@@ -122,6 +124,11 @@ export default function ImageToImageGenerator() {
         console.log('Generated new images:', newImages.length)
         setGeneratedImages(newImages) // 直接设置新图片，不使用 prev
         setError('')
+        
+        // 验证状态更新
+        setTimeout(() => {
+          console.log('State after generation - Images:', newImages.length, 'Unlocked:', unlockedImages.size)
+        }, 100)
       } else {
         throw new Error('No images generated')
       }
@@ -180,12 +187,19 @@ export default function ImageToImageGenerator() {
 
   const handlePaymentSuccess = () => {
     console.log('Payment success for image index:', selectedImageIndex)
+    console.log('Current unlocked images before update:', Array.from(unlockedImages))
+    
     setUnlockedImages(prev => {
       const newSet = new Set(prev)
       newSet.add(selectedImageIndex)
       console.log('Updated unlocked images:', Array.from(newSet))
       return newSet
     })
+    
+    // 强制重新渲染
+    setTimeout(() => {
+      console.log('Final unlocked images state:', Array.from(unlockedImages))
+    }, 100)
   }
 
 
@@ -460,7 +474,7 @@ export default function ImageToImageGenerator() {
               <div className="flex-1">
                 {/* 调试信息 */}
                 <div className="text-xs text-gray-400 mb-2 text-center">
-                  Debug: {generatedImages.length} images, {unlockedImages.size} unlocked
+                  Debug: {generatedImages.length} images, {unlockedImages.size} unlocked, Selected: {selectedImageIndex}
                 </div>
                 
                 {generatedImages.length === 0 ? (
