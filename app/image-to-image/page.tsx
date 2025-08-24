@@ -4,6 +4,7 @@ import { useState, useRef } from 'react'
 import { motion } from 'framer-motion'
 import { Upload, X, Palette, Loader2, Download, ImageIcon, Lock } from 'lucide-react'
 import PaymentModal from '../components/PaymentModal'
+import EnvironmentIndicator from '../components/EnvironmentIndicator'
 
 interface ImageToImageRequest {
   text_prompts: Array<{
@@ -209,6 +210,11 @@ export default function ImageToImageGenerator() {
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
             Upload an image and describe how you want to transform it. Our Nano Banana AI model will create amazing variations using optimized default parameters.
           </p>
+          
+          {/* 环境指示器 */}
+          <div className="flex justify-center mt-4">
+            <EnvironmentIndicator />
+          </div>
         </motion.div>
 
         {/* 主要内容区域 - 左右布局 */}

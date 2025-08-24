@@ -10,6 +10,7 @@
 | `STABILITY_API_KEY` | Stability AI API 密钥（图生图） | ✅ | `sk-xxxxxxxxxxxxxxxxxxxxxxxx` |
 | `PAYPAL_CLIENT_ID` | PayPal 客户端 ID | ✅ | `Abc123...` |
 | `PAYPAL_CLIENT_SECRET` | PayPal 客户端密钥 | ✅ | `EFG456...` |
+| `PAYPAL_ENVIRONMENT` | PayPal 环境模式 | ✅ | `sandbox` 或 `live` |
 
 ## 🔑 API 密钥配置
 
@@ -108,6 +109,7 @@ vercel env add STABILITY_API_KEY
 # PayPal API 配置
 PAYPAL_CLIENT_ID=your_paypal_client_id_here
 PAYPAL_CLIENT_SECRET=your_paypal_client_secret_here
+PAYPAL_ENVIRONMENT=sandbox
 ```
 
 #### 3. 生产环境配置
@@ -119,16 +121,48 @@ PAYPAL_CLIENT_SECRET=your_paypal_client_secret_here
 - 变量名：`PAYPAL_CLIENT_SECRET`
 - 变量值：你的 PayPal Client Secret
 
+- 变量名：`PAYPAL_ENVIRONMENT`
+- 变量值：`live`（生产环境）
+
 或使用 Vercel CLI：
 ```bash
 vercel env add PAYPAL_CLIENT_ID
 vercel env add PAYPAL_CLIENT_SECRET
+vercel env add PAYPAL_ENVIRONMENT
 ```
 
 #### 4. 环境选择
 
 - **Sandbox**: 用于测试，使用测试账户
+  - 设置 `PAYPAL_ENVIRONMENT=sandbox`
+  - 使用测试 Client ID 和 Secret
+  - 不会产生真实交易
+
 - **Live**: 用于生产，处理真实支付
+  - 设置 `PAYPAL_ENVIRONMENT=live`
+  - 使用生产 Client ID 和 Secret
+  - 处理真实用户支付
+
+#### 5. 环境切换说明
+
+**开发阶段**：
+```env
+PAYPAL_ENVIRONMENT=sandbox
+PAYPAL_CLIENT_ID=your_sandbox_client_id
+PAYPAL_CLIENT_SECRET=your_sandbox_client_secret
+```
+
+**生产部署**：
+```env
+PAYPAL_ENVIRONMENT=live
+PAYPAL_CLIENT_ID=your_live_client_id
+PAYPAL_CLIENT_SECRET=your_live_client_secret
+```
+
+**重要提醒**：
+- 确保在正确的环境中使用对应的密钥
+- 不要在生产环境使用 Sandbox 密钥
+- 环境变量更改后需要重启应用
 
 #### 其他平台
 

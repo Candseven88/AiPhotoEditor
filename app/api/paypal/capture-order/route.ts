@@ -15,6 +15,7 @@ export async function POST(request: NextRequest) {
     // 获取 PayPal 环境变量
     const clientId = process.env.PAYPAL_CLIENT_ID
     const clientSecret = process.env.PAYPAL_CLIENT_SECRET
+    const environment = process.env.PAYPAL_ENVIRONMENT || 'sandbox'
 
     if (!clientId || !clientSecret) {
       return NextResponse.json(
@@ -23,8 +24,13 @@ export async function POST(request: NextRequest) {
       )
     }
 
+    // 根据环境选择 PayPal API 端点
+    const baseUrl = environment === 'live' 
+      ? 'https://api-m.paypal.com' 
+      : 'https://api-m.sandbox.paypal.com'
+
     // 获取 PayPal 访问令牌
-    const tokenResponse = await fetch('https://api-m.sandbox.paypal.com/v1/oauth2/token', {
+    const tokenResponse = await fetch(`${baseUrl}/v1/oauth2/token`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -45,7 +51,7 @@ export async function POST(request: NextRequest) {
     const accessToken = tokenData.access_token
 
     // 捕获 PayPal 订单
-    const captureResponse = await fetch(`https://api-m.sandbox.paypal.com/v2/checkout/orders/${orderID}/capture`, {
+    const captureResponse = await fetch(`${baseUrl}/v2/checkout/orders/${orderID}/capture`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
