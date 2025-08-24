@@ -2,7 +2,8 @@
 
 import { useState, useRef } from 'react'
 import { motion } from 'framer-motion'
-import { Upload, X, Palette, Loader2, Download, ImageIcon } from 'lucide-react'
+import { Upload, X, Palette, Loader2, Download, ImageIcon, Lock } from 'lucide-react'
+import PaymentModal from '../components/PaymentModal'
 
 interface ImageToImageRequest {
   text_prompts: Array<{
@@ -19,6 +20,9 @@ export default function ImageToImageGenerator() {
   const [isGenerating, setIsGenerating] = useState(false)
   const [generatedImages, setGeneratedImages] = useState<string[]>([])
   const [error, setError] = useState('')
+  const [paymentModalOpen, setPaymentModalOpen] = useState(false)
+  const [selectedImageIndex, setSelectedImageIndex] = useState(0)
+  const [unlockedImages, setUnlockedImages] = useState<Set<number>>(new Set())
   
   const fileInputRef = useRef<HTMLInputElement>(null)
 
@@ -127,12 +131,22 @@ export default function ImageToImageGenerator() {
   }
 
   const downloadImage = (imageData: string, index: number) => {
+    if (!unlockedImages.has(index)) {
+      setSelectedImageIndex(index)
+      setPaymentModalOpen(true)
+      return
+    }
+    
     const link = document.createElement('a')
     link.href = imageData
     link.download = `nano-banana-transformed-${Date.now()}-${index}.png`
     document.body.appendChild(link)
     link.click()
     document.body.removeChild(link)
+  }
+
+  const handlePaymentSuccess = () => {
+    setUnlockedImages(prev => new Set(Array.from(prev).concat(selectedImageIndex)))
   }
 
   // 快速提示词建议
@@ -418,7 +432,9 @@ export default function ImageToImageGenerator() {
                           <motion.img
                             src={image}
                             alt={`Transformed image ${index + 1}`}
-                            className="w-full h-auto max-h-96 object-contain rounded-t-xl"
+                            className={`w-full h-auto max-h-96 object-contain rounded-t-xl transition-all duration-300 ${
+                              unlockedImages.has(index) ? '' : 'filter blur-lg'
+                            }`}
                             onLoad={(e) => {
                               const target = e.target as HTMLImageElement
                               target.style.opacity = '1'
@@ -434,21 +450,52 @@ export default function ImageToImageGenerator() {
                             }}
                           />
                           
-                          {/* 悬停时的下载按钮 */}
+                          {/* 未解锁时的锁定覆盖层 */}
+                          {!unlockedImages.has(index) && (
+                            <motion.div 
+                              className="absolute inset-0 bg-black/30 backdrop-blur-sm flex items-center justify-center"
+                              initial={{ opacity: 0 }}
+                              animate={{ opacity: 1 }}
+                              transition={{ duration: 0.3 }}
+                            >
+                              <div className="text-center text-white">
+                                <Lock className="w-12 h-12 mx-auto mb-2" />
+                                <p className="font-semibold">Image Locked</p>
+                                <p className="text-sm opacity-90">Pay to unlock</p>
+                              </div>
+                            </motion.div>
+                          )}
+                          
+                          {/* 悬停时的操作按钮 */}
                           <motion.div 
                             className="absolute inset-0 bg-black/20 backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300"
                             initial={{ opacity: 0 }}
                             whileHover={{ opacity: 1 }}
                           >
-                            <motion.button
-                              onClick={() => downloadImage(image, index)}
-                              className="bg-white text-orange-700 px-4 py-2 rounded-lg shadow-xl hover:bg-orange-50 transition-colors font-semibold flex items-center space-x-2"
-                              whileHover={{ scale: 1.05 }}
-                              whileTap={{ scale: 0.95 }}
-                            >
-                              <Download className="w-4 h-4" />
-                              <span>Download</span>
-                            </motion.button>
+                            {unlockedImages.has(index) ? (
+                              <motion.button
+                                onClick={() => downloadImage(image, index)}
+                                className="bg-white text-orange-700 px-4 py-2 rounded-lg shadow-xl hover:bg-orange-50 transition-colors font-semibold flex items-center space-x-2"
+                                whileHover={{ scale: 1.05 }}
+                                whileTap={{ scale: 0.95 }}
+                              >
+                                <Download className="w-4 h-4" />
+                                <span>Download</span>
+                              </motion.button>
+                            ) : (
+                              <motion.button
+                                onClick={() => {
+                                  setSelectedImageIndex(index)
+                                  setPaymentModalOpen(true)
+                                }}
+                                className="bg-orange-500 text-white px-4 py-2 rounded-lg shadow-xl hover:bg-orange-600 transition-colors font-semibold flex items-center space-x-2"
+                                whileHover={{ scale: 1.05 }}
+                                whileTap={{ scale: 0.95 }}
+                              >
+                                <Lock className="w-4 h-4" />
+                                <span>Unlock Image</span>
+                              </motion.button>
+                            )}
                           </motion.div>
                         </div>
                         
@@ -463,16 +510,31 @@ export default function ImageToImageGenerator() {
                             </span>
                           </div>
                           
-                          {/* 下载按钮 */}
-                          <motion.button
-                            onClick={() => downloadImage(image, index)}
-                            className="w-full bg-gradient-to-r from-orange-500 to-yellow-500 hover:from-orange-600 hover:to-yellow-600 text-white py-2 px-4 rounded-lg transition-all duration-200 flex items-center justify-center font-semibold text-sm"
-                            whileHover={{ scale: 1.02 }}
-                            whileTap={{ scale: 0.98 }}
-                          >
-                            <Download className="w-4 h-4 mr-2" />
-                            Download Image
-                          </motion.button>
+                          {/* 操作按钮 */}
+                          {unlockedImages.has(index) ? (
+                            <motion.button
+                              onClick={() => downloadImage(image, index)}
+                              className="w-full bg-gradient-to-r from-orange-500 to-yellow-500 hover:from-orange-600 hover:to-yellow-600 text-white py-2 px-4 rounded-lg transition-all duration-200 flex items-center justify-center font-semibold text-sm"
+                              whileHover={{ scale: 1.02 }}
+                              whileTap={{ scale: 0.98 }}
+                            >
+                              <Download className="w-4 h-4 mr-2" />
+                              Download Image
+                            </motion.button>
+                          ) : (
+                            <motion.button
+                              onClick={() => {
+                                setSelectedImageIndex(index)
+                                setPaymentModalOpen(true)
+                              }}
+                              className="w-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white py-2 px-4 rounded-lg transition-all duration-200 flex items-center justify-center font-semibold text-sm"
+                              whileHover={{ scale: 1.02 }}
+                              whileTap={{ scale: 0.98 }}
+                            >
+                              <Lock className="w-4 h-4 mr-2" />
+                              Unlock Image ($2.99)
+                            </motion.button>
+                          )}
                         </div>
                       </motion.div>
                     ))}
@@ -494,6 +556,15 @@ export default function ImageToImageGenerator() {
             <p className="text-red-700 text-center font-medium">{error}</p>
           </motion.div>
         )}
+
+        {/* PayPal 支付模态框 */}
+        <PaymentModal
+          isOpen={paymentModalOpen}
+          onClose={() => setPaymentModalOpen(false)}
+          onPaymentSuccess={handlePaymentSuccess}
+          imageIndex={selectedImageIndex}
+          price={2.99}
+        />
       </div>
     </div>
   )
