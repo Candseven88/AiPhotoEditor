@@ -12,8 +12,16 @@ export async function POST(request: NextRequest) {
   try {
     const body: ImageToImageRequest = await request.json()
     
+    console.log('Received request:', {
+      hasTextPrompts: !!body.text_prompts,
+      textPromptsLength: body.text_prompts?.length,
+      hasInitImage: !!body.init_image,
+      initImageLength: body.init_image?.length
+    })
+    
     // 验证必需参数
     if (!body.text_prompts || body.text_prompts.length === 0) {
+      console.log('Validation failed: text_prompts missing or empty')
       return NextResponse.json(
         { error: 'text_prompts is required' },
         { status: 400 }
@@ -21,6 +29,7 @@ export async function POST(request: NextRequest) {
     }
 
     if (!body.init_image) {
+      console.log('Validation failed: init_image missing')
       return NextResponse.json(
         { error: 'init_image is required' },
         { status: 400 }
@@ -30,24 +39,45 @@ export async function POST(request: NextRequest) {
     // 获取 Stability AI API Key
     const apiKey = process.env.STABILITY_API_KEY
     if (!apiKey) {
+      console.log('STABILITY_API_KEY not configured')
       return NextResponse.json(
         { error: 'STABILITY_API_KEY is not configured' },
         { status: 500 }
       )
     }
 
-    // 使用默认参数构建 Stability AI 请求
-    const stabilityRequest = {
-      text_prompts: body.text_prompts,
-      init_image: body.init_image,
-      init_image_mode: 'IMAGE_STRENGTH',
-      image_strength: 0.35, // 默认图像强度，保持原图特征的同时进行转换
-      cfg_scale: 7, // 默认 CFG 比例
-      steps: 30, // 默认步数，平衡质量和速度
-      samples: 1
-    }
+    console.log('API Key configured, proceeding with request...')
 
-    console.log('Sending image-to-image request to Nano Banana AI model...')
+    // 创建 FormData 用于 multipart/form-data 请求
+    const formData = new FormData()
+    
+    // 添加文本提示词
+    body.text_prompts.forEach((prompt, index) => {
+      formData.append(`text_prompts[${index}][text]`, prompt.text)
+      formData.append(`text_prompts[${index}][weight]`, prompt.weight.toString())
+    })
+    
+    // 添加初始图像（转换 base64 为 blob）
+    try {
+      const imageBlob = new Blob([Buffer.from(body.init_image, 'base64')], { type: 'image/png' })
+      formData.append('init_image', imageBlob, 'init_image.png')
+      console.log('Image blob created successfully, size:', imageBlob.size)
+    } catch (blobError) {
+      console.error('Failed to create image blob:', blobError)
+      return NextResponse.json(
+        { error: 'Failed to process uploaded image' },
+        { status: 400 }
+      )
+    }
+    
+    // 添加其他参数
+    formData.append('init_image_mode', 'IMAGE_STRENGTH')
+    formData.append('image_strength', '0.35')
+    formData.append('cfg_scale', '7')
+    formData.append('steps', '30')
+    formData.append('samples', '1')
+
+    console.log('FormData created, sending request to Nano Banana AI model...')
 
     // 调用 Stability AI API
     const response = await fetch(
@@ -55,19 +85,27 @@ export async function POST(request: NextRequest) {
       {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
           'Accept': 'application/json',
           'Authorization': `Bearer ${apiKey}`,
           'Stability-Client-ID': 'nano-banana-app',
           'Stability-Client-Version': '1.0.0'
         },
-        body: JSON.stringify(stabilityRequest)
+        body: formData
       }
     )
 
+    console.log('Response status:', response.status)
+    console.log('Response headers:', Object.fromEntries(response.headers.entries()))
+
     if (!response.ok) {
-      const errorData = await response.json()
-      console.error('Nano Banana AI model error:', errorData)
+      let errorData
+      try {
+        errorData = await response.json()
+        console.error('Nano Banana AI model error:', errorData)
+      } catch (parseError) {
+        console.error('Failed to parse error response:', parseError)
+        errorData = { message: 'Unknown error occurred' }
+      }
       
       // 处理特定错误
       if (errorData.name === 'content_moderation') {
@@ -84,14 +122,15 @@ export async function POST(request: NextRequest) {
       return NextResponse.json(
         { 
           error: 'Failed to generate image',
-          details: errorData.message || 'Unknown error'
+          details: errorData.message || 'Unknown error',
+          status: response.status
         },
         { status: response.status }
       )
     }
 
     const data = await response.json()
-    console.log('Nano Banana AI image-to-image generation successful')
+    console.log('Nano Banana AI image-to-image generation successful, response data:', data)
     return NextResponse.json(data)
     
   } catch (error) {
