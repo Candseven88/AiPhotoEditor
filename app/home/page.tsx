@@ -6,11 +6,18 @@ import { Wand2, ImageIcon, Sparkles, Palette, Home, Zap } from 'lucide-react'
 import ImageGenerator from '../components/ImageGenerator'
 import ImageToImageGenerator from '../components/ImageToImageGenerator'
 import CaseShowcase from '../components/CaseShowcase'
+import UsernameToImageGenerator from '../components/UsernameToImageGenerator'
 
 export default function HomePage() {
-  const [activeTab, setActiveTab] = useState<'text-to-image' | 'image-to-image'>('text-to-image')
+  const [activeTab, setActiveTab] = useState<'username-to-image' | 'text-to-image' | 'image-to-image'>('username-to-image')
 
   const tabs = [
+    {
+      id: 'username-to-image',
+      label: 'UserName to Image',
+      icon: Sparkles,
+      description: 'Generate a personalized avatar from your username'
+    },
     {
       id: 'text-to-image',
       label: 'Text to Image',
@@ -159,7 +166,7 @@ export default function HomePage() {
                 return (
                   <motion.button
                     key={tab.id}
-                    onClick={() => setActiveTab(tab.id as 'text-to-image' | 'image-to-image')}
+                    onClick={() => setActiveTab(tab.id as 'username-to-image' | 'text-to-image' | 'image-to-image')}
                     className={`flex-1 flex items-center justify-center space-x-2 p-3 rounded-lg transition-all duration-300 ${
                       isActive 
                         ? 'bg-gradient-to-r from-orange-500 to-yellow-500 text-white shadow-md' 
@@ -187,7 +194,17 @@ export default function HomePage() {
           className="max-w-7xl mx-auto"
         >
           <AnimatePresence mode="wait">
-            {activeTab === 'text-to-image' ? (
+            {activeTab === 'username-to-image' ? (
+              <motion.div
+                key="username-to-image"
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: 20 }}
+                transition={{ duration: 0.5 }}
+              >
+                <UsernameToImageGenerator />
+              </motion.div>
+            ) : activeTab === 'text-to-image' ? (
               <motion.div
                 key="text-to-image"
                 initial={{ opacity: 0, x: -20 }}
