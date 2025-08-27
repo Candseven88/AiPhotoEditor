@@ -1,64 +1,14 @@
 'use client'
 
-import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { Filter, Grid, List, Search, Star, Download, Share2 } from 'lucide-react'
-import CaseShowcase from '../components/CaseShowcase'
+import Navigation from '../components/Navigation'
+import BeforeAfterSlider from '../components/BeforeAfterSlider'
 
 export default function CasesPage() {
-  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid')
-  const [selectedCategory, setSelectedCategory] = useState<string>('all')
-  const [searchQuery, setSearchQuery] = useState('')
-
-  const categories = [
-    { id: 'all', name: 'All Cases', count: 8 },
-    { id: 'skiing', name: 'Skiing', count: 2 },
-    { id: 'vehicle', name: 'Vehicle', count: 3 },
-    { id: 'portrait', name: 'Portrait', count: 2 },
-    { id: 'swimming', name: 'Swimming', count: 1 }
-  ]
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-orange-50 via-yellow-50 to-orange-100">
       {/* 导航栏 */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-orange-100 shadow-lg">
-        <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-          <div className="flex items-center space-x-3">
-            <img 
-              src="/Logo.png" 
-              alt="NanoBanana Logo" 
-              className="w-8 h-8 rounded-lg"
-            />
-            <span className="text-xl font-bold text-gray-800">NanoBanana</span>
-          </div>
-          <div className="flex items-center space-x-4">
-            <a 
-              href="/home" 
-              className="px-4 py-2 text-orange-600 hover:text-orange-700 font-medium transition-colors"
-            >
-              Home
-            </a>
-            <a 
-              href="/text-to-image" 
-              className="px-4 py-2 text-orange-600 hover:text-orange-700 font-medium transition-colors"
-            >
-              Text to Image
-            </a>
-            <a 
-              href="/image-to-image" 
-              className="px-4 py-2 text-orange-600 hover:text-orange-700 font-medium transition-colors"
-            >
-              Image to Image
-            </a>
-            <a 
-              href="/cases" 
-              className="px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-colors font-medium"
-            >
-              Cases
-            </a>
-          </div>
-        </div>
-      </nav>
+      <Navigation />
 
       <div className="container mx-auto px-4 py-8 pt-24">
         {/* 页面标题 */}
@@ -74,72 +24,13 @@ export default function CasesPage() {
             </span>
             <br />
             <span className="text-3xl md:text-4xl text-gray-700">
-              Case Studies & Examples
+              Before & After Gallery
             </span>
           </h1>
           <p className="text-xl md:text-2xl text-gray-600 max-w-4xl mx-auto">
-            Explore our collection of AI-enhanced images showcasing the power of our lightweight image AI technology. 
-            See how nano banana ai transforms ordinary photos into extraordinary works of art.
+            Drag the slider handle to compare original images with AI-enhanced results. 
+            Experience the power of our lightweight image AI technology transforming ordinary photos into extraordinary works of art.
           </p>
-        </motion.div>
-
-        {/* 搜索和筛选 */}
-        <motion.div 
-          className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg p-6 mb-8"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-        >
-          <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
-            {/* 搜索框 */}
-            <div className="relative flex-1 max-w-md">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-              <input
-                type="text"
-                placeholder="Search cases..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
-              />
-            </div>
-
-            {/* 分类筛选 */}
-            <div className="flex flex-wrap gap-2">
-              {categories.map((category) => (
-                <button
-                  key={category.id}
-                  onClick={() => setSelectedCategory(category.id)}
-                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-                    selectedCategory === category.id
-                      ? 'bg-orange-500 text-white'
-                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                  }`}
-                >
-                  {category.name} ({category.count})
-                </button>
-              ))}
-            </div>
-
-            {/* 视图切换 */}
-            <div className="flex items-center space-x-2">
-              <button
-                onClick={() => setViewMode('grid')}
-                className={`p-2 rounded-lg transition-colors ${
-                  viewMode === 'grid' ? 'bg-orange-500 text-white' : 'bg-gray-100 text-gray-700'
-                }`}
-              >
-                <Grid className="w-5 h-5" />
-              </button>
-              <button
-                onClick={() => setViewMode('list')}
-                className={`p-2 rounded-lg transition-colors ${
-                  viewMode === 'list' ? 'bg-orange-500 text-white' : 'bg-gray-100 text-gray-700'
-                }`}
-              >
-                <List className="w-5 h-5" />
-              </button>
-            </div>
-          </div>
         </motion.div>
 
         {/* 案例展示 */}
@@ -148,7 +39,72 @@ export default function CasesPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.4 }}
         >
-          <CaseShowcase variant="grid" maxItems={8} showKeywords={true} />
+          <div className="text-center mb-12">
+            <h3 className="text-3xl font-bold text-gray-900 mb-4">
+              Interactive Image Comparisons
+            </h3>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              Use the slider handle to compare original images with AI-enhanced results
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8">
+            <BeforeAfterSlider
+              beforeImage="/cases/两名女子滑雪的照片.jpg"
+              afterImage="/cases/两名女子滑雪的照片-红色.png"
+              height="h-64 md:h-80"
+              beforeLabel="Original"
+              afterLabel="Enhanced"
+            />
+            <BeforeAfterSlider
+              beforeImage="/cases/冬季男子雪地上滑雪.jpg"
+              afterImage="/cases/冬季男子雪地上滑雪-红色.png"
+              height="h-64 md:h-80"
+              beforeLabel="Original"
+              afterLabel="Enhanced"
+            />
+            <BeforeAfterSlider
+              beforeImage="/cases/红色福特重点车辆在白天的蓝色天空下的沙子上驾驶.jpg"
+              afterImage="/cases/红色福特重点车辆在白天的蓝色天空下的沙子上驾驶-海边.png"
+              height="h-64 md:h-80"
+              beforeLabel="Original"
+              afterLabel="Enhanced"
+            />
+            <BeforeAfterSlider
+              beforeImage="/cases/红色福特重点车辆在白天的蓝色天空下的沙子上驾驶.jpg"
+              afterImage="/cases/红色福特重点车辆在白天的蓝色天空下的沙子上驾驶-2.png"
+              height="h-64 md:h-80"
+              beforeLabel="Original"
+              afterLabel="Enhanced"
+            />
+            <BeforeAfterSlider
+              beforeImage="/cases/黑色道奇challenger Coupe.jpg"
+              afterImage="/cases/黑色道奇challenger Coupe-在云端.png"
+              height="h-64 md:h-80"
+              beforeLabel="Original"
+              afterLabel="Enhanced"
+            />
+            <BeforeAfterSlider
+              beforeImage="/cases/Baby Saja.jpg"
+              afterImage="/cases/Baby_Saja-Ciga.png"
+              height="h-64 md:h-80"
+              beforeLabel="Original"
+              afterLabel="Enhanced"
+            />
+            <BeforeAfterSlider
+              beforeImage="/cases/three girls laughing.jpg"
+              afterImage="/cases/three girls laughing-in front of Mount Fuji.png"
+              height="h-64 md:h-80"
+              beforeLabel="Original"
+              afterLabel="Enhanced"
+            />
+            <BeforeAfterSlider
+              beforeImage="/cases/在水中游泳的白色monokini的女人.jpg"
+              afterImage="/cases/在水中游泳的白色monokini的女人-火山.png"
+              height="h-64 md:h-80"
+              beforeLabel="Original"
+              afterLabel="Enhanced"
+            />
+          </div>
         </motion.div>
 
         {/* 技术说明 */}

@@ -1,7 +1,9 @@
 'use client'
 
+import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { Calendar, User, ArrowRight, Search, Filter, BookOpen, Lightbulb, Palette, Zap } from 'lucide-react'
+import { Calendar, Clock, User, ArrowRight, Search, Filter, BookOpen, Lightbulb, Palette, Zap } from 'lucide-react'
+import Navigation from '../components/Navigation'
 import Link from 'next/link'
 
 export default function BlogPage() {
@@ -14,7 +16,7 @@ export default function BlogPage() {
       author: "NanoBanana Team",
       date: "2024-01-15",
       readTime: "8 min read",
-      image: "/blog/nano-banana-ai-guide.jpg",
+      image: "/cases/Baby Saja.jpg",
       tags: ["nano banana ai", "ai image generation", "how does nano banana ai work"]
     },
     {
@@ -25,7 +27,7 @@ export default function BlogPage() {
       author: "AI Expert",
       date: "2024-01-12",
       readTime: "12 min read",
-      image: "/blog/nano-banana-vs-stable-diffusion.jpg",
+      image: "/cases/冬季男子雪地上滑雪.jpg",
       tags: ["nano banana vs stable diffusion", "ai image generator comparison", "stable diffusion alternative"]
     },
     {
@@ -36,7 +38,7 @@ export default function BlogPage() {
       author: "Tech Researcher",
       date: "2024-01-10",
       readTime: "10 min read",
-      image: "/blog/google-secret-image-model.jpg",
+      image: "/cases/红色福特重点车辆在白天的蓝色天空下的沙子上驾驶.jpg",
       tags: ["google nano-banana model", "google secret image model", "nano banana ai technology"]
     },
     {
@@ -47,7 +49,7 @@ export default function BlogPage() {
       author: "Performance Engineer",
       date: "2024-01-08",
       readTime: "6 min read",
-      image: "/blog/lightweight-ai-image-generator.jpg",
+      image: "/cases/黑色道奇challenger Coupe.jpg",
       tags: ["lightweight image ai", "lightweight ai image generator", "ai performance optimization"]
     },
     {
@@ -58,7 +60,7 @@ export default function BlogPage() {
       author: "Creative Director",
       date: "2024-01-05",
       readTime: "9 min read",
-      image: "/blog/text-to-image-revolution.jpg",
+      image: "/cases/两名女子滑雪的照片.jpg",
       tags: ["text-to-image", "natural language editing", "ai art creation"]
     },
     {
@@ -69,7 +71,7 @@ export default function BlogPage() {
       author: "Photo Editor",
       date: "2024-01-03",
       readTime: "7 min read",
-      image: "/blog/image-to-image-transformation.jpg",
+      image: "/cases/在水中游泳的白色monokini的女人.jpg",
       tags: ["image to image", "ai photo editing", "photo editing ai"]
     }
   ]
@@ -86,57 +88,7 @@ export default function BlogPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-orange-50 via-yellow-50 to-orange-100">
-      {/* 导航栏 */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-orange-100 shadow-lg">
-        <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-          <div className="flex items-center space-x-3">
-            <img 
-              src="/Logo.png" 
-              alt="NanoBanana AI Logo" 
-              className="w-8 h-8 rounded-lg"
-            />
-            <span className="text-xl font-bold text-gray-800">NanoBanana AI</span>
-          </div>
-          <div className="flex items-center space-x-4">
-            <a 
-              href="/home" 
-              className="px-4 py-2 text-orange-600 hover:text-orange-700 font-medium transition-colors"
-            >
-              Home
-            </a>
-            <a 
-              href="/text-to-image" 
-              className="px-4 py-2 text-orange-600 hover:text-orange-700 font-medium transition-colors"
-            >
-              Text to Image
-            </a>
-            <a 
-              href="/image-to-image" 
-              className="px-4 py-2 text-orange-600 hover:text-orange-700 font-medium transition-colors"
-            >
-              Image to Image
-            </a>
-            <a 
-              href="/cases" 
-              className="px-4 py-2 text-orange-600 hover:text-orange-700 font-medium transition-colors"
-            >
-              Gallery
-            </a>
-            <a 
-              href="/blog" 
-              className="px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-colors font-medium"
-            >
-              Blog
-            </a>
-            <a 
-              href="/about" 
-              className="px-4 py-2 text-orange-600 hover:text-orange-700 font-medium transition-colors"
-            >
-              About
-            </a>
-          </div>
-        </div>
-      </nav>
+      <Navigation />
 
       <div className="container mx-auto px-4 py-8 pt-20">
         {/* 页面标题 */}
@@ -226,10 +178,11 @@ export default function BlogPage() {
               transition={{ duration: 0.5, delay: 0.8 + index * 0.1 }}
             >
               <div className="h-48 bg-gradient-to-br from-orange-200 to-yellow-200 flex items-center justify-center">
-                <div className="text-center text-gray-600">
-                  <Palette className="w-16 h-16 mx-auto mb-2 text-orange-400" />
-                  <p className="text-sm">Blog Image</p>
-                </div>
+                <img
+                  src={post.image || "/cases/three girls laughing.jpg"}
+                  alt={post.title}
+                  className="w-full h-full object-cover"
+                />
               </div>
               
               <div className="p-6">
@@ -318,10 +271,11 @@ export default function BlogPage() {
               </div>
               
               <div className="h-64 bg-gradient-to-br from-orange-200 to-yellow-200 rounded-lg flex items-center justify-center">
-                <div className="text-center text-gray-600">
-                  <Palette className="w-20 h-20 mx-auto mb-2 text-orange-400" />
-                  <p className="text-sm">Featured Blog Image</p>
-                </div>
+                <img
+                  src="/cases/three girls laughing.jpg"
+                  alt="How Does Nano Banana AI Work?"
+                  className="w-full h-full object-cover rounded-lg"
+                />
               </div>
             </div>
           </div>

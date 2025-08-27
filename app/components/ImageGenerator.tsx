@@ -3,6 +3,8 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Wand2, Download, Loader2, Sparkles, Image as ImageIcon } from 'lucide-react'
+import GradientButton from '../components/ui/GradientButton'
+import EmptyState from '../components/ui/EmptyState'
 
 interface GenerationRequest {
   prompt: string
@@ -207,26 +209,11 @@ export default function ImageGenerator() {
               <motion.button
                 onClick={generateImage}
                 disabled={isGenerating || !prompt.trim()}
-                className="w-full bg-gradient-to-r from-orange-500 via-yellow-500 to-orange-600 hover:from-orange-600 hover:via-yellow-600 hover:to-orange-700 disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold py-4 px-8 rounded-xl transition-all duration-300 flex items-center justify-center space-x-3 text-lg shadow-lg hover:shadow-xl transform hover:scale-[1.02]"
-                whileHover={{ scale: isGenerating ? 1 : 1.02 }}
-                whileTap={{ scale: 0.98 }}
+                className=""
               >
-                {isGenerating ? (
-                  <>
-                    <motion.div
-                      animate={{ rotate: 360 }}
-                      transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-                    >
-                      <Loader2 className="w-6 h-6" />
-                    </motion.div>
-                    <span>Generating...</span>
-                  </>
-                ) : (
-                  <>
-                    <Wand2 className="w-6 h-6" />
-                    <span>Generate Image</span>
-                  </>
-                )}
+                <GradientButton size="lg" loading={isGenerating} leftIcon={!isGenerating ? <Wand2 className="w-6 h-6" /> : undefined}>
+                  {isGenerating ? 'Generating…' : 'Generate Image'}
+                </GradientButton>
               </motion.button>
               
               {/* 进度指示器 */}
@@ -267,13 +254,11 @@ export default function ImageGenerator() {
             {/* 图像展示区域 */}
             <div className="flex-1">
               {generatedImages.length === 0 ? (
-                <div className="h-full flex items-center justify-center">
-                  <div className="text-center text-gray-500">
-                    <ImageIcon className="w-24 h-24 mx-auto mb-4 text-orange-200" />
-                    <p className="text-lg">No images generated yet</p>
-                    <p className="text-sm">Enter a prompt and click generate to create your first image</p>
-                  </div>
-                </div>
+                <EmptyState
+                  title="No images generated yet"
+                  subtitle="Enter a prompt and click generate to create your first image"
+                  icon={<ImageIcon className="w-full h-full text-orange-200" />}
+                />
               ) : (
                 <div className="space-y-4">
                   {generatedImages.map((image, index) => (

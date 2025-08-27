@@ -1,8 +1,8 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Users, Award, Rocket, Zap, Palette, Shield, Globe, Heart, Star, CheckCircle } from 'lucide-react'
-import Link from 'next/link'
+import { Users, Zap, Star, Shield, Heart, Award, ArrowRight } from 'lucide-react'
+import Navigation from '../components/Navigation'
 
 export default function AboutPage() {
   const teamMembers = [
@@ -46,7 +46,7 @@ export default function AboutPage() {
 
   const values = [
     {
-      icon: Rocket,
+      icon: Zap,
       title: "Innovation",
       description: "Pushing the boundaries of what's possible with AI image generation"
     },
@@ -61,7 +61,7 @@ export default function AboutPage() {
       description: "Ensuring your creative work and data remain protected"
     },
     {
-      icon: Globe,
+      icon: ArrowRight,
       title: "Accessibility",
       description: "Making AI image generation available to everyone, everywhere"
     }
@@ -70,56 +70,7 @@ export default function AboutPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-orange-50 via-yellow-50 to-orange-100">
       {/* 导航栏 */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-orange-100 shadow-lg">
-        <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-          <div className="flex items-center space-x-3">
-            <img 
-              src="/Logo.png" 
-              alt="NanoBanana AI Logo" 
-              className="w-8 h-8 rounded-lg"
-            />
-            <span className="text-xl font-bold text-gray-800">NanoBanana AI</span>
-          </div>
-          <div className="flex items-center space-x-4">
-            <a 
-              href="/home" 
-              className="px-4 py-2 text-orange-600 hover:text-orange-700 font-medium transition-colors"
-            >
-              Home
-            </a>
-            <a 
-              href="/text-to-image" 
-              className="px-4 py-2 text-orange-600 hover:text-orange-700 font-medium transition-colors"
-            >
-              Text to Image
-            </a>
-            <a 
-              href="/image-to-image" 
-              className="px-4 py-2 text-orange-600 hover:text-orange-700 font-medium transition-colors"
-            >
-              Image to Image
-            </a>
-            <a 
-              href="/cases" 
-              className="px-4 py-2 text-orange-600 hover:text-orange-700 font-medium transition-colors"
-            >
-              Gallery
-            </a>
-            <a 
-              href="/blog" 
-              className="px-4 py-2 text-orange-600 hover:text-orange-700 font-medium transition-colors"
-            >
-              Blog
-            </a>
-            <a 
-              href="/about" 
-              className="px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-colors font-medium"
-            >
-              About
-            </a>
-          </div>
-        </div>
-      </nav>
+      <Navigation />
 
       <div className="container mx-auto px-4 py-8 pt-20">
         {/* 页面标题 */}
@@ -169,11 +120,18 @@ export default function AboutPage() {
             </div>
             
             <div className="relative">
-              <div className="bg-gradient-to-br from-orange-200 to-yellow-200 rounded-2xl p-8 h-80 flex items-center justify-center">
-                <div className="text-center text-gray-600">
-                  <Palette className="w-24 h-24 mx-auto mb-4 text-orange-400" />
-                  <p className="text-lg font-medium">Our Mission</p>
-                  <p className="text-sm mt-2">Democratizing AI Image Generation</p>
+              <div className="bg-gradient-to-br from-orange-200 to-yellow-200 rounded-2xl p-8 h-80 flex items-center justify-center overflow-hidden">
+                <img
+                  src="/cases/Baby Saja.jpg"
+                  alt="Our Mission"
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-black/30 flex items-center justify-center">
+                  <div className="text-center text-white">
+                    <Award className="w-24 h-24 mx-auto mb-4 text-orange-300" />
+                    <p className="text-lg font-medium">Our Mission</p>
+                    <p className="text-sm mt-2">Democratizing AI Image Generation</p>
+                  </div>
                 </div>
               </div>
               
@@ -208,7 +166,7 @@ export default function AboutPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div className="bg-white/80 backdrop-blur-sm rounded-xl p-8 shadow-lg border border-orange-100">
               <div className="w-16 h-16 bg-gradient-to-br from-orange-500 to-yellow-500 rounded-xl flex items-center justify-center mb-6">
-                <Rocket className="w-8 h-8 text-white" />
+                <Zap className="w-8 h-8 text-white" />
               </div>
               <h3 className="text-2xl font-bold text-gray-900 mb-4">Our Mission</h3>
               <p className="text-gray-600">
@@ -220,7 +178,7 @@ export default function AboutPage() {
             
             <div className="bg-white/80 backdrop-blur-sm rounded-xl p-8 shadow-lg border border-orange-100">
               <div className="w-16 h-16 bg-gradient-to-br from-orange-500 to-yellow-500 rounded-xl flex items-center justify-center mb-6">
-                <Globe className="w-8 h-8 text-white" />
+                <ArrowRight className="w-8 h-8 text-white" />
               </div>
               <h3 className="text-2xl font-bold text-gray-900 mb-4">Our Vision</h3>
               <p className="text-gray-600">
@@ -294,21 +252,21 @@ export default function AboutPage() {
                 </h3>
                 <div className="space-y-4">
                   <div className="flex items-start space-x-3">
-                    <CheckCircle className="w-6 h-6 text-green-500 mt-1 flex-shrink-0" />
+                    <Shield className="w-6 h-6 text-green-500 mt-1 flex-shrink-0" />
                     <div>
                       <h4 className="font-semibold text-gray-900">Lightweight Architecture</h4>
                       <p className="text-gray-600">Our nano banana ai model is optimized for speed and efficiency</p>
                     </div>
                   </div>
                   <div className="flex items-start space-x-3">
-                    <CheckCircle className="w-6 h-6 text-green-500 mt-1 flex-shrink-0" />
+                    <Shield className="w-6 h-6 text-green-500 mt-1 flex-shrink-0" />
                     <div>
                       <h4 className="font-semibold text-gray-900">Superior Quality</h4>
                       <p className="text-gray-600">Professional-grade results that rival traditional methods</p>
                     </div>
                   </div>
                   <div className="flex items-start space-x-3">
-                    <CheckCircle className="w-6 h-6 text-green-500 mt-1 flex-shrink-0" />
+                    <Shield className="w-6 h-6 text-green-500 mt-1 flex-shrink-0" />
                     <div>
                       <h4 className="font-semibold text-gray-900">Natural Language Processing</h4>
                       <p className="text-gray-600">Advanced understanding of creative descriptions and context</p>
@@ -323,21 +281,21 @@ export default function AboutPage() {
                 </h3>
                 <div className="space-y-4">
                   <div className="flex items-start space-x-3">
-                    <CheckCircle className="w-6 h-6 text-green-500 mt-1 flex-shrink-0" />
+                    <Shield className="w-6 h-6 text-green-500 mt-1 flex-shrink-0" />
                     <div>
                       <h4 className="font-semibold text-gray-900">Faster Processing</h4>
                       <p className="text-gray-600">Generate images in seconds, not minutes</p>
                     </div>
                   </div>
                   <div className="flex items-start space-x-3">
-                    <CheckCircle className="w-6 h-6 text-green-500 mt-1 flex-shrink-0" />
+                    <Shield className="w-6 h-6 text-green-500 mt-1 flex-shrink-0" />
                     <div>
                       <h4 className="font-semibold text-gray-900">Lower Resource Usage</h4>
                       <p className="text-gray-600">Works smoothly on any device or platform</p>
                     </div>
                   </div>
                   <div className="flex items-start space-x-3">
-                    <CheckCircle className="w-6 h-6 text-green-500 mt-1 flex-shrink-0" />
+                    <Shield className="w-6 h-6 text-green-500 mt-1 flex-shrink-0" />
                     <div>
                       <h4 className="font-semibold text-gray-900">Better User Experience</h4>
                       <p className="text-gray-600">Intuitive interface designed for creators</p>
@@ -444,18 +402,18 @@ export default function AboutPage() {
               to bring their ideas to life.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link 
+              <a 
                 href="/home"
                 className="px-8 py-3 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-colors font-medium"
               >
                 Try Nano Banana AI
-              </Link>
-              <Link 
+              </a>
+              <a 
                 href="/blog"
                 className="px-8 py-3 border border-orange-500 text-orange-600 rounded-lg hover:bg-orange-50 transition-colors font-medium"
               >
                 Learn More
-              </Link>
+              </a>
             </div>
           </div>
         </motion.div>

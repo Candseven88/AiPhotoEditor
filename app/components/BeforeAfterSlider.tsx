@@ -102,27 +102,28 @@ export default function BeforeAfterSlider({
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
       >
-        {/* Before Image (背景) */}
-        <img
-          src={beforeImage}
-          alt="Before"
-          className="absolute inset-0 w-full h-full object-cover"
-        />
+        {/* Before Image (左半部分) */}
+        <div className="absolute inset-0 w-full h-full">
+          <img
+            src={beforeImage}
+            alt="Before"
+            className="w-full h-full object-cover"
+          />
+        </div>
         
-        {/* After Image (前景，被裁剪) */}
-        <div
-          className="absolute inset-0 overflow-hidden"
-          style={{ width: `${sliderPosition}%` }}
+        {/* After Image (右半部分) */}
+        <div 
+          className="absolute inset-0 w-full h-full overflow-hidden"
+          style={{ clipPath: `inset(0 ${100 - sliderPosition}% 0 0)` }}
         >
           <img
             src={afterImage}
             alt="After"
-            className="absolute inset-0 w-full h-full object-cover"
-            style={{ left: '0' }}
+            className="w-full h-full object-cover"
           />
         </div>
         
-        {/* 滑块 */}
+        {/* 滑块分割线 */}
         <div
           className="absolute top-0 bottom-0 w-1 bg-orange-500 cursor-col-resize"
           style={{ left: `${sliderPosition}%` }}

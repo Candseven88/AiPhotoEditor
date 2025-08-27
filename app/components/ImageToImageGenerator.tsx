@@ -5,6 +5,8 @@ import { motion } from 'framer-motion'
 import { Upload, X, Palette, Loader2, Download, ImageIcon, Lock } from 'lucide-react'
 import PaymentModal from './PaymentModal'
 import EnvironmentIndicator from './EnvironmentIndicator'
+import GradientButton from './ui/GradientButton'
+import EmptyState from './ui/EmptyState'
 
 interface ImageToImageRequest {
   text_prompts: Array<{
@@ -360,24 +362,14 @@ export default function ImageToImageGenerator() {
               <motion.button
                 onClick={generateImage}
                 disabled={isGenerating || !prompt.trim() || !uploadedImage}
-                className="w-full bg-gradient-to-r from-orange-500 to-yellow-500 hover:from-orange-600 hover:to-yellow-600 disabled:from-gray-400 disabled:to-gray-500 text-white py-4 px-6 rounded-xl font-semibold text-lg transition-all duration-200 flex items-center justify-center shadow-lg disabled:shadow-none"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
+                className=""
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 2.0 }}
               >
-                {isGenerating ? (
-                  <>
-                    <Loader2 className="w-5 h-5 animate-spin mr-3" />
-                    Transforming Image...
-                  </>
-                ) : (
-                  <>
-                    <Palette className="w-5 h-5 mr-3" />
-                    Transform Image
-                  </>
-                )}
+                <GradientButton size="lg" loading={isGenerating} leftIcon={!isGenerating ? <Palette className="w-5 h-5" /> : undefined}>
+                  {isGenerating ? 'Transforming Image…' : 'Transform Image'}
+                </GradientButton>
               </motion.button>
             </div>
 
@@ -417,13 +409,11 @@ export default function ImageToImageGenerator() {
               </div>
               
               {generatedImages.length === 0 ? (
-                <div className="h-full flex items-center justify-center">
-                  <div className="text-center text-gray-500">
-                    <ImageIcon className="w-24 h-24 mx-auto mb-4 text-orange-200" />
-                    <p className="text-lg">No images transformed yet</p>
-                    <p className="text-sm">Upload an image and describe the transformation to get started</p>
-                  </div>
-                </div>
+                <EmptyState
+                  title="No images generated yet"
+                  subtitle="Upload an image and enter a prompt to transform"
+                  icon={<ImageIcon className="w-full h-full text-orange-200" />}
+                />
               ) : (
                 <div className="space-y-4">
                   {generatedImages.map((image, index) => (

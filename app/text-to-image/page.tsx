@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Wand2, Download, Loader2, Sparkles, Image as ImageIcon } from 'lucide-react'
+import Navigation from '../components/Navigation'
 
 interface GenerationRequest {
   prompt: string
@@ -141,38 +142,7 @@ export default function TextToImagePage() {
       </div>
 
       {/* 导航栏 */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-orange-100 shadow-lg">
-        <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-          <div className="flex items-center space-x-3">
-            <img 
-              src="/Logo.png" 
-              alt="NanoBanana Logo" 
-              className="w-8 h-8 rounded-lg"
-            />
-            <span className="text-xl font-bold text-gray-800">NanoBanana</span>
-          </div>
-          <div className="flex items-center space-x-4">
-            <a 
-              href="/home" 
-              className="px-4 py-2 text-orange-600 hover:text-orange-700 font-medium transition-colors"
-            >
-              Home
-            </a>
-            <a 
-              href="/text-to-image" 
-              className="px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-colors font-medium"
-            >
-              Text to Image
-            </a>
-            <a 
-              href="/image-to-image" 
-              className="px-4 py-2 text-orange-600 hover:text-orange-700 font-medium transition-colors"
-            >
-              Image to Image
-            </a>
-          </div>
-        </div>
-      </nav>
+      <Navigation />
 
       <div className="container mx-auto px-4 py-8 relative z-10">
         {/* 标题区域 */}

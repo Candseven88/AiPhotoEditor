@@ -1,10 +1,11 @@
 'use client'
 
 import { useState, useRef, useEffect } from 'react'
-import { motion } from 'framer-motion'
-import { Upload, X, Palette, Loader2, Download, ImageIcon, Lock } from 'lucide-react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { Palette, Upload, Download, Loader2, Sparkles, Image as ImageIcon, Lock, X } from 'lucide-react'
 import PaymentModal from '../components/PaymentModal'
 import EnvironmentIndicator from '../components/EnvironmentIndicator'
+import Navigation from '../components/Navigation'
 
 interface ImageToImageRequest {
   text_prompts: Array<{
@@ -217,38 +218,7 @@ export default function ImageToImageGenerator() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-orange-50 via-yellow-50 to-orange-100">
       {/* 导航栏 */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-orange-100 shadow-lg">
-        <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-          <div className="flex items-center space-x-3">
-            <img 
-              src="/Logo.png" 
-              alt="NanoBanana Logo" 
-              className="w-8 h-8 rounded-lg"
-            />
-            <span className="text-xl font-bold text-gray-800">NanoBanana</span>
-          </div>
-          <div className="flex items-center space-x-4">
-            <a 
-              href="/home" 
-              className="px-4 py-2 text-orange-600 hover:text-orange-700 font-medium transition-colors"
-            >
-              Home
-            </a>
-            <a 
-              href="/" 
-              className="px-4 py-2 text-orange-600 hover:text-orange-700 font-medium transition-colors"
-            >
-              Text to Image
-            </a>
-            <a 
-              href="/image-to-image" 
-              className="px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-colors font-medium"
-            >
-              Image to Image
-            </a>
-          </div>
-        </div>
-      </nav>
+      <Navigation />
 
       {/* 主要内容 */}
       <div className="container mx-auto px-4 pt-24 pb-8">
