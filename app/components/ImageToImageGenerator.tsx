@@ -22,6 +22,7 @@ export default function ImageToImageGenerator() {
   const [uploadedImage, setUploadedImage] = useState<string | null>(null)
   const [isGenerating, setIsGenerating] = useState(false)
   const [generatedImages, setGeneratedImages] = useState<string[]>([])
+  const [originalImageUrls, setOriginalImageUrls] = useState<string[]>([])
   const [error, setError] = useState('')
   const [paymentModalOpen, setPaymentModalOpen] = useState(false)
   const [selectedImageIndex, setSelectedImageIndex] = useState(0)
@@ -80,6 +81,7 @@ export default function ImageToImageGenerator() {
     
     // 清除之前的图片和支付状态，确保每次生成都是全新开始
     setGeneratedImages([])
+    setOriginalImageUrls([])
     setUnlockedImages(new Set())
     setSelectedImageIndex(0) // 重置选中的图片索引
     setPaymentModalOpen(false) // 关闭任何可能打开的支付弹窗
@@ -125,6 +127,7 @@ export default function ImageToImageGenerator() {
         )
         console.log('Generated new images:', newImages.length)
         setGeneratedImages(newImages) // 直接设置新图片，不使用 prev
+        setOriginalImageUrls(newImages) // 对于base64，显示和下载使用相同的URL
         setError('')
         
         // 验证状态更新
@@ -145,7 +148,7 @@ export default function ImageToImageGenerator() {
     }
   }
 
-  const downloadImage = (imageData: string, index: number) => {
+  const downloadImage = (index: number) => {
     if (!unlockedImages.has(index)) {
       setSelectedImageIndex(index)
       setPaymentModalOpen(true)
@@ -153,22 +156,31 @@ export default function ImageToImageGenerator() {
     }
     
     try {
+      const originalUrl = originalImageUrls[index]
+      if (!originalUrl) {
+        console.error('No original URL found for index:', index)
+        setError('Download failed. No image URL found.')
+        return
+      }
+
       // 创建下载链接
       const link = document.createElement('a')
-      link.href = imageData
       link.download = `nano-banana-transformed-${Date.now()}-${index}.png`
       
       // 对于 base64 数据，需要特殊处理
-      if (imageData.startsWith('data:image/')) {
+      if (originalUrl.startsWith('data:image/')) {
         // 如果是 base64 数据，直接下载
+        link.href = originalUrl
         document.body.appendChild(link)
         link.click()
         document.body.removeChild(link)
       } else {
-        // 如果是 URL，先获取图片再下载
-        fetch(imageData)
-          .then(response => response.blob())
-          .then(blob => {
+        // 如果是 URL，使用代理下载
+        const proxyUrl = `/api/proxy-image?url=${encodeURIComponent(originalUrl)}`
+        fetch(proxyUrl)
+          .then(async (response) => {
+            if (!response.ok) throw new Error(`Proxy failed: ${response.status}`)
+            const blob = await response.blob()
             const url = window.URL.createObjectURL(blob)
             link.href = url
             document.body.appendChild(link)
@@ -176,14 +188,14 @@ export default function ImageToImageGenerator() {
             document.body.removeChild(link)
             window.URL.revokeObjectURL(url)
           })
-          .catch(error => {
-            console.error('Download failed:', error)
-            alert('Download failed. Please try again.')
+          .catch(err => {
+            console.error('Download failed:', err)
+            setError('Download failed. Please try again.')
           })
       }
     } catch (error) {
       console.error('Download error:', error)
-      alert('Download failed. Please try again.')
+      setError('Download failed. Please try again.')
     }
   }
 
@@ -494,7 +506,7 @@ export default function ImageToImageGenerator() {
                             whileHover={{ opacity: 1 }}
                           >
                             <motion.button
-                              onClick={() => downloadImage(image, index)}
+                              onClick={() => downloadImage(index)}
                               className="bg-white text-orange-700 px-4 py-2 rounded-lg shadow-xl hover:bg-orange-50 transition-colors font-semibold flex items-center justify-center space-x-2"
                               whileHover={{ scale: 1.05 }}
                               whileTap={{ scale: 0.95 }}
@@ -520,8 +532,8 @@ export default function ImageToImageGenerator() {
                         {/* 操作按钮 */}
                         {unlockedImages.has(index) ? (
                           <motion.button
-                            onClick={() => downloadImage(image, index)}
-                            className="w-full bg-gradient-to-r from-orange-500 to-yellow-500 hover:from-orange-600 hover:to-yellow-600 text-white py-2 px-4 rounded-lg transition-all duration-200 flex items-center justify-center font-semibold text-sm"
+                            onClick={() => downloadImage(index)}
+                            className="w-full bg-gradient-to-r from-orange-500 to-yellow-600 hover:from-orange-600 hover:to-yellow-600 text-white py-2 px-4 rounded-lg transition-all duration-200 flex items-center justify-center font-semibold text-sm"
                             whileHover={{ scale: 1.02 }}
                             whileTap={{ scale: 0.98 }}
                           >

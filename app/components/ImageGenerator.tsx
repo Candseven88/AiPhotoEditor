@@ -1,10 +1,10 @@
-'use client'
+"use client"
 
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Wand2, Download, Loader2, Sparkles, Image as ImageIcon } from 'lucide-react'
-import GradientButton from '../components/ui/GradientButton'
-import EmptyState from '../components/ui/EmptyState'
+import { Sparkles, Wand2, Loader2, Image as ImageIcon } from 'lucide-react'
+import GradientButton from './ui/GradientButton'
+import EmptyState from './ui/EmptyState'
 
 interface GenerationRequest {
   prompt: string
@@ -34,9 +34,9 @@ export default function ImageGenerator() {
   const [isGenerating, setIsGenerating] = useState(false)
   const [generationProgress, setGenerationProgress] = useState('')
   const [generatedImages, setGeneratedImages] = useState<string[]>([])
+  const [originalImageUrls, setOriginalImageUrls] = useState<string[]>([])
   const [error, setError] = useState('')
 
-  // 生成图像的核心函数
   const generateImage = async () => {
     if (!prompt.trim()) {
       setError('Please enter a prompt')
@@ -46,8 +46,9 @@ export default function ImageGenerator() {
     setIsGenerating(true)
     setError('')
     setGenerationProgress('Initializing generation...')
-    // 清空旧结果，只显示本次生成
+    // 清空之前生成的图片，只展示本次最新结果
     setGeneratedImages([])
+    setOriginalImageUrls([])
 
     try {
       const request: GenerationRequest = {
@@ -59,9 +60,7 @@ export default function ImageGenerator() {
 
       const response = await fetch('/api/generate', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(request)
       })
 
@@ -72,20 +71,43 @@ export default function ImageGenerator() {
 
       setGenerationProgress('Processing response...')
       const data: GenerationResponse = await response.json()
+      
+      console.log('API Response:', data)
 
       if (data.artifacts && data.artifacts.length > 0) {
-        // 处理 Nano Banana AI 响应 - 图像以 URL 形式返回
-        const newImages = data.artifacts.map(artifact => {
-          if (artifact.url) {
-            return artifact.url // 直接使用 URL
-          } else if (artifact.base64) {
-            return `data:image/png;base64,${artifact.base64}` // 兼容 base64 格式
-          }
-          return null
-        }).filter(Boolean) as string[]
+        const originalUrls: string[] = []
+        const displayUrls: string[] = []
         
-        // 使用最新结果覆盖
-        setGeneratedImages(newImages)
+        data.artifacts.forEach(artifact => {
+          if (artifact.url) {
+            console.log('Generated image URL:', artifact.url)
+            originalUrls.push(artifact.url)
+            // 使用代理来显示图片，避免CORS问题
+            displayUrls.push(`/api/proxy-image-display?url=${encodeURIComponent(artifact.url)}`)
+          } else if (artifact.base64) {
+            console.log('Generated base64 image')
+            const base64Url = `data:image/png;base64,${artifact.base64}`
+            originalUrls.push(base64Url)
+            displayUrls.push(base64Url)
+          }
+        })
+
+        console.log('Setting generated images:', displayUrls)
+        console.log('Original URLs for download:', originalUrls)
+        
+        // 测试图片URL是否可访问
+        if (displayUrls.length > 0) {
+          try {
+            const testResponse = await fetch(displayUrls[0], { method: 'HEAD' })
+            console.log('Image URL accessibility test:', testResponse.status, testResponse.statusText)
+          } catch (error) {
+            console.error('Image URL test failed:', error)
+          }
+        }
+        
+        // 仅显示本次生成的最新图片
+        setGeneratedImages(displayUrls)
+        setOriginalImageUrls(originalUrls)
         setError('')
       } else {
         throw new Error('No images generated')
@@ -98,82 +120,110 @@ export default function ImageGenerator() {
     }
   }
 
-  // 下载图像
-  const downloadImage = (imageData: string, index: number) => {
-    const link = document.createElement('a')
-    link.href = imageData
-    link.download = `nanobanana-generated-${Date.now()}-${index}.png`
-    document.body.appendChild(link)
-    link.click()
-    document.body.removeChild(link)
-  }
-
-  // 快速提示词建议
   const quickPrompts = [
     'A cute little cat',
     'Beautiful sunset landscape',
     'Peaceful lake reflection'
   ]
 
+  const downloadImage = (index: number) => {
+    try {
+      const originalUrl = originalImageUrls[index]
+      if (!originalUrl) {
+        console.error('No original URL found for index:', index)
+        setError('Download failed. No image URL found.')
+        return
+      }
+
+      const link = document.createElement('a')
+      link.download = `nanobanana-generated-${Date.now()}-${index}.png`
+
+      if (originalUrl.startsWith('data:image/')) {
+        link.href = originalUrl
+        document.body.appendChild(link)
+        link.click()
+        document.body.removeChild(link)
+      } else {
+        const proxyUrl = `/api/proxy-image?url=${encodeURIComponent(originalUrl)}`
+        fetch(proxyUrl)
+          .then(async (response) => {
+            if (!response.ok) throw new Error(`Proxy failed: ${response.status}`)
+            const blob = await response.blob()
+            const url = window.URL.createObjectURL(blob)
+            link.href = url
+            document.body.appendChild(link)
+            link.click()
+            document.body.removeChild(link)
+            window.URL.revokeObjectURL(url)
+          })
+          .catch(err => {
+            console.error('Download failed:', err)
+            setError('Download failed. Please try again.')
+          })
+      }
+    } catch (e) {
+      console.error('Download error:', e)
+      setError('Download failed. Please try again.')
+    }
+  }
+
   return (
     <div className="min-h-screen">
-      {/* 主要内容区域 - 左右布局 */}
-      <div className="grid grid-cols-1 xl:grid-cols-2 gap-8 mb-8">
-        {/* 左侧：提示词输入和生成控制 */}
+      <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 md:gap-8 mb-8">
         <motion.div 
-          className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-2xl p-8 border border-orange-100"
+          className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-2xl p-4 md:p-8 border border-orange-100"
           initial={{ opacity: 0, x: -30 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, delay: 0.6 }}
         >
-          <div className="space-y-6">
-            {/* 提示词输入 */}
+          <div className="space-y-4 md:space-y-6">
             <div>
               <motion.label 
-                className="block text-lg font-semibold text-gray-800 mb-3 flex items-center space-x-2"
+                className="block text-base md:text-lg font-semibold text-gray-800 mb-2 md:mb-3 flex items-center space-x-2"
                 whileHover={{ x: 5 }}
               >
-                <Sparkles className="w-5 h-5 text-orange-500" />
+                <Sparkles className="w-4 h-4 md:w-5 md:h-5 text-orange-500" />
                 <span>Prompt</span>
               </motion.label>
               <motion.textarea
                 value={prompt}
                 onChange={(e) => setPrompt(e.target.value)}
                 placeholder="Describe the image you want to generate..."
-                className="w-full h-40 px-4 py-3 border-2 border-orange-200 rounded-xl focus:ring-4 focus:ring-orange-200/30 focus:border-orange-400 resize-none transition-all duration-200 text-lg"
+                className="w-full h-40 px-3 md:px-4 py-2 md:py-3 border-2 border-orange-200 rounded-xl focus:ring-4 focus:ring-orange-200/30 focus:border-orange-400 resize-none transition-all duration-200 text-base md:text-lg"
                 whileFocus={{ scale: 1.02 }}
               />
               
               {/* 快速提示词建议 */}
               <div className="mt-2">
-                <div className="flex items-center gap-2 text-xs text-gray-600">
+                <div className="flex items-center gap-1 md:gap-2 text-xs text-gray-600">
                   <span>💡</span>
                   <span className="font-medium">Quick:</span>
-                  {quickPrompts.map((suggestion, index) => (
-                    <motion.button
-                      key={suggestion}
-                      onClick={() => setPrompt(suggestion)}
-                      className="px-2 py-1 bg-gradient-to-r from-orange-100 to-yellow-100 hover:from-orange-200 hover:to-yellow-200 rounded-md text-xs font-medium text-orange-700 border border-orange-200 transition-all duration-200"
-                      whileHover={{ scale: 1.05, y: -1 }}
-                      whileTap={{ scale: 0.95 }}
-                      initial={{ opacity: 0, x: -10 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: index * 0.1 }}
-                    >
-                      {suggestion}
-                    </motion.button>
-                  ))}
+                  <div className="flex flex-wrap gap-1 md:gap-2">
+                    {quickPrompts.map((suggestion, index) => (
+                      <motion.button
+                        key={suggestion}
+                        onClick={() => setPrompt(suggestion)}
+                        className="px-1 md:px-2 py-1 bg-gradient-to-r from-orange-100 to-yellow-100 hover:from-orange-200 hover:to-yellow-200 rounded-md text-xs font-medium text-orange-700 border border-orange-200 transition-all duration-200"
+                        whileHover={{ scale: 1.05, y: -1 }}
+                        whileTap={{ scale: 0.95 }}
+                        initial={{ opacity: 0, x: -10 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: index * 0.1 }}
+                      >
+                        {suggestion}
+                      </motion.button>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
 
-            {/* 尺寸选择 */}
             <div>
               <motion.label 
-                className="block text-lg font-semibold text-gray-800 mb-3 flex items-center space-x-2"
+                className="block text-base md:text-lg font-semibold text-gray-800 mb-2 md:mb-3 flex items-center space-x-2"
                 whileHover={{ x: 5 }}
               >
-                <ImageIcon className="w-5 h-5 text-orange-500" />
+                <ImageIcon className="w-4 h-4 md:w-5 md:h-5 text-orange-500" />
                 <span>Image Size</span>
               </motion.label>
               <select
@@ -182,7 +232,7 @@ export default function ImageGenerator() {
                   const option = sizeOptions.find(opt => opt.value === e.target.value)
                   if (option) setSelectedSize(option)
                 }}
-                className="w-full px-4 py-3 border-2 border-orange-200 rounded-xl focus:ring-4 focus:ring-orange-200/30 focus:border-orange-400 transition-all duration-200 text-lg"
+                className="w-full px-3 md:px-4 py-2 md:py-3 border-2 border-orange-200 rounded-xl focus:ring-4 focus:ring-orange-200/30 focus:border-orange-400 transition-all duration-200 text-base md:text-lg"
               >
                 {sizeOptions.map((option) => (
                   <option key={option.value} value={option.value}>
@@ -190,12 +240,11 @@ export default function ImageGenerator() {
                   </option>
                 ))}
               </select>
-              <p className="text-sm text-gray-600 mt-3">
+              <p className="text-xs md:text-sm text-gray-600 mt-2 md:mt-3">
                 Recommended sizes for best results
               </p>
             </div>
 
-            {/* 模型信息提示 */}
             <div className="pt-2">
               <p className="text-xs text-gray-500 text-center leading-relaxed">
                 <span className="font-medium text-orange-600">Nano Banana AI Model</span>
@@ -204,29 +253,29 @@ export default function ImageGenerator() {
               </p>
             </div>
 
-            {/* 生成按钮 */}
             <div className="pt-4">
-              <motion.button
-                onClick={generateImage}
-                disabled={isGenerating || !prompt.trim()}
-                className=""
-              >
-                <GradientButton size="lg" loading={isGenerating} leftIcon={!isGenerating ? <Wand2 className="w-6 h-6" /> : undefined}>
-                  {isGenerating ? 'Generating…' : 'Generate Image'}
-                </GradientButton>
-              </motion.button>
-              
-              {/* 进度指示器 */}
+              <div className="flex justify-center">
+                <motion.button
+                  onClick={generateImage}
+                  disabled={isGenerating || !prompt.trim()}
+                  className=""
+                >
+                  <GradientButton size="lg" loading={isGenerating} leftIcon={!isGenerating ? <Wand2 className="w-6 h-6" /> : undefined}>
+                    {isGenerating ? 'Generating…' : 'Generate Image'}
+                  </GradientButton>
+                </motion.button>
+              </div>
+
               <AnimatePresence>
                 {isGenerating && generationProgress && (
                   <motion.div 
-                    className="mt-6 p-4 bg-gradient-to-r from-orange-100 to-yellow-100 border border-orange-200 rounded-xl"
+                    className="mt-4 p-3 bg-gradient-to-r from-orange-100 to-yellow-100 border border-orange-200 rounded-xl"
                     initial={{ opacity: 0, height: 0 }}
                     animate={{ opacity: 1, height: 'auto' }}
                     exit={{ opacity: 0, height: 0 }}
                     transition={{ duration: 0.3 }}
                   >
-                    <p className="text-orange-700 font-medium text-center">{generationProgress}</p>
+                    <p className="text-orange-700 font-medium text-center text-sm">{generationProgress}</p>
                   </motion.div>
                 )}
               </AnimatePresence>
@@ -234,24 +283,22 @@ export default function ImageGenerator() {
           </div>
         </motion.div>
 
-        {/* 右侧：生成的图像展示区域 */}
         <motion.div 
-          className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-2xl p-8 border border-orange-100 min-h-[700px]"
+          className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-2xl p-4 md:p-8 border border-orange-100 min-h-[500px] md:min-h-[700px]"
           initial={{ opacity: 0, x: 30 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, delay: 0.8 }}
         >
           <div className="h-full flex flex-col">
             <motion.h2 
-              className="text-2xl font-bold text-gray-900 mb-6 text-center"
+              className="text-xl md:text-2xl font-bold text-gray-900 mb-4 md:mb-6 text-center"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 1.0 }}
             >
               Generated Images
             </motion.h2>
-            
-            {/* 图像展示区域 */}
+
             <div className="flex-1">
               {generatedImages.length === 0 ? (
                 <EmptyState
@@ -260,7 +307,7 @@ export default function ImageGenerator() {
                   icon={<ImageIcon className="w-full h-full text-orange-200" />}
                 />
               ) : (
-                <div className="space-y-4">
+                <div className="space-y-3 md:space-y-4">
                   {generatedImages.map((image, index) => (
                     <motion.div
                       key={index}
@@ -270,70 +317,58 @@ export default function ImageGenerator() {
                       transition={{ duration: 0.5, delay: index * 0.1 }}
                       whileHover={{ y: -5, scale: 1.02 }}
                     >
-                      {/* 图像预览 */}
-                      <div className="relative group bg-gray-50">
+                      <div className="relative group bg-gray-50 min-h-[200px] md:min-h-[300px] flex items-center justify-center">
                         <motion.img
                           src={image}
                           alt={`Generated image ${index + 1}`}
-                          className="w-full h-auto max-h-96 object-contain rounded-t-xl"
+                          className="w-full h-auto max-h-64 md:max-h-96 object-contain rounded-t-xl"
                           initial={{ scale: 1.1 }}
                           animate={{ scale: 1 }}
                           transition={{ duration: 0.5 }}
-                          onLoad={(e) => {
-                            // 图片加载成功后的处理
-                            const target = e.target as HTMLImageElement
-                            target.style.opacity = '1'
-                          }}
                           onError={(e) => {
-                            const target = e.target as HTMLImageElement
-                            target.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZmZmN2VkIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgZmlsbD0iI2Y5NzMxNiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkltYWdlIExvYWQgRXJyb3I8L3RleHQ+PC9zdmc+'
+                            console.error('Image failed to load:', image)
+                            console.error('Error details:', e)
+                            e.currentTarget.style.display = 'none'
+                            // 显示错误信息
+                            const errorDiv = document.createElement('div')
+                            errorDiv.className = 'text-red-500 text-sm text-center p-4'
+                            errorDiv.textContent = 'Image failed to load'
+                            e.currentTarget.parentElement?.appendChild(errorDiv)
                           }}
-                          style={{ 
-                            minHeight: '200px',
-                            opacity: 0,
-                            transition: 'opacity 0.3s ease-in-out'
+                          onLoad={() => {
+                            console.log('Image loaded successfully:', image)
                           }}
+                          crossOrigin="anonymous"
                         />
-                        
-                        {/* 悬停时的下载按钮 */}
                         <motion.div 
                           className="absolute inset-0 bg-black/20 backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300"
                           initial={{ opacity: 0 }}
                           whileHover={{ opacity: 1 }}
                         >
-                          <motion.button
-                            onClick={() => downloadImage(image, index)}
-                            className="bg-white text-orange-700 px-4 py-2 rounded-lg shadow-xl hover:bg-orange-50 transition-colors font-semibold flex items-center space-x-2"
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
+                          <button
+                            onClick={() => downloadImage(index)}
+                            className="bg-white text-orange-700 px-3 md:px-4 py-2 rounded-lg shadow-xl hover:bg-orange-50 transition-colors font-semibold text-sm"
                           >
-                            <Download className="w-4 h-4" />
-                            <span>Download</span>
-                          </motion.button>
+                            Download
+                          </button>
                         </motion.div>
                       </div>
-                      
-                      {/* 图像信息 */}
-                      <div className="p-4">
-                        <div className="flex justify-between items-center mb-3">
-                          <span className="text-sm text-gray-600 font-medium">
+
+                      <div className="p-3 md:p-4">
+                        <div className="flex justify-between items-center mb-2 md:mb-3">
+                          <span className="text-xs md:text-sm text-gray-600 font-medium">
                             Image #{index + 1}
                           </span>
                           <span className="text-xs text-orange-600 bg-orange-100 px-2 py-1 rounded-full">
                             {selectedSize.label}
                           </span>
                         </div>
-                        
-                        {/* 下载按钮 */}
-                        <motion.button
-                          onClick={() => downloadImage(image, index)}
-                          className="w-full bg-gradient-to-r from-orange-500 to-yellow-500 hover:from-orange-600 hover:to-yellow-600 text-white py-2 px-4 rounded-lg transition-all duration-200 flex items-center justify-center font-semibold text-sm"
-                          whileHover={{ scale: 1.02 }}
-                          whileTap={{ scale: 0.98 }}
+                        <button
+                          onClick={() => downloadImage(index)}
+                          className="w-full bg-gradient-to-r from-orange-500 to-yellow-500 hover:from-orange-600 hover:to-yellow-600 text-white py-2 px-3 md:px-4 rounded-lg transition-all duration-200 font-semibold text-xs md:text-sm"
                         >
-                          <Download className="w-4 h-4 mr-2" />
                           Download Image
-                        </motion.button>
+                        </button>
                       </div>
                     </motion.div>
                   ))}
@@ -344,17 +379,16 @@ export default function ImageGenerator() {
         </motion.div>
       </div>
 
-      {/* 错误显示 */}
       <AnimatePresence>
         {error && (
           <motion.div 
-            className="bg-red-50 border-2 border-red-200 rounded-xl p-6 mb-8"
+            className="bg-red-50 border-2 border-red-200 rounded-xl p-4 md:p-6 mb-8"
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: 50 }}
             transition={{ duration: 0.3 }}
           >
-            <p className="text-red-700 text-center font-medium">{error}</p>
+            <p className="text-red-700 text-center font-medium text-sm md:text-base">{error}</p>
           </motion.div>
         )}
       </AnimatePresence>
