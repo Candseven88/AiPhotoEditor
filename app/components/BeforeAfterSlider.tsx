@@ -104,15 +104,15 @@ export default function BeforeAfterSlider({
       >
         {/* Before Image (左半部分) */}
         <div className="absolute inset-0 w-full h-full">
-          <img
-            src={beforeImage}
-            alt="Before"
+        <img
+          src={beforeImage}
+          alt="Before"
             className="w-full h-full object-cover"
-          />
+        />
         </div>
         
         {/* After Image (右半部分) */}
-        <div 
+        <div
           className="absolute inset-0 w-full h-full overflow-hidden"
           style={{ clipPath: `inset(0 ${100 - sliderPosition}% 0 0)` }}
         >

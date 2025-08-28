@@ -129,8 +129,8 @@ export default function AboutPage() {
                 <div className="absolute inset-0 bg-black/30 flex items-center justify-center">
                   <div className="text-center text-white">
                     <Award className="w-24 h-24 mx-auto mb-4 text-orange-300" />
-                    <p className="text-lg font-medium">Our Mission</p>
-                    <p className="text-sm mt-2">Democratizing AI Image Generation</p>
+                  <p className="text-lg font-medium">Our Mission</p>
+                  <p className="text-sm mt-2">Democratizing AI Image Generation</p>
                   </div>
                 </div>
               </div>
