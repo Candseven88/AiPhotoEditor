@@ -36,6 +36,7 @@ export default function UsernameToImageGenerator() {
   const [isGenerating, setIsGenerating] = useState(false)
   const [generationProgress, setGenerationProgress] = useState('')
   const [generatedImages, setGeneratedImages] = useState<string[]>([])
+  const [originalImageUrls, setOriginalImageUrls] = useState<string[]>([])
   const [error, setError] = useState('')
 
   const buildPromptFromUsername = (name: string, withText: boolean, style: string) => {
@@ -61,6 +62,7 @@ export default function UsernameToImageGenerator() {
     setGenerationProgress('Initializing generation...')
     // 清空之前生成的图片，只展示本次最新结果
     setGeneratedImages([])
+    setOriginalImageUrls([])
 
     try {
       const prompt = buildPromptFromUsername(username, includeText, styleHint)
@@ -84,16 +86,43 @@ export default function UsernameToImageGenerator() {
 
       setGenerationProgress('Processing response...')
       const data: GenerationResponse = await response.json()
+      
+      console.log('API Response:', data)
 
       if (data.artifacts && data.artifacts.length > 0) {
-        const newImages = data.artifacts.map(artifact => {
-          if (artifact.url) return artifact.url
-          if (artifact.base64) return `data:image/png;base64,${artifact.base64}`
-          return null
-        }).filter(Boolean) as string[]
+        const originalUrls: string[] = []
+        const displayUrls: string[] = []
+        
+        data.artifacts.forEach(artifact => {
+          if (artifact.url) {
+            console.log('Generated image URL:', artifact.url)
+            originalUrls.push(artifact.url)
+            // 使用代理来显示图片，避免CORS问题
+            displayUrls.push(`/api/proxy-image-display?url=${encodeURIComponent(artifact.url)}`)
+          } else if (artifact.base64) {
+            console.log('Generated base64 image')
+            const base64Url = `data:image/png;base64,${artifact.base64}`
+            originalUrls.push(base64Url)
+            displayUrls.push(base64Url)
+          }
+        })
 
+        console.log('Setting generated images:', displayUrls)
+        console.log('Original URLs for download:', originalUrls)
+        
+        // 测试图片URL是否可访问
+        if (displayUrls.length > 0) {
+          try {
+            const testResponse = await fetch(displayUrls[0], { method: 'HEAD' })
+            console.log('Image URL accessibility test:', testResponse.status, testResponse.statusText)
+          } catch (error) {
+            console.error('Image URL test failed:', error)
+          }
+        }
+        
         // 仅显示本次生成的最新图片
-        setGeneratedImages(newImages)
+        setGeneratedImages(displayUrls)
+        setOriginalImageUrls(originalUrls)
         setError('')
       } else {
         throw new Error('No images generated')
@@ -115,18 +144,25 @@ export default function UsernameToImageGenerator() {
     'ByteKnight'
   ]
 
-  const downloadImage = (imageData: string, index: number) => {
+  const downloadImage = (index: number) => {
     try {
+      const originalUrl = originalImageUrls[index]
+      if (!originalUrl) {
+        console.error('No original URL found for index:', index)
+        setError('Download failed. No image URL found.')
+        return
+      }
+
       const link = document.createElement('a')
       link.download = `nanobanana-username-avatar-${Date.now()}-${index}.png`
 
-      if (imageData.startsWith('data:image/')) {
-        link.href = imageData
+      if (originalUrl.startsWith('data:image/')) {
+        link.href = originalUrl
         document.body.appendChild(link)
         link.click()
         document.body.removeChild(link)
       } else {
-        const proxyUrl = `/api/proxy-image?url=${encodeURIComponent(imageData)}`
+        const proxyUrl = `/api/proxy-image?url=${encodeURIComponent(originalUrl)}`
         fetch(proxyUrl)
           .then(async (response) => {
             if (!response.ok) throw new Error(`Proxy failed: ${response.status}`)
@@ -261,27 +297,29 @@ export default function UsernameToImageGenerator() {
               </p>
             </div>
 
-            <div className="pt-4 flex justify-center">
-              <motion.button
-                onClick={generateImage}
-                disabled={isGenerating || !username.trim()}
-                className=""
-              >
-                <GradientButton size="lg" loading={isGenerating} leftIcon={!isGenerating ? <Wand2 className="w-6 h-6" /> : undefined}>
-                  {isGenerating ? 'Generating…' : 'Generate Avatar'}
-                </GradientButton>
-              </motion.button>
+            <div className="pt-4">
+              <div className="flex justify-center">
+                <motion.button
+                  onClick={generateImage}
+                  disabled={isGenerating || !username.trim()}
+                  className=""
+                >
+                  <GradientButton size="lg" loading={isGenerating} leftIcon={!isGenerating ? <Wand2 className="w-6 h-6" /> : undefined}>
+                    {isGenerating ? 'Generating…' : 'Generate Avatar'}
+                  </GradientButton>
+                </motion.button>
+              </div>
 
               <AnimatePresence>
                 {isGenerating && generationProgress && (
                   <motion.div 
-                    className="mt-6 p-4 bg-gradient-to-r from-orange-100 to-yellow-100 border border-orange-200 rounded-xl"
+                    className="mt-4 p-3 bg-gradient-to-r from-orange-100 to-yellow-100 border border-orange-200 rounded-xl"
                     initial={{ opacity: 0, height: 0 }}
                     animate={{ opacity: 1, height: 'auto' }}
                     exit={{ opacity: 0, height: 0 }}
                     transition={{ duration: 0.3 }}
                   >
-                    <p className="text-orange-700 font-medium text-center text-sm md:text-base">{generationProgress}</p>
+                    <p className="text-orange-700 font-medium text-center text-sm">{generationProgress}</p>
                   </motion.div>
                 )}
               </AnimatePresence>
@@ -323,7 +361,7 @@ export default function UsernameToImageGenerator() {
                       transition={{ duration: 0.5, delay: index * 0.1 }}
                       whileHover={{ y: -5, scale: 1.02 }}
                     >
-                      <div className="relative group bg-gray-50">
+                      <div className="relative group bg-gray-50 min-h-[200px] md:min-h-[300px] flex items-center justify-center">
                         <motion.img
                           src={image}
                           alt={`Generated avatar ${index + 1}`}
@@ -331,6 +369,20 @@ export default function UsernameToImageGenerator() {
                           initial={{ scale: 1.1 }}
                           animate={{ scale: 1 }}
                           transition={{ duration: 0.5 }}
+                          onError={(e) => {
+                            console.error('Image failed to load:', image)
+                            console.error('Error details:', e)
+                            e.currentTarget.style.display = 'none'
+                            // 显示错误信息
+                            const errorDiv = document.createElement('div')
+                            errorDiv.className = 'text-red-500 text-sm text-center p-4'
+                            errorDiv.textContent = 'Image failed to load'
+                            e.currentTarget.parentElement?.appendChild(errorDiv)
+                          }}
+                          onLoad={() => {
+                            console.log('Image loaded successfully:', image)
+                          }}
+                          crossOrigin="anonymous"
                         />
                         <motion.div 
                           className="absolute inset-0 bg-black/20 backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300"
@@ -338,7 +390,7 @@ export default function UsernameToImageGenerator() {
                           whileHover={{ opacity: 1 }}
                         >
                           <button
-                            onClick={() => downloadImage(image, index)}
+                            onClick={() => downloadImage(index)}
                             className="bg-white text-orange-700 px-3 md:px-4 py-2 rounded-lg shadow-xl hover:bg-orange-50 transition-colors font-semibold text-sm"
                           >
                             Download
@@ -356,7 +408,7 @@ export default function UsernameToImageGenerator() {
                           </span>
                         </div>
                         <button
-                          onClick={() => downloadImage(image, index)}
+                          onClick={() => downloadImage(index)}
                           className="w-full bg-gradient-to-r from-orange-500 to-yellow-500 hover:from-orange-600 hover:to-yellow-600 text-white py-2 px-3 md:px-4 rounded-lg transition-all duration-200 font-semibold text-xs md:text-sm"
                         >
                           Download Avatar

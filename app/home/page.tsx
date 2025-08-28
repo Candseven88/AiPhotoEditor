@@ -93,37 +93,37 @@ export default function HomePage() {
       <div className="relative z-10 pt-20">
         {/* Hero Section */}
         <section className="container mx-auto px-4 py-16">
-          <motion.div 
+        <motion.div 
             className="text-center max-w-4xl mx-auto"
-            initial={{ opacity: 0, y: -30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-          >
-            <motion.div 
+          initial={{ opacity: 0, y: -30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+        >
+          <motion.div 
               className="flex items-center justify-center space-x-3 mb-8"
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-            >
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+          >
               <Home className="w-10 h-10 text-orange-500" />
               <h1 className="text-6xl md:text-7xl font-bold bg-gradient-to-r from-orange-600 via-yellow-600 to-orange-600 bg-clip-text text-transparent">
-                NanoBanana AI
-              </h1>
-            </motion.div>
-            <motion.p 
+              NanoBanana AI
+            </h1>
+          </motion.div>
+          <motion.p 
               className="text-2xl md:text-3xl text-gray-700 max-w-3xl mx-auto mb-8 leading-relaxed"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
-            >
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+          >
               Transform your ideas into stunning visuals with our advanced AI image generation platform
-            </motion.p>
+          </motion.p>
             <motion.p 
               className="text-lg text-gray-600 max-w-2xl mx-auto mb-12"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.8, delay: 0.6 }}
-            >
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0.6 }}
+          >
               Create personalized avatars, generate images from text, and transform photos with cutting-edge AI technology
             </motion.p>
           </motion.div>
@@ -143,33 +143,33 @@ export default function HomePage() {
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
               Choose your preferred AI generation method and bring your ideas to life
             </p>
-          </motion.div>
+        </motion.div>
 
-          {/* 功能标签页 */}
-          <motion.div 
+        {/* 功能标签页 */}
+        <motion.div 
             className="max-w-4xl mx-auto mb-12"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 1.4 }}
-          >
+        >
             <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg p-1 md:p-2 border border-orange-100">
               <div className="flex space-x-1 md:space-x-2 relative">
-                {tabs.map((tab) => {
-                  const Icon = tab.icon
-                  const isActive = activeTab === tab.id
-                  
-                  return (
-                    <motion.button
-                      key={tab.id}
+              {tabs.map((tab) => {
+                const Icon = tab.icon
+                const isActive = activeTab === tab.id
+                
+                return (
+                  <motion.button
+                    key={tab.id}
                       onClick={() => setActiveTab(tab.id as 'username-to-image' | 'text-to-image' | 'image-to-image')}
                       className={`relative flex-1 flex items-center justify-center space-x-1 md:space-x-3 p-2 md:p-4 rounded-xl transition-all duration-200 ${
-                        isActive 
+                      isActive 
                           ? 'text-white' 
                           : 'text-gray-600 hover:text-orange-600 hover:bg-orange-50/50'
-                      }`}
+                    }`}
                       whileHover={{ scale: 1.01 }}
                       whileTap={{ scale: 0.99 }}
-                    >
+                  >
                       <Icon className={`w-4 h-4 md:w-6 md:h-6 transition-colors duration-200 ${isActive ? 'text-white' : 'text-orange-500'}`} />
                       <span className="font-semibold text-xs md:text-base transition-colors duration-200 hidden sm:inline">{tab.label}</span>
                       <span className="font-semibold text-xs transition-colors duration-200 sm:hidden">
@@ -183,23 +183,23 @@ export default function HomePage() {
                           transition={{ type: "spring", stiffness: 300, damping: 30 }}
                         />
                       )}
-                    </motion.button>
-                  )
-                })}
-              </div>
+                  </motion.button>
+                )
+              })}
             </div>
-          </motion.div>
+          </div>
+        </motion.div>
 
-          {/* 功能内容区域 */}
-          <motion.div
-            key={activeTab}
+        {/* 功能内容区域 */}
+        <motion.div
+          key={activeTab}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
-            className="max-w-7xl mx-auto"
-          >
-            <AnimatePresence mode="wait">
+          className="max-w-7xl mx-auto"
+        >
+          <AnimatePresence mode="wait">
               {activeTab === 'username-to-image' ? (
                 <motion.div
                   key="username-to-image"
@@ -211,28 +211,28 @@ export default function HomePage() {
                   <UsernameToImageGenerator />
                 </motion.div>
               ) : activeTab === 'text-to-image' ? (
-                <motion.div
-                  key="text-to-image"
+              <motion.div
+                key="text-to-image"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
                   transition={{ duration: 0.3, ease: "easeInOut" }}
-                >
-                  <ImageGenerator />
-                </motion.div>
-              ) : (
-                <motion.div
-                  key="image-to-image"
+              >
+                <ImageGenerator />
+              </motion.div>
+            ) : (
+              <motion.div
+                key="image-to-image"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
                   transition={{ duration: 0.3, ease: "easeInOut" }}
-                >
-                  <ImageToImageGenerator />
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </motion.div>
+              >
+                <ImageToImageGenerator />
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </motion.div>
         </section>
 
         {/* Features Section */}
@@ -267,12 +267,12 @@ export default function HomePage() {
 
         {/* Showcase Section */}
         <section className="container mx-auto px-4 py-16">
-          <motion.div 
+        <motion.div 
             className="text-center mb-16"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 1.6 }}
-          >
+        >
             <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
               See <span className="text-orange-600">NanoBanana AI</span> in Action
             </h2>
@@ -287,8 +287,8 @@ export default function HomePage() {
                 <p className="text-lg text-gray-700 leading-relaxed">
                   Experience the power of lightweight AI image generation and enhancement. 
                   Our advanced model delivers stunning results with incredible speed and quality.
-                </p>
-              </div>
+            </p>
+          </div>
             </div>
           </motion.div>
 
@@ -346,7 +346,7 @@ export default function HomePage() {
                 beforeLabel="Original"
                 afterLabel="Enhanced"
               />
-            </div>
+          </div>
           </motion.div>
 
           {/* Gallery Showcase */}
@@ -365,17 +365,17 @@ export default function HomePage() {
               </p>
             </div>
             <CaseShowcase variant="carousel" maxItems={6} />
-          </motion.div>
+        </motion.div>
         </section>
 
         {/* CTA Section */}
         <section className="container mx-auto px-4 py-16">
-          <motion.div 
+        <motion.div 
             className="text-center bg-gradient-to-r from-orange-500 to-yellow-500 rounded-3xl p-12 text-white"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 2.4 }}
-          >
+        >
             <h2 className="text-4xl md:text-5xl font-bold mb-6">
               Ready to Create Something Amazing?
             </h2>
@@ -390,7 +390,7 @@ export default function HomePage() {
               <span>Start Creating Now</span>
               <ArrowRight className="w-5 h-5" />
             </motion.button>
-          </motion.div>
+        </motion.div>
         </section>
       </div>
     </div>
