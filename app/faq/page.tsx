@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ChevronDown, Search, HelpCircle, Zap, Palette, Shield, Users, Globe } from 'lucide-react'
 import Link from 'next/link'
+import Navigation from '../components/Navigation'
 
 export default function FAQPage() {
   const [activeCategory, setActiveCategory] = useState('all')
@@ -214,59 +215,10 @@ export default function FAQPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-orange-50 via-yellow-50 to-orange-100">
-      {/* 导航栏 */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-orange-100 shadow-lg">
-        <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-          <div className="flex items-center space-x-3">
-            <img 
-              src="/Logo.png" 
-              alt="NanoBanana AI Logo" 
-              className="w-8 h-8 rounded-lg"
-            />
-            <span className="text-xl font-bold text-gray-800">NanoBanana AI</span>
-          </div>
-          <div className="flex items-center space-x-4">
-            <a 
-              href="/home" 
-              className="px-4 py-2 text-orange-600 hover:text-orange-700 font-medium transition-colors"
-            >
-              Home
-            </a>
-            <a 
-              href="/text-to-image" 
-              className="px-4 py-2 text-orange-600 hover:text-orange-700 font-medium transition-colors"
-            >
-              Text to Image
-            </a>
-            <a 
-              href="/image-to-image" 
-              className="px-4 py-2 text-orange-600 hover:text-orange-700 font-medium transition-colors"
-            >
-              Image to Image
-            </a>
-            <a 
-              href="/cases" 
-              className="px-4 py-2 text-orange-600 hover:text-orange-700 font-medium transition-colors"
-            >
-              Gallery
-            </a>
-            <a 
-              href="/blog" 
-              className="px-4 py-2 text-orange-600 hover:text-orange-700 font-medium transition-colors"
-            >
-              Blog
-            </a>
-            <a 
-              href="/about" 
-              className="px-4 py-2 text-orange-600 hover:text-orange-700 font-medium transition-colors"
-            >
-              About
-            </a>
-          </div>
-        </div>
-      </nav>
-
-      <div className="container mx-auto px-4 py-8 pt-20">
+      {/* Navigation */}
+      <Navigation />
+      
+      <div className="container mx-auto px-4 py-8">
         {/* 页面标题 */}
         <motion.div 
           className="text-center mb-16"

@@ -255,15 +255,15 @@ export default function ImageGenerator() {
 
             <div className="pt-4">
               <div className="flex justify-center">
-                <motion.button
+                <GradientButton 
+                  size="lg" 
+                  loading={isGenerating} 
+                  leftIcon={!isGenerating ? <Wand2 className="w-6 h-6" /> : undefined}
                   onClick={generateImage}
                   disabled={isGenerating || !prompt.trim()}
-                  className=""
                 >
-                  <GradientButton size="lg" loading={isGenerating} leftIcon={!isGenerating ? <Wand2 className="w-6 h-6" /> : undefined}>
-                    {isGenerating ? 'Generating…' : 'Generate Image'}
-                  </GradientButton>
-                </motion.button>
+                  {isGenerating ? 'Generating…' : 'Generate Image'}
+                </GradientButton>
               </div>
 
               <AnimatePresence>

@@ -299,15 +299,15 @@ export default function UsernameToImageGenerator() {
 
             <div className="pt-4">
               <div className="flex justify-center">
-                <motion.button
+                <GradientButton 
+                  size="lg" 
+                  loading={isGenerating} 
+                  leftIcon={!isGenerating ? <Wand2 className="w-6 h-6" /> : undefined}
                   onClick={generateImage}
                   disabled={isGenerating || !username.trim()}
-                  className=""
                 >
-                  <GradientButton size="lg" loading={isGenerating} leftIcon={!isGenerating ? <Wand2 className="w-6 h-6" /> : undefined}>
-                    {isGenerating ? 'Generating…' : 'Generate Avatar'}
-                  </GradientButton>
-                </motion.button>
+                  {isGenerating ? 'Generating…' : 'Generate Avatar'}
+                </GradientButton>
               </div>
 
               <AnimatePresence>

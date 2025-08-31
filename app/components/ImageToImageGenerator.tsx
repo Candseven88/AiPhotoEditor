@@ -371,18 +371,21 @@ export default function ImageToImageGenerator() {
 
             {/* 生成按钮 */}
             <div className="pt-4">
-              <motion.button
-                onClick={generateImage}
-                disabled={isGenerating || !prompt.trim() || !uploadedImage}
-                className=""
+              <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 2.0 }}
               >
-                <GradientButton size="lg" loading={isGenerating} leftIcon={!isGenerating ? <Palette className="w-5 h-5" /> : undefined}>
+                <GradientButton 
+                  size="lg" 
+                  loading={isGenerating} 
+                  leftIcon={!isGenerating ? <Palette className="w-5 h-5" /> : undefined}
+                  onClick={generateImage}
+                  disabled={isGenerating || !prompt.trim() || !uploadedImage}
+                >
                   {isGenerating ? 'Transforming Image…' : 'Transform Image'}
                 </GradientButton>
-              </motion.button>
+              </motion.div>
             </div>
 
             {/* 模型信息提示 */}
