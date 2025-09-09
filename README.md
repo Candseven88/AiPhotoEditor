@@ -1,16 +1,15 @@
 # NanoBanana AI Image Generator
 
-一个基于 BigModel Cogview-3 的炫酷 AI 图像生成器，具有丰富的动效、交互和多语言支持。
+一个基于 BigModel Cogview-3 的简洁AI图像生成器，专注于核心功能。
 
-## ✨ 特性
+## ✨ 核心功能
 
-- 🎨 **AI 图像生成**: 使用 BigModel Cogview-3-Flash 模型
+- 🎨 **Username to Image**: 根据用户名生成个性化头像
+- 🖼️ **Text to Image**: 从文字描述生成图像  
+- 🎭 **Image to Image**: 图像风格转换（付费功能）
 - 🌍 **多语言支持**: 支持英文和中文界面
-- 🎭 **丰富动效**: 使用 Framer Motion 实现流畅动画
-- 🎨 **橙黄色主题**: 温暖的视觉设计
 - 📱 **响应式设计**: 完美适配各种设备
 - ⚡ **快速生成**: 5-10秒生成高质量图像
-- 💾 **一键下载**: 支持图像下载和分享
 
 ## 🚀 快速开始
 
@@ -28,7 +27,7 @@ npm install
 BIGMODEL_API_KEY=your_bigmodel_api_key_here
 ```
 
-### 3. 运行开发服务器
+### 3. 启动开发服务器
 
 ```bash
 npm run dev
@@ -42,73 +41,93 @@ npm run dev
 - **语言**: TypeScript
 - **样式**: Tailwind CSS
 - **动画**: Framer Motion
-- **国际化**: next-intl 4.x
 - **图标**: Lucide React
+- **AI模型**: BigModel Cogview-3-Flash
 
 ## 📁 项目结构
 
 ```
 app/
-├── [locale]/           # 国际化路由
-│   ├── layout.tsx     # 国际化布局
-│   └── page.tsx       # 主页面
+├── components/           # React 组件
+│   ├── ImageGenerator.tsx           # 文本转图像
+│   ├── UsernameToImageGenerator.tsx # 用户名转头像
+│   ├── ImageToImageGenerator.tsx    # 图像转图像
+│   ├── Navigation.tsx               # 导航栏
+│   └── ui/                         # UI组件
 ├── api/
-│   └── generate/      # BigModel API 路由
-├── components/         # React 组件
-│   ├── ImageGenerator.tsx
-│   └── LanguageSwitcher.tsx
-├── globals.css        # 全局样式
-└── layout.tsx         # 根布局
+│   ├── generate/                   # 图像生成API
+│   ├── generate-image-to-image/    # 图像转图像API
+│   └── paypal/                     # 支付API
+├── globals.css                     # 全局样式
+└── page.tsx                        # 主页面
 ```
 
-## 🌍 多语言支持
+## 🎯 功能说明
 
-- **英文** (默认): `/en`
-- **中文**: `/zh`
+### Username to Image
+- 输入用户名/昵称
+- AI根据名字含义生成个性化头像
+- 支持风格提示和文字包含选项
 
-## 🎨 设计特色
+### Text to Image  
+- 输入文字描述
+- 生成对应的图像
+- 支持多种尺寸选择
 
-- **橙黄色主题**: 温暖、活力的视觉体验
-- **玻璃拟态效果**: 现代化的 UI 设计
-- **流畅动画**: 丰富的交互动效
-- **响应式布局**: 完美适配各种屏幕尺寸
+### Image to Image
+- 上传原始图片
+- 输入变换提示
+- 通过PayPal支付$0.80解锁高清结果
 
 ## 🚀 部署
 
 ### Vercel 部署
 
 1. 推送代码到 GitHub
-2. 在 Vercel 中导入项目
+2. 在 Vercel 中导入项目  
 3. 添加环境变量 `BIGMODEL_API_KEY`
 4. 部署完成
 
 ### 环境变量
 
-确保在生产环境中设置以下环境变量:
-
+生产环境需要设置:
 - `BIGMODEL_API_KEY`: BigModel API 密钥
-
-## 📝 使用说明
-
-1. 在提示词输入框中描述你想要生成的图像
-2. 选择图像尺寸
-3. 点击"生成图像"按钮
-4. 等待 5-10 秒生成完成
-5. 下载或分享生成的图像
 
 ## 🔧 开发
 
-### 添加新语言
+### 构建项目
+```bash
+npm run build
+```
 
-1. 在 `messages/` 目录下创建新的语言文件
-2. 在 `i18n.ts` 中添加语言代码
-3. 更新 `LanguageSwitcher` 组件
+### 代码检查
+```bash
+npm run lint
+```
 
-### 自定义样式
+## 📊 项目特点
 
-- 主题色彩在 `tailwind.config.js` 中配置
-- 全局样式在 `app/globals.css` 中定义
-- 组件样式使用 Tailwind CSS 类名
+- **简洁专注**: 移除了复杂的用户认证系统，专注于AI图像生成
+- **快速启动**: 简化的依赖结构，快速安装和启动
+- **现代技术**: 使用最新的Next.js 15和React 18
+- **响应式**: 完美支持桌面和移动设备
+- **付费功能**: 集成PayPal支付系统
+
+## 🎨 设计特色
+
+- **橙黄色主题**: 温暖、活力的视觉体验
+- **玻璃拟态效果**: 现代化的UI设计  
+- **流畅动画**: 丰富的交互动效
+- **Toast通知**: 友好的错误和成功提示
+
+## 📝 更新日志
+
+### v0.1.0 (最新)
+- ✅ 删除所有用户认证相关功能
+- ✅ 简化项目结构和依赖
+- ✅ 修复启动问题
+- ✅ 专注于核心AI图像生成功能
+- ✅ 改进错误提示系统
 
 ## 📄 许可证
 
@@ -118,6 +137,6 @@ MIT License
 
 欢迎提交 Issue 和 Pull Request！
 
-## 📞 支持
+---
 
-如有问题，请提交 Issue 或联系开发团队。 
+**NanoBanana AI - 让创意更简单** 🍌✨ 
