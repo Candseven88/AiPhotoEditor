@@ -27,11 +27,12 @@ export const authConfig = {
     },
     async jwt({ token, user }) {
       if (user) {
+        const extendedUser = user as any;
         token.id = user.id;
-        token.uuid = user.uuid;
-        token.subscription_plan = user.subscription_plan;
-        token.credits_balance = user.credits_balance;
-        token.email_verified = user.email_verified;
+        token.uuid = extendedUser.uuid || '';
+        token.subscription_plan = extendedUser.subscription_plan || 'free';
+        token.credits_balance = extendedUser.credits_balance || 10;
+        token.email_verified = extendedUser.email_verified || false;
       }
       return token;
     },
