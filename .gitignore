@@ -95,4 +95,32 @@ jspm_packages/
 .dynamodb/
 
 # TernJS port file
-.tern-port 
+.tern-port
+
+# Development documentation (keep only essential docs)
+*_UPDATE.md
+*_SETUP.md
+*_CHECKLIST.md
+*_SUMMARY.md
+*_GUIDE.md
+*_INTEGRATION*.md
+*_IMPLEMENTATION*.md
+LATEST_IMPROVEMENTS.md
+IMPROVEMENTS_SUMMARY.md
+PROJECT_SUMMARY.md
+GITHUB_DEPLOYMENT_SUMMARY.md
+HOME_PAGE_UPDATE.md
+PAGE_STRUCTURE_UPDATE.md
+CASE_SHOWCASE_*.md
+COMPARISON_OPTIMIZATION_UPDATE.md
+TAB_OPTIMIZATION_UPDATE.md
+TEXT_REMOVAL_UPDATE.md
+NAVBAR_FIXED_POSITION.md
+GET_STARTED_BUTTON_FIX.md
+VERCEL_ANALYTICS_INTEGRATION.md
+
+# Test files
+test-*.js
+
+# Workspace files
+*.code-workspace 
