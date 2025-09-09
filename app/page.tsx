@@ -13,8 +13,7 @@ import {
   Star, 
   Users, 
   Clock, 
-  User, 
-  LogIn,
+  User,
   Rocket,
   Shield,
   Award,
@@ -26,14 +25,12 @@ import CaseShowcase from './components/CaseShowcase'
 import UsernameToImageGenerator from './components/UsernameToImageGenerator'
 import BeforeAfterSlider from './components/BeforeAfterSlider'
 import Navigation from './components/Navigation'
-import LoginForm from '../src/components/auth/LoginForm'
-import SignupForm from '../src/components/auth/SignupForm'
+
 import GradientButton from './components/ui/GradientButton'
 import Card from './components/ui/Card'
 
 export default function HomePage() {
   const [activeTab, setActiveTab] = useState<'username-to-image' | 'text-to-image' | 'image-to-image'>('username-to-image')
-  const [showAuth, setShowAuth] = useState<'login' | 'signup' | null>(null)
 
   // 监听来自导航栏的标签切换事件
   useEffect(() => {
@@ -362,15 +359,7 @@ export default function HomePage() {
                 Get Started Now
               </GradientButton>
               
-              <GradientButton
-                size="lg"
-                variant="outline"
-                onClick={() => setShowAuth('login')}
-                leftIcon={<LogIn className="w-5 h-5" />}
-                className="min-w-[200px]"
-              >
-                Sign In
-              </GradientButton>
+
             </motion.div>
 
             {/* 服务介绍 */}
@@ -801,39 +790,7 @@ export default function HomePage() {
         </section>
       </div>
 
-      {/* 认证模态框 - 改进版本 */}
-      <AnimatePresence>
-        {showAuth && (
-          <motion.div
-            className="fixed inset-0 bg-black/60 backdrop-blur-md z-50 flex items-center justify-center p-4"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-          >
-            <motion.div
-              className="relative w-full max-w-md"
-              initial={{ scale: 0.9, opacity: 0, y: 20 }}
-              animate={{ scale: 1, opacity: 1, y: 0 }}
-              exit={{ scale: 0.9, opacity: 0, y: 20 }}
-              transition={{ type: "spring", duration: 0.5 }}
-            >
-              <motion.button
-                onClick={() => setShowAuth(null)}
-                className="absolute -top-4 -right-4 w-10 h-10 bg-white rounded-full shadow-xl flex items-center justify-center text-gray-600 hover:text-gray-800 transition-colors z-10"
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-              >
-                ✕
-              </motion.button>
-              
-              <div className="glass-effect-strong rounded-3xl overflow-hidden">
-                {showAuth === 'login' && <LoginForm />}
-                {showAuth === 'signup' && <SignupForm />}
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+
     </div>
   )
 } 
