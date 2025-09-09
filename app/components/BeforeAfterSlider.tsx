@@ -144,18 +144,27 @@ export default function BeforeAfterSlider({
         <img
           src={beforeImage}
           alt="Before"
+<<<<<<< HEAD
           className="w-full h-full object-cover object-center"
           loading="lazy"
+=======
+            className="w-full h-full object-cover"
+>>>>>>> 42c0f9ce70d7128de9a9abfa72ff03d9ab4401a3
         />
         </div>
         
         {/* After Image (右半部分) */}
         <div
+<<<<<<< HEAD
           className="absolute inset-0 w-full h-full overflow-hidden will-change-auto"
           style={{ 
             clipPath: `inset(0 ${100 - sliderPosition}% 0 0)`,
             transform: 'translateZ(0)' // 启用硬件加速
           }}
+=======
+          className="absolute inset-0 w-full h-full overflow-hidden"
+          style={{ clipPath: `inset(0 ${100 - sliderPosition}% 0 0)` }}
+>>>>>>> 42c0f9ce70d7128de9a9abfa72ff03d9ab4401a3
         >
           <img
             src={afterImage}
