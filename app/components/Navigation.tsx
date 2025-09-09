@@ -111,37 +111,13 @@ export default function Navigation() {
     }
   ]
 
-  const moreMenuItems = [
-    {
-      title: 'About',
-      description: 'Learn about NanoBanana',
-      icon: Users,
-      href: '/about'
-    },
-    {
-      title: 'Cases',
-      description: 'View our success stories',
-      icon: ImageIcon,
-      href: '/cases'
-    },
-    {
-      title: 'Blog',
-      description: 'Read our latest articles',
-      icon: FileText,
-      href: '/blog'
-    },
-    {
-      title: 'FAQ',
-      description: 'Frequently asked questions',
-      icon: HelpCircle,
-      href: '/faq'
-    },
-    {
-      title: 'Testimonials',
-      description: 'What our users say',
-      icon: Award,
-      href: '/testimonials'
-    }
+  const moreMenuItems: Array<{
+    title: string
+    description: string
+    icon: any
+    href: string
+  }> = [
+    // Note: Removed About, Cases, Blog, FAQ, and Testimonials pages to keep the app focused on core AI functionality
   ]
 
   if (status === 'loading') {
