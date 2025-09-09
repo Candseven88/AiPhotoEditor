@@ -1,15 +1,73 @@
 "use client"
 
 import { PropsWithChildren } from 'react'
+import { motion, type HTMLMotionProps } from 'framer-motion'
 
-interface CardProps {
+type Variant = 'default' | 'glass' | 'elevated' | 'minimal' | 'gradient'
+type Size = 'sm' | 'md' | 'lg' | 'xl'
+
+interface CardProps extends Omit<HTMLMotionProps<'div'>, 'ref'> {
+  variant?: Variant
+  size?: Size
+  hover?: boolean
+  glow?: boolean
   className?: string
 }
 
-export default function Card({ className = '', children }: PropsWithChildren<CardProps>) {
+const sizeClasses: Record<Size, string> = {
+  sm: 'p-4',
+  md: 'p-6',
+  lg: 'p-8',
+  xl: 'p-10'
+}
+
+const variantClasses: Record<Variant, string> = {
+  default: 'bg-white border border-gray-200 shadow-sm',
+  glass: 'glass-effect',
+  elevated: 'bg-white shadow-dramatic border border-gray-100/50',
+  minimal: 'bg-gray-50/50 border border-gray-100',
+  gradient: 'bg-gradient-to-br from-white via-gray-50 to-white border border-gray-200'
+}
+
+export default function Card({
+  variant = 'default',
+  size = 'md',
+  hover = true,
+  glow = false,
+  className = '',
+  children,
+  ...rest
+}: PropsWithChildren<CardProps>) {
+  const baseClasses = [
+    'rounded-2xl transition-all duration-300 ease-out',
+    'transform-gpu',
+    sizeClasses[size],
+    variantClasses[variant],
+    glow ? 'hover:shadow-glow' : '',
+    className
+  ].filter(Boolean).join(' ')
+
+  const hoverAnimation = hover ? {
+    y: -4,
+    transition: { duration: 0.3, ease: 'easeOut' }
+  } : {}
+
+  const tapAnimation = hover ? {
+    scale: 0.98,
+    transition: { duration: 0.1, ease: 'easeOut' }
+  } : {}
+
   return (
-    <div className={`bg-white/80 dark:bg-gray-900/70 backdrop-blur-sm border border-orange-100 dark:border-gray-800 rounded-2xl shadow-2xl ${className}`}>
+    <motion.div
+      className={baseClasses}
+      whileHover={hoverAnimation}
+      whileTap={tapAnimation}
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, ease: 'easeOut' }}
+      {...rest}
+    >
       {children}
-    </div>
+    </motion.div>
   )
 } 

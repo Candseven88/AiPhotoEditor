@@ -32,6 +32,7 @@ export default function BeforeAfterSlider({
 
   const handleMouseMove = (e: React.MouseEvent) => {
     if (isDragging) {
+      e.preventDefault()
       updateSliderPosition(e)
     }
   }
@@ -47,6 +48,7 @@ export default function BeforeAfterSlider({
 
   const handleTouchMove = (e: React.TouchEvent) => {
     if (isDragging) {
+      e.preventDefault()
       updateSliderPositionTouch(e)
     }
   }
@@ -62,7 +64,10 @@ export default function BeforeAfterSlider({
     const x = e.clientX - rect.left
     const percentage = (x / rect.width) * 100
     
-    setSliderPosition(Math.max(0, Math.min(100, percentage)))
+    // 使用requestAnimationFrame来确保流畅的动画
+    requestAnimationFrame(() => {
+      setSliderPosition(Math.max(0, Math.min(100, percentage)))
+    })
   }
 
   const updateSliderPositionTouch = (e: React.TouchEvent) => {
@@ -72,28 +77,60 @@ export default function BeforeAfterSlider({
     const x = e.touches[0].clientX - rect.left
     const percentage = (x / rect.width) * 100
     
-    setSliderPosition(Math.max(0, Math.min(100, percentage)))
+    // 使用requestAnimationFrame来确保流畅的动画
+    requestAnimationFrame(() => {
+      setSliderPosition(Math.max(0, Math.min(100, percentage)))
+    })
   }
 
   useEffect(() => {
     const handleGlobalMouseUp = () => setIsDragging(false)
     const handleGlobalTouchEnd = () => setIsDragging(false)
+    const handleGlobalMouseMove = (e: MouseEvent) => {
+      if (isDragging && containerRef.current) {
+        const rect = containerRef.current.getBoundingClientRect()
+        const x = e.clientX - rect.left
+        const percentage = (x / rect.width) * 100
+        
+        requestAnimationFrame(() => {
+          setSliderPosition(Math.max(0, Math.min(100, percentage)))
+        })
+      }
+    }
+    const handleGlobalTouchMove = (e: TouchEvent) => {
+      if (isDragging && containerRef.current && e.touches[0]) {
+        e.preventDefault()
+        const rect = containerRef.current.getBoundingClientRect()
+        const x = e.touches[0].clientX - rect.left
+        const percentage = (x / rect.width) * 100
+        
+        requestAnimationFrame(() => {
+          setSliderPosition(Math.max(0, Math.min(100, percentage)))
+        })
+      }
+    }
     
-    document.addEventListener('mouseup', handleGlobalMouseUp)
-    document.addEventListener('touchend', handleGlobalTouchEnd)
+    if (isDragging) {
+      document.addEventListener('mouseup', handleGlobalMouseUp)
+      document.addEventListener('touchend', handleGlobalTouchEnd)
+      document.addEventListener('mousemove', handleGlobalMouseMove)
+      document.addEventListener('touchmove', handleGlobalTouchMove, { passive: false })
+    }
     
     return () => {
       document.removeEventListener('mouseup', handleGlobalMouseUp)
       document.removeEventListener('touchend', handleGlobalTouchEnd)
+      document.removeEventListener('mousemove', handleGlobalMouseMove)
+      document.removeEventListener('touchmove', handleGlobalTouchMove)
     }
-  }, [])
+  }, [isDragging])
 
   return (
     <div className={`relative ${height} ${className}`}>
       {/* 容器 */}
       <div
         ref={containerRef}
-        className="relative w-full h-full overflow-hidden rounded-lg shadow-lg cursor-col-resize"
+        className="group relative w-full h-full overflow-hidden rounded-lg shadow-lg cursor-col-resize"
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUp}
@@ -107,32 +144,40 @@ export default function BeforeAfterSlider({
         <img
           src={beforeImage}
           alt="Before"
-            className="w-full h-full object-cover"
+          className="w-full h-full object-cover object-center"
+          loading="lazy"
         />
         </div>
         
         {/* After Image (右半部分) */}
         <div
-          className="absolute inset-0 w-full h-full overflow-hidden"
-          style={{ clipPath: `inset(0 ${100 - sliderPosition}% 0 0)` }}
+          className="absolute inset-0 w-full h-full overflow-hidden will-change-auto"
+          style={{ 
+            clipPath: `inset(0 ${100 - sliderPosition}% 0 0)`,
+            transform: 'translateZ(0)' // 启用硬件加速
+          }}
         >
           <img
             src={afterImage}
             alt="After"
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover object-center"
+            loading="lazy"
           />
         </div>
         
         {/* 滑块分割线 */}
         <div
-          className="absolute top-0 bottom-0 w-1 bg-orange-500 cursor-col-resize"
-          style={{ left: `${sliderPosition}%` }}
+          className="absolute top-0 bottom-0 w-1 bg-orange-500 cursor-col-resize transition-all duration-200 group-hover:w-2 will-change-transform"
+          style={{ 
+            left: `${sliderPosition}%`,
+            transform: 'translateZ(0)' // 启用硬件加速
+          }}
         >
           {/* 滑块手柄 */}
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-8 h-8 bg-orange-500 rounded-full shadow-lg border-2 border-white flex items-center justify-center">
-            <div className="flex space-x-1">
-              <ChevronLeft className="w-3 h-3 text-white" />
-              <ChevronRight className="w-3 h-3 text-white" />
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-10 h-10 bg-orange-500 rounded-full shadow-xl border-3 border-white flex items-center justify-center transition-all duration-200 hover:scale-110 hover:bg-orange-600">
+            <div className="flex space-x-0.5">
+              <ChevronLeft className="w-4 h-4 text-white" />
+              <ChevronRight className="w-4 h-4 text-white" />
             </div>
           </div>
         </div>
@@ -146,8 +191,12 @@ export default function BeforeAfterSlider({
         </div>
         
         {/* 悬停提示 */}
-        <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-black/70 text-white px-3 py-2 rounded text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-          Drag to compare
+        <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-black/80 text-white px-4 py-2 rounded-full text-sm font-medium opacity-0 group-hover:opacity-100 transition-all duration-300 backdrop-blur-sm">
+          <span className="flex items-center gap-2">
+            <ChevronLeft className="w-3 h-3" />
+            Drag to compare
+            <ChevronRight className="w-3 h-3" />
+          </span>
         </div>
       </div>
       
