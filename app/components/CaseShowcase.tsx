@@ -53,27 +53,27 @@ const caseImages: CaseImage[] = [
     keywords: ['nano banana ai', 'background enhancement', 'ai photo editing']
   },
   {
-    id: 'dodge-challenger',
-    original: '/cases/黑色道奇challenger Coupe.jpg',
-    processed: '/cases/黑色道奇challenger Coupe-在云端.png',
+    id: 'red-ford',
+    original: '/cases/红色福特重点车辆在白天的蓝色天空下的沙子上驾驶.jpg',
+    processed: '/cases/红色福特重点车辆在白天的蓝色天空下的沙子上驾驶-海边.png',
     title: 'Cloud Background Enhancement',
     description: 'Add dramatic cloud backgrounds to vehicle photos',
     category: 'vehicle',
     keywords: ['google nano-banana model', 'background generation', 'ai image enhancement']
   },
   {
-    id: 'baby-saja',
-    original: '/cases/Baby Saja.jpg',
-    processed: '/cases/Baby_Saja-Ciga.png',
+    id: 'skiing-man',
+    original: '/cases/冬季男子雪地上滑雪.jpg',
+    processed: '/cases/冬季男子雪地上滑雪-红色.png',
     title: 'Portrait Style Enhancement',
     description: 'Enhance portrait photos with AI-powered style transformation',
     category: 'portrait',
     keywords: ['nano banana ai image generation', 'portrait enhancement', 'ai photo editing']
   },
   {
-    id: 'three-girls',
-    original: '/cases/three girls laughing.jpg',
-    processed: '/cases/three girls laughing-in front of Mount Fuji.png',
+    id: 'skiing-women',
+    original: '/cases/两名女子滑雪的照片.jpg',
+    processed: '/cases/两名女子滑雪的照片-红色.png',
     title: 'Background Scene Addition',
     description: 'Add iconic backgrounds to group photos',
     category: 'portrait',

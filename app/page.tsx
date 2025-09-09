@@ -575,8 +575,8 @@ export default function HomePage() {
               {/* 第一个对比 */}
               <Card variant="glass" hover={true} className="overflow-hidden">
                 <BeforeAfterSlider 
-                  beforeImage="/cases/three girls laughing.jpg"
-                  afterImage="/cases/three girls laughing-with beard.png"
+                  beforeImage="/cases/两名女子滑雪的照片.jpg"
+                  afterImage="/cases/两名女子滑雪的照片-红色.png"
                   beforeLabel="Original"
                   afterLabel="AI Enhanced"
                   height="h-64"
@@ -672,8 +672,8 @@ export default function HomePage() {
               {/* 大尺寸对比展示 */}
               <Card variant="glass" size="lg" className="overflow-hidden">
                 <BeforeAfterSlider 
-                  beforeImage="/cases/Baby Saja.jpg"
-                  afterImage="/cases/Baby Saja-Ciga.png"
+                  beforeImage="/cases/冬季男子雪地上滑雪.jpg"
+                  afterImage="/cases/冬季男子雪地上滑雪-红色.png"
                   beforeLabel="Original"
                   afterLabel="AI Enhanced"
                   height="h-80"
@@ -711,8 +711,8 @@ export default function HomePage() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <Card variant="glass" hover={true} className="overflow-hidden">
                   <BeforeAfterSlider 
-                    beforeImage="/cases/黑色道奇challenger Coupe.jpg"
-                    afterImage="/cases/黑色道奇challenger Coupe-在云端.png"
+                    beforeImage="/cases/红色福特重点车辆在白天的蓝色天空下的沙子上驾驶.jpg"
+                    afterImage="/cases/红色福特重点车辆在白天的蓝色天空下的沙子上驾驶-2.png"
                     beforeLabel="Original"
                     afterLabel="AI Enhanced"
                     height="h-64"

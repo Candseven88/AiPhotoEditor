@@ -28,25 +28,15 @@ import Link from 'next/link'
 export default function Navigation() {
   const { data: session, status } = useSession()
   const [showUserMenu, setShowUserMenu] = useState(false)
-  const [showFeaturesMenu, setShowFeaturesMenu] = useState(false)
-  const [showMoreMenu, setShowMoreMenu] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   
   const userMenuRef = useRef<HTMLDivElement>(null)
-  const featuresMenuRef = useRef<HTMLDivElement>(null)
-  const moreMenuRef = useRef<HTMLDivElement>(null)
 
   // 关闭菜单当点击外部
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (userMenuRef.current && !userMenuRef.current.contains(event.target as Node)) {
         setShowUserMenu(false)
-      }
-      if (featuresMenuRef.current && !featuresMenuRef.current.contains(event.target as Node)) {
-        setShowFeaturesMenu(false)
-      }
-      if (moreMenuRef.current && !moreMenuRef.current.contains(event.target as Node)) {
-        setShowMoreMenu(false)
       }
     }
 
@@ -60,7 +50,6 @@ export default function Navigation() {
 
   const scrollToSection = (sectionId: string, tabId?: string) => {
     // 关闭菜单
-    setShowFeaturesMenu(false)
     setIsMobileMenuOpen(false)
     
     // 如果在首页，直接滚动到指定区域
@@ -162,125 +151,25 @@ export default function Navigation() {
             </motion.span>
           </Link>
 
-          {/* Desktop Navigation - 改进版本 */}
+          {/* Desktop Navigation - 简化版本 */}
           <div className="hidden md:flex items-center space-x-2">
-            {/* Features Dropdown - 现代化设计 */}
-            <div className="relative" ref={featuresMenuRef}>
+            {/* Direct Feature Links */}
+            {featuresMenuItems.map((item, index) => (
               <motion.button
-                onClick={() => setShowFeaturesMenu(!showFeaturesMenu)}
+                key={item.title}
+                onClick={item.onClick}
                 className="flex items-center space-x-2 px-4 py-2.5 text-gray-700 hover:text-orange-600 hover:bg-orange-50/50 rounded-xl transition-all duration-200 font-medium"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: index * 0.1 }}
               >
-                <Zap className="w-4 h-4" />
-                <span>Features</span>
-                <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${showFeaturesMenu ? 'rotate-180' : ''}`} />
+                <item.icon className="w-4 h-4" />
+                <span className="hidden lg:inline">{item.title}</span>
+                <span className="lg:hidden">{item.title.split(' ')[0]}</span>
               </motion.button>
-
-              <AnimatePresence>
-                {showFeaturesMenu && (
-                  <motion.div
-                    initial={{ opacity: 0, y: -10, scale: 0.95 }}
-                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                    exit={{ opacity: 0, y: -10, scale: 0.95 }}
-                    transition={{ duration: 0.2, ease: "easeOut" }}
-                    className="absolute top-full left-0 mt-3 w-96 glass-effect-strong rounded-2xl shadow-2xl border border-white/30 overflow-hidden"
-                  >
-                    <div className="p-6">
-                      <div className="flex items-center gap-2 mb-4">
-                        <div className="w-8 h-8 bg-gradient-to-r from-orange-500 to-yellow-500 rounded-lg flex items-center justify-center">
-                          <Sparkles className="w-4 h-4 text-white" />
-                        </div>
-                        <h3 className="text-sm font-semibold text-gray-600 uppercase tracking-wider">
-                          AI Image Generation
-                        </h3>
-                      </div>
-                      <div className="space-y-2">
-                        {featuresMenuItems.map((item, index) => (
-                          <motion.div
-                            key={item.title}
-                            initial={{ opacity: 0, x: -10 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            transition={{ delay: index * 0.05 }}
-                          >
-                            <button
-                              onClick={item.onClick}
-                              className="flex items-start space-x-3 p-3 rounded-xl hover:bg-orange-50/50 transition-all duration-200 group w-full text-left"
-                            >
-                              <div className={`w-10 h-10 bg-gradient-to-r ${item.gradient} rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg group-hover:scale-110 transition-transform duration-200`}>
-                                <item.icon className="w-5 h-5 text-white" />
-                              </div>
-                              <div className="flex-1 min-w-0">
-                                <p className="text-sm font-semibold text-gray-800 group-hover:text-orange-600 transition-colors">
-                                  {item.title}
-                                </p>
-                                <p className="text-xs text-gray-500 mt-1 leading-relaxed">
-                                  {item.description}
-                                </p>
-                              </div>
-                            </button>
-                          </motion.div>
-                        ))}
-                      </div>
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
-
-            {/* More Dropdown - 现代化设计 */}
-            <div className="relative" ref={moreMenuRef}>
-              <motion.button
-                onClick={() => setShowMoreMenu(!showMoreMenu)}
-                className="flex items-center space-x-2 px-4 py-2.5 text-gray-700 hover:text-orange-600 hover:bg-orange-50/50 rounded-xl transition-all duration-200 font-medium"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-              >
-                <span>More</span>
-                <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${showMoreMenu ? 'rotate-180' : ''}`} />
-              </motion.button>
-
-              <AnimatePresence>
-                {showMoreMenu && (
-                  <motion.div
-                    initial={{ opacity: 0, y: -10, scale: 0.95 }}
-                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                    exit={{ opacity: 0, y: -10, scale: 0.95 }}
-                    transition={{ duration: 0.2, ease: "easeOut" }}
-                    className="absolute top-full left-0 mt-3 w-72 glass-effect-strong rounded-2xl shadow-2xl border border-white/30 overflow-hidden"
-                  >
-                    <div className="p-4">
-                      <div className="space-y-1">
-                        {moreMenuItems.map((item, index) => (
-                          <motion.div
-                            key={item.title}
-                            initial={{ opacity: 0, x: -10 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            transition={{ delay: index * 0.05 }}
-                          >
-                            <Link
-                              href={item.href}
-                              className="flex items-center space-x-3 p-3 rounded-xl hover:bg-orange-50/50 transition-all duration-200 group"
-                              onClick={() => setShowMoreMenu(false)}
-                            >
-                              <item.icon className="w-4 h-4 text-gray-400 group-hover:text-orange-500 transition-colors" />
-                              <div className="flex-1">
-                                <span className="text-sm font-medium text-gray-700 group-hover:text-orange-600 transition-colors">
-                                  {item.title}
-                                </span>
-                                <p className="text-xs text-gray-500 mt-0.5">
-                                  {item.description}
-                                </p>
-                              </div>
-                            </Link>
-                          </motion.div>
-                        ))}
-                      </div>
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
+            ))}
 
             {/* User Menu - 现代化设计 */}
             {session ? (
