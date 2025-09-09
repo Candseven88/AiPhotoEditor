@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { User, Wand2, Loader2, Image as ImageIcon, Type } from 'lucide-react'
 import GradientButton from './ui/GradientButton'
 import EmptyState from './ui/EmptyState'
+import { useToast } from './ui/Toast'
 
 interface GenerationRequest {
   prompt: string
@@ -38,6 +39,7 @@ export default function UsernameToImageGenerator() {
   const [generatedImages, setGeneratedImages] = useState<string[]>([])
   const [originalImageUrls, setOriginalImageUrls] = useState<string[]>([])
   const [error, setError] = useState('')
+  const { showError, showWarning, showSuccess, ToastManager } = useToast()
 
   const buildPromptFromUsername = (name: string, withText: boolean, style: string) => {
     const safeName = name.trim()
@@ -53,7 +55,7 @@ export default function UsernameToImageGenerator() {
 
   const generateImage = async () => {
     if (!username.trim()) {
-      setError('Please enter your UserName/NickName')
+      showError('Please enter your UserName/NickName', 'Missing Username')
       return
     }
 
@@ -128,7 +130,21 @@ export default function UsernameToImageGenerator() {
         throw new Error('No images generated')
       }
     } catch (error: any) {
-      setError(error.message || 'Failed to generate image')
+      const errorMessage = error.message || 'Failed to generate image'
+      setError(errorMessage)
+      
+      // 检查是否是敏感内容警告
+      if (errorMessage.includes('potentially unsafe or sensitive content') || 
+          errorMessage.includes('sensitive content') ||
+          errorMessage.includes('unsafe content')) {
+        showWarning(
+          'Your username or style hint may contain sensitive content. Please try using different words that are more appropriate.',
+          'Content Warning',
+          10000 // 显示10秒
+        )
+      } else {
+        showError(errorMessage, 'Generation Failed', 8000)
+      }
     } finally {
       setIsGenerating(false)
       setGenerationProgress('')
@@ -186,7 +202,9 @@ export default function UsernameToImageGenerator() {
   }
 
   return (
-    <div className="min-h-screen">
+    <>
+      <ToastManager />
+      <div className="min-h-screen">
       <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 md:gap-8 mb-8">
         <motion.div 
           className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-2xl p-4 md:p-8 border border-orange-100"
@@ -347,8 +365,8 @@ export default function UsernameToImageGenerator() {
               {generatedImages.length === 0 ? (
                 <EmptyState
                   title="No avatars generated yet"
-                  subtitle="Enter a username and click generate to create your avatar"
-                  icon={<ImageIcon className="w-full h-full text-orange-200" />}
+                  description="Enter a username and click generate to create your avatar"
+                  icon="image"
                 />
               ) : (
                 <div className="space-y-3 md:space-y-4">
@@ -437,5 +455,6 @@ export default function UsernameToImageGenerator() {
         )}
       </AnimatePresence>
     </div>
+    </>
   )
 } 

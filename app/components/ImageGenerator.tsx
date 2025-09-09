@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Sparkles, Wand2, Loader2, Image as ImageIcon } from 'lucide-react'
 import GradientButton from './ui/GradientButton'
 import EmptyState from './ui/EmptyState'
+import { useToast } from './ui/Toast'
 
 interface GenerationRequest {
   prompt: string
@@ -36,10 +37,11 @@ export default function ImageGenerator() {
   const [generatedImages, setGeneratedImages] = useState<string[]>([])
   const [originalImageUrls, setOriginalImageUrls] = useState<string[]>([])
   const [error, setError] = useState('')
+  const { showError, showWarning, showSuccess, ToastManager } = useToast()
 
   const generateImage = async () => {
     if (!prompt.trim()) {
-      setError('Please enter a prompt')
+      showError('Please enter a prompt', 'Missing Prompt')
       return
     }
 
@@ -113,7 +115,21 @@ export default function ImageGenerator() {
         throw new Error('No images generated')
       }
     } catch (error: any) {
-      setError(error.message || 'Failed to generate image')
+      const errorMessage = error.message || 'Failed to generate image'
+      setError(errorMessage)
+      
+      // 检查是否是敏感内容警告
+      if (errorMessage.includes('potentially unsafe or sensitive content') || 
+          errorMessage.includes('sensitive content') ||
+          errorMessage.includes('unsafe content')) {
+        showWarning(
+          'Your prompt may contain sensitive content. Please try using different words or descriptions that are more appropriate.',
+          'Content Warning',
+          10000 // 显示10秒
+        )
+      } else {
+        showError(errorMessage, 'Generation Failed', 8000)
+      }
     } finally {
       setIsGenerating(false)
       setGenerationProgress('')
@@ -131,7 +147,7 @@ export default function ImageGenerator() {
       const originalUrl = originalImageUrls[index]
       if (!originalUrl) {
         console.error('No original URL found for index:', index)
-        setError('Download failed. No image URL found.')
+        showError('Download failed. No image URL found.', 'Download Error')
         return
       }
 
@@ -158,17 +174,19 @@ export default function ImageGenerator() {
           })
           .catch(err => {
             console.error('Download failed:', err)
-            setError('Download failed. Please try again.')
+            showError('Download failed. Please try again.', 'Download Error')
           })
       }
     } catch (e) {
       console.error('Download error:', e)
-      setError('Download failed. Please try again.')
+      showError('Download failed. Please try again.', 'Download Error')
     }
   }
 
   return (
-    <div className="min-h-screen">
+    <>
+      <ToastManager />
+      <div className="min-h-screen">
       <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 md:gap-8 mb-8">
         <motion.div 
           className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-2xl p-4 md:p-8 border border-orange-100"
@@ -303,8 +321,8 @@ export default function ImageGenerator() {
               {generatedImages.length === 0 ? (
                 <EmptyState
                   title="No images generated yet"
-                  subtitle="Enter a prompt and click generate to create your first image"
-                  icon={<ImageIcon className="w-full h-full text-orange-200" />}
+                  description="Enter a prompt and click generate to create your first image"
+                  icon="image"
                 />
               ) : (
                 <div className="space-y-3 md:space-y-4">
@@ -393,5 +411,6 @@ export default function ImageGenerator() {
         )}
       </AnimatePresence>
     </div>
+    </>
   )
 } 

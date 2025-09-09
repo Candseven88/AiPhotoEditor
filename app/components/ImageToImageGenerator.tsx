@@ -7,6 +7,7 @@ import PaymentModal from './PaymentModal'
 import EnvironmentIndicator from './EnvironmentIndicator'
 import GradientButton from './ui/GradientButton'
 import EmptyState from './ui/EmptyState'
+import { useToast } from './ui/Toast'
 
 interface ImageToImageRequest {
   text_prompts: Array<{
@@ -27,6 +28,7 @@ export default function ImageToImageGenerator() {
   const [paymentModalOpen, setPaymentModalOpen] = useState(false)
   const [selectedImageIndex, setSelectedImageIndex] = useState(0)
   const [unlockedImages, setUnlockedImages] = useState<Set<number>>(new Set())
+  const { showError, showWarning, showSuccess, ToastManager } = useToast()
   
   const fileInputRef = useRef<HTMLInputElement>(null)
 
@@ -36,13 +38,13 @@ export default function ImageToImageGenerator() {
     if (file) {
       // 验证文件大小 (10MB)
       if (file.size > 10 * 1024 * 1024) {
-        setError('File size must be less than 10MB')
+        showError('File size must be less than 10MB', 'File Too Large')
         return
       }
 
       // 验证文件类型
       if (!file.type.startsWith('image/')) {
-        setError('Please upload an image file')
+        showError('Please upload an image file', 'Invalid File Type')
         return
       }
 
@@ -67,12 +69,12 @@ export default function ImageToImageGenerator() {
   // 生成图像
   const generateImage = async () => {
     if (!prompt.trim()) {
-      setError('Please enter a prompt')
+      showError('Please enter a prompt', 'Missing Prompt')
       return
     }
 
     if (!uploadedImage) {
-      setError('Please upload an image')
+      showError('Please upload an image', 'Missing Image')
       return
     }
 
@@ -139,9 +141,25 @@ export default function ImageToImageGenerator() {
       }
     } catch (error: any) {
       if (error.name === 'AbortError') {
-        setError('Request timed out. Please try again.')
+        const errorMessage = 'Request timed out. Please try again.'
+        setError(errorMessage)
+        showError(errorMessage, 'Timeout Error', 8000)
       } else {
-        setError(error.message || 'Failed to generate image')
+        const errorMessage = error.message || 'Failed to generate image'
+        setError(errorMessage)
+        
+        // 检查是否是敏感内容警告
+        if (errorMessage.includes('potentially unsafe or sensitive content') || 
+            errorMessage.includes('sensitive content') ||
+            errorMessage.includes('unsafe content')) {
+          showWarning(
+            'Your prompt or uploaded image may contain sensitive content. Please try using different content that is more appropriate.',
+            'Content Warning',
+            10000 // 显示10秒
+          )
+        } else {
+          showError(errorMessage, 'Generation Failed', 8000)
+        }
       }
     } finally {
       setIsGenerating(false)
@@ -227,7 +245,9 @@ export default function ImageToImageGenerator() {
   ]
 
   return (
-    <div className="min-h-screen">
+    <>
+      <ToastManager />
+      <div className="min-h-screen">
       {/* 主要内容区域 - 左右布局 */}
       <div className="grid grid-cols-1 xl:grid-cols-2 gap-8 mb-8">
         {/* 左侧：图像上传和提示词输入 */}
@@ -426,8 +446,8 @@ export default function ImageToImageGenerator() {
               {generatedImages.length === 0 ? (
                 <EmptyState
                   title="No images generated yet"
-                  subtitle="Upload an image and enter a prompt to transform"
-                  icon={<ImageIcon className="w-full h-full text-orange-200" />}
+                  description="Upload an image and enter a prompt to transform"
+                  icon="image"
                 />
               ) : (
                 <div className="space-y-4">
@@ -588,5 +608,6 @@ export default function ImageToImageGenerator() {
         price={0.80}
       />
     </div>
+    </>
   )
 } 
