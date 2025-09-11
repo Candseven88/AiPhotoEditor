@@ -8,8 +8,12 @@ import {
   Palette,
   Menu,
   X,
-  Home
+  Home,
+  BookOpen,
+  Zap,
+  Users
 } from 'lucide-react'
+import Link from 'next/link'
 
 export default function Navigation() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
@@ -19,19 +23,57 @@ export default function Navigation() {
       id: 'username-to-image',
       label: 'Username to Image',
       icon: Sparkles,
-      description: 'Generate personalized avatars'
+      description: 'Generate personalized avatars',
+      type: 'tab'
     },
     {
       id: 'text-to-image',
       label: 'Text to Image',
       icon: Wand2,
-      description: 'Create images from text'
+      description: 'Create images from text',
+      type: 'tab'
     },
     {
       id: 'image-to-image',
       label: 'Image to Image',
       icon: Palette,
-      description: 'Transform existing images'
+      description: 'Transform existing images',
+      type: 'tab'
+    }
+  ]
+
+  const pageItems = [
+    {
+      id: 'nanobanana',
+      label: 'NanoBanana',
+      icon: Sparkles,
+      description: 'AI Image Generation Tools',
+      href: '/nanobanana',
+      type: 'page'
+    },
+    {
+      id: 'seedream',
+      label: 'Seedream 4.0',
+      icon: Zap,
+      description: 'Advanced AI Image Generator',
+      href: '/seedream',
+      type: 'page'
+    },
+    {
+      id: 'blog',
+      label: 'Blog',
+      icon: BookOpen,
+      description: 'Latest AI insights',
+      href: '/blog',
+      type: 'page'
+    },
+    {
+      id: 'about',
+      label: 'About',
+      icon: Users,
+      description: 'Learn about us',
+      href: '/about',
+      type: 'page'
     }
   ]
 
@@ -70,17 +112,28 @@ export default function Navigation() {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-1">
-            {navigationItems.map((item) => (
+            <Link href="/">
               <motion.button
-                key={item.id}
-                onClick={() => switchTab(item.id)}
                 className="flex items-center space-x-2 px-4 py-2 rounded-xl text-gray-700 hover:text-orange-600 hover:bg-orange-50 transition-all duration-200 group"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                <item.icon className="w-4 h-4" />
-                <span className="font-medium">{item.label}</span>
+                <Home className="w-4 h-4" />
+                <span className="font-medium">Home</span>
               </motion.button>
+            </Link>
+            
+            {pageItems.map((item) => (
+              <Link key={item.id} href={item.href}>
+                <motion.button
+                  className="flex items-center space-x-2 px-4 py-2 rounded-xl text-gray-700 hover:text-orange-600 hover:bg-orange-50 transition-all duration-200 group"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <item.icon className="w-4 h-4" />
+                  <span className="font-medium">{item.label}</span>
+                </motion.button>
+              </Link>
             ))}
           </div>
 
@@ -110,6 +163,42 @@ export default function Navigation() {
             transition={{ duration: 0.3 }}
           >
             <div className="space-y-2">
+              <Link href="/">
+                <motion.button
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="flex items-center space-x-3 w-full px-4 py-3 rounded-xl text-gray-700 hover:text-orange-600 hover:bg-orange-50 transition-all duration-200 group"
+                  whileHover={{ x: 5 }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  <Home className="w-5 h-5" />
+                  <div className="text-left">
+                    <div className="font-medium">Home</div>
+                    <div className="text-sm text-gray-500 group-hover:text-orange-500">
+                      Back to main page
+                    </div>
+                  </div>
+                </motion.button>
+              </Link>
+              
+              {pageItems.map((item) => (
+                <Link key={item.id} href={item.href}>
+                  <motion.button
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="flex items-center space-x-3 w-full px-4 py-3 rounded-xl text-gray-700 hover:text-orange-600 hover:bg-orange-50 transition-all duration-200 group"
+                    whileHover={{ x: 5 }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    <item.icon className="w-5 h-5" />
+                    <div className="text-left">
+                      <div className="font-medium">{item.label}</div>
+                      <div className="text-sm text-gray-500 group-hover:text-orange-500">
+                        {item.description}
+                      </div>
+                    </div>
+                  </motion.button>
+                </Link>
+              ))}
+              
               {navigationItems.map((item) => (
                 <motion.button
                   key={item.id}

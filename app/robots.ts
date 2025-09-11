@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next'
 
 export default function robots(): MetadataRoute.Robots {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://nanobanana.ai'
+  const baseUrl = 'https://www.nanobananaai.dev'
   
   return {
     rules: [
@@ -9,13 +9,11 @@ export default function robots(): MetadataRoute.Robots {
         userAgent: '*',
         allow: [
           '/',
-          '/text-to-image',
-          '/image-to-image',
-          '/cases',
+          '/nanobanana',
+          '/seedream',
           '/blog',
+          '/blog/*',
           '/about',
-          '/faq',
-          '/testimonials',
           '/privacy',
           '/terms',
           '/payment/success',

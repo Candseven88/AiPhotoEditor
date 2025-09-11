@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next'
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://nanobanana.ai'
+  const baseUrl = 'https://www.nanobananaai.dev'
   const currentDate = new Date()
   
   // 静态页面 - 高优先级
@@ -13,28 +13,22 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 1.0,
     },
     {
-      url: `${baseUrl}/text-to-image`,
+      url: `${baseUrl}/nanobanana`,
       lastModified: currentDate,
       changeFrequency: 'weekly' as const,
       priority: 0.9,
     },
     {
-      url: `${baseUrl}/image-to-image`,
+      url: `${baseUrl}/seedream`,
       lastModified: currentDate,
       changeFrequency: 'weekly' as const,
       priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/cases`,
-      lastModified: currentDate,
-      changeFrequency: 'weekly' as const,
-      priority: 0.8,
     },
     {
       url: `${baseUrl}/blog`,
       lastModified: currentDate,
       changeFrequency: 'weekly' as const,
-      priority: 0.7,
+      priority: 0.8,
     },
   ]
 
@@ -46,17 +40,39 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'monthly' as const,
       priority: 0.6,
     },
+  ]
+
+  // 博客页面 - 动态内容
+  const blogPages = [
     {
-      url: `${baseUrl}/faq`,
+      url: `${baseUrl}/blog/nanobanana-ai-revolutionizing-creative-workflows`,
       lastModified: currentDate,
-      changeFrequency: 'monthly' as const,
-      priority: 0.6,
+      changeFrequency: 'weekly' as const,
+      priority: 0.7,
     },
     {
-      url: `${baseUrl}/testimonials`,
+      url: `${baseUrl}/blog/nanobanana-vs-seedream`,
       lastModified: currentDate,
-      changeFrequency: 'monthly' as const,
-      priority: 0.6,
+      changeFrequency: 'weekly' as const,
+      priority: 0.7,
+    },
+    {
+      url: `${baseUrl}/blog/ai-image-generation-future`,
+      lastModified: currentDate,
+      changeFrequency: 'weekly' as const,
+      priority: 0.7,
+    },
+    {
+      url: `${baseUrl}/blog/nanobanana-username-generator-guide`,
+      lastModified: currentDate,
+      changeFrequency: 'weekly' as const,
+      priority: 0.7,
+    },
+    {
+      url: `${baseUrl}/blog/professional-ai-image-tips`,
+      lastModified: currentDate,
+      changeFrequency: 'weekly' as const,
+      priority: 0.7,
     },
   ]
 
@@ -92,58 +108,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
   ]
 
-  // 案例展示页面 - 基于实际案例
-  const casePages = [
-    {
-      url: `${baseUrl}/cases/baby-saja-ciga`,
-      lastModified: currentDate,
-      changeFrequency: 'monthly' as const,
-      priority: 0.7,
-    },
-    {
-      url: `${baseUrl}/cases/three-girls-laughing`,
-      lastModified: currentDate,
-      changeFrequency: 'monthly' as const,
-      priority: 0.7,
-    },
-    {
-      url: `${baseUrl}/cases/skiing-women`,
-      lastModified: currentDate,
-      changeFrequency: 'monthly' as const,
-      priority: 0.7,
-    },
-    {
-      url: `${baseUrl}/cases/skiing-man`,
-      lastModified: currentDate,
-      changeFrequency: 'monthly' as const,
-      priority: 0.7,
-    },
-    {
-      url: `${baseUrl}/cases/swimming-woman`,
-      lastModified: currentDate,
-      changeFrequency: 'monthly' as const,
-      priority: 0.7,
-    },
-    {
-      url: `${baseUrl}/cases/ford-vehicle`,
-      lastModified: currentDate,
-      changeFrequency: 'monthly' as const,
-      priority: 0.7,
-    },
-    {
-      url: `${baseUrl}/cases/dodge-challenger`,
-      lastModified: currentDate,
-      changeFrequency: 'monthly' as const,
-      priority: 0.7,
-    },
-  ]
-
   // 合并所有页面
   return [
     ...staticPages,
     ...infoPages,
+    ...blogPages,
     ...legalPages,
     ...paymentPages,
-    ...casePages,
   ]
 } 
