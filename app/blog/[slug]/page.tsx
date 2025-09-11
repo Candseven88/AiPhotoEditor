@@ -192,13 +192,14 @@ Ready to try NanoBanana AI? Start creating today with our free tier and discover
 }
 
 interface BlogPostPageProps {
-  params: {
+  params: Promise<{
     slug: string
-  }
+  }>
 }
 
-export default function BlogPostPage({ params }: BlogPostPageProps) {
-  const post = blogPosts[params.slug as keyof typeof blogPosts]
+export default async function BlogPostPage({ params }: BlogPostPageProps) {
+  const { slug } = await params
+  const post = blogPosts[slug as keyof typeof blogPosts]
   
   if (!post) {
     notFound()

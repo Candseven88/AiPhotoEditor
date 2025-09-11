@@ -461,7 +461,7 @@ export default function SeedreamPage() {
                       exit={{ opacity: 0 }}
                     >
                       <EmptyState
-                        icon={ImageIcon}
+                        icon="image"
                         title="Ready to Create"
                         description="Enter a prompt above and click 'Generate' to see Seedream 4.0 in action"
                       />
