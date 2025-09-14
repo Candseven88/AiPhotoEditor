@@ -33,12 +33,12 @@ const footerSections = [
   {
     title: 'Resources',
     links: [
-      { label: 'Blog', href: '/blog' },
-      { label: 'Documentation', href: '#' },
-      { label: 'Tutorials', href: '#' },
-      { label: 'Case Studies', href: '/blog' },
-      { label: 'Templates', href: '#' },
-      { label: 'Community', href: '#' }
+      { label: 'AI Editing Blog', href: '/blog' },
+      { label: 'Professional AI Tips', href: '/blog/edit-pro-tips-ai' },
+      { label: 'Seedream vs NanoBanana', href: '/blog/nanobanana-vs-seedream' },
+      { label: 'Success Stories', href: '/blog/nanobanana-success-stories' },
+      { label: 'Feature Guides', href: '/blog/nanobanana-features-guide' },
+      { label: 'Future Roadmap', href: '/blog/nanobanana-future-roadmap' }
     ]
   },
   {

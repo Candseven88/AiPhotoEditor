@@ -28,6 +28,7 @@ import Navigation from './components/Navigation'
 
 import GradientButton from './components/ui/GradientButton'
 import Card from './components/ui/Card'
+import Link from 'next/link'
 
 export default function HomePage() {
   const [activeTab, setActiveTab] = useState<'username-to-image' | 'text-to-image' | 'image-to-image'>('username-to-image')
@@ -359,6 +360,16 @@ export default function HomePage() {
                 Get Started Now
               </GradientButton>
               
+              <Link href="/blog/edit-pro-tips-ai">
+                <GradientButton
+                  size="lg"
+                  variant="secondary"
+                  leftIcon={<Sparkles className="w-5 h-5" />}
+                  className="min-w-[200px]"
+                >
+                  Learn AI Editing Tips
+                </GradientButton>
+              </Link>
 
             </motion.div>
 
@@ -373,9 +384,29 @@ export default function HomePage() {
                 <span className="text-gray-800">Choose Your</span>
                 <span className="gradient-text"> Creative Path</span>
               </h3>
-              <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              <p className="text-lg text-gray-600 max-w-2xl mx-auto mb-6">
                 Three powerful AI tools to bring your vision to life. Start with any method that suits your creative needs.
               </p>
+              <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
+                <Link href="/seedream">
+                  <GradientButton
+                    size="sm"
+                    variant="secondary"
+                    leftIcon={<Zap className="w-4 h-4" />}
+                  >
+                    Try Seedream 4.0 Pro
+                  </GradientButton>
+                </Link>
+                <Link href="/blog">
+                  <GradientButton
+                    size="sm"
+                    variant="outline"
+                    leftIcon={<User className="w-4 h-4" />}
+                  >
+                    Read Success Stories
+                  </GradientButton>
+                </Link>
+              </div>
             </motion.div>
           </motion.div>
         </section>
@@ -637,6 +668,23 @@ export default function HomePage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.8 }}
           >
+            <div className="text-center mb-12">
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
+                Real Results from <span className="gradient-text">Real Users</span>
+              </h2>
+              <p className="text-lg text-gray-600 max-w-2xl mx-auto mb-6">
+                See how creators worldwide use NanoBanana AI to transform their content and boost engagement.
+              </p>
+              <Link href="/blog/edit-pro-tips-ai">
+                <GradientButton
+                  size="sm"
+                  variant="secondary"
+                  rightIcon={<ArrowRight className="w-4 h-4" />}
+                >
+                  Master Professional AI Editing
+                </GradientButton>
+              </Link>
+            </div>
             <CaseShowcase variant="comparison" />
           </motion.div>
         </section>

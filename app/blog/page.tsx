@@ -10,6 +10,17 @@ import Link from 'next/link'
 
 const blogPosts = [
   {
+    id: 'edit-pro-tips-ai',
+    title: 'Edit Pro Tips AI: Master Professional AI Image Editing Techniques',
+    excerpt: 'Discover the latest AI editing trends and learn how NanoBanana AI revolutionizes content creation for Instagram, CapCut, and social media platforms.',
+    date: '2025-01-20',
+    author: 'AI Creative Team',
+    readTime: '8 min read',
+    tags: ['Edit Pro Tips', 'AI Editing', 'Social Media', 'Instagram', 'CapCut'],
+    gradient: 'from-purple-500 to-pink-500',
+    featured: true
+  },
+  {
     id: 'nanobanana-revolution',
     title: 'NanoBanana AI: Revolutionizing Creative Workflows for Everyone',
     excerpt: 'Discover how NanoBanana AI is democratizing artificial intelligence for creators, making professional-grade image generation accessible to all.',
@@ -18,7 +29,7 @@ const blogPosts = [
     readTime: '6 min read',
     tags: ['NanoBanana', 'AI Revolution', 'Creative Workflows'],
     gradient: 'from-orange-500 to-yellow-500',
-    featured: true
+    featured: false
   },
   {
     id: 'nanobanana-vs-seedream',
@@ -131,10 +142,31 @@ export default function BlogPage() {
               <span className="gradient-text"> AI Image Generation</span>
             </h2>
             
-            <p className="text-lg text-gray-600 mb-8 max-w-3xl mx-auto">
+            <p className="text-lg text-gray-600 mb-6 max-w-3xl mx-auto">
               Stay updated with the latest developments in Seedream AI technology, 
               tutorials, comparisons, and industry insights from our expert team.
             </p>
+            
+            <div className="flex flex-col sm:flex-row gap-3 justify-center items-center mb-8">
+              <Link href="/">
+                <GradientButton
+                  size="sm"
+                  variant="secondary"
+                  leftIcon={<Sparkles className="w-4 h-4" />}
+                >
+                  Try AI Tools Now
+                </GradientButton>
+              </Link>
+              <Link href="/seedream">
+                <GradientButton
+                  size="sm"
+                  variant="outline"
+                  leftIcon={<Zap className="w-4 h-4" />}
+                >
+                  Explore Seedream 4.0
+                </GradientButton>
+              </Link>
+            </div>
 
             {/* Tag filter */}
             <div className="flex flex-wrap justify-center gap-3 mb-12">

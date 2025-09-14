@@ -45,7 +45,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
   // 博客页面 - 动态内容
   const blogPages = [
     {
-      url: `${baseUrl}/blog/nanobanana-ai-revolutionizing-creative-workflows`,
+      url: `${baseUrl}/blog/edit-pro-tips-ai`,
+      lastModified: currentDate,
+      changeFrequency: 'weekly' as const,
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/blog/nanobanana-revolution`,
       lastModified: currentDate,
       changeFrequency: 'weekly' as const,
       priority: 0.7,
@@ -57,19 +63,19 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.7,
     },
     {
-      url: `${baseUrl}/blog/ai-image-generation-future`,
+      url: `${baseUrl}/blog/nanobanana-features-guide`,
       lastModified: currentDate,
       changeFrequency: 'weekly' as const,
       priority: 0.7,
     },
     {
-      url: `${baseUrl}/blog/nanobanana-username-generator-guide`,
+      url: `${baseUrl}/blog/nanobanana-success-stories`,
       lastModified: currentDate,
       changeFrequency: 'weekly' as const,
       priority: 0.7,
     },
     {
-      url: `${baseUrl}/blog/professional-ai-image-tips`,
+      url: `${baseUrl}/blog/nanobanana-future-roadmap`,
       lastModified: currentDate,
       changeFrequency: 'weekly' as const,
       priority: 0.7,

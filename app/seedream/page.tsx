@@ -8,6 +8,7 @@ import Card from '../components/ui/Card'
 import GradientButton from '../components/ui/GradientButton'
 import EmptyState from '../components/ui/EmptyState'
 import { useToast } from '../components/ui/Toast'
+import Link from 'next/link'
 
 interface GenerationRequest {
   prompt: string
@@ -263,7 +264,7 @@ export default function SeedreamPage() {
 
             {/* Features Grid */}
             <motion.div
-              className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12"
+              className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.3 }}
@@ -283,6 +284,33 @@ export default function SeedreamPage() {
                   <p className="text-sm text-gray-600">{feature.description}</p>
                 </motion.div>
               ))}
+            </motion.div>
+
+            {/* CTA Links */}
+            <motion.div
+              className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.6 }}
+            >
+              <Link href="/blog/edit-pro-tips-ai">
+                <GradientButton
+                  size="md"
+                  variant="secondary"
+                  leftIcon={<Wand2 className="w-4 h-4" />}
+                >
+                  Learn Professional AI Editing Techniques
+                </GradientButton>
+              </Link>
+              <Link href="/">
+                <GradientButton
+                  size="md"
+                  variant="outline"
+                  leftIcon={<Users className="w-4 h-4" />}
+                >
+                  Try Basic AI Tools
+                </GradientButton>
+              </Link>
             </motion.div>
           </motion.div>
         </section>
