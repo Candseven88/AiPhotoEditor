@@ -17,7 +17,7 @@
 - **状态**: ✅ 已配置
 - **验证方法**:
   - 访问 [Google Search Console](https://search.google.com/search-console)
-  - 添加网站属性 `https://www.aiphotoeditor.dev`
+  - 添加网站属性 `https://www.aiphotoeditor.space`
   - 选择 HTML 标签验证方式，会自动检测到配置的验证标签
 
 ### 3. Microsoft Clarity
@@ -30,7 +30,7 @@
   - 或登录 [Microsoft Clarity 仪表板](https://clarity.microsoft.com)
 
 ### 4. 网站域名配置
-- **主域名**: https://www.aiphotoeditor.dev
+- **主域名**: https://www.aiphotoeditor.space
 - **配置位置**: 
   - `app/layout.tsx` (metadataBase)
   - `app/sitemap.ts` (baseUrl)

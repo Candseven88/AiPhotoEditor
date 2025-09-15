@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next'
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://www.aiphotoeditor.dev'
+  const baseUrl = 'https://www.aiphotoeditor.space'
   const currentDate = new Date()
   
   // 静态页面 - 高优先级

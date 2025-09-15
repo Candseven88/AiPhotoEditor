@@ -18,7 +18,7 @@ export const metadata: Metadata = {
   verification: {
     google: 'PnF_JUbsBtHyPbnWvat0KgdAXjCaj9TdlBIXBWUmnJQ',
   },
-  metadataBase: new URL('https://www.aiphotoeditor.dev'),
+  metadataBase: new URL('https://www.aiphotoeditor.space'),
 }
 
 export default function RootLayout({

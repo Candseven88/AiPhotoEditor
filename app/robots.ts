@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next'
 
 export default function robots(): MetadataRoute.Robots {
-  const baseUrl = 'https://www.nanobananaai.dev'
+  const baseUrl = 'https://www.aiphotoeditor.space'
   
   return {
     rules: [
@@ -9,7 +9,7 @@ export default function robots(): MetadataRoute.Robots {
         userAgent: '*',
         allow: [
           '/',
-          '/nanobanana',
+          '/aiphotoeditor',
           '/seedream',
           '/blog',
           '/blog/*',
