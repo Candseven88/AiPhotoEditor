@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "🚀 启动 NanoBanana AI 图像生成器..."
+echo "🚀 启动 AI Photo Editor 图像生成器..."
 
 # 检查 Node.js 版本
 echo "📋 检查 Node.js 版本..."

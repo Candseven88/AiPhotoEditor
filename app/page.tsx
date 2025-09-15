@@ -60,21 +60,21 @@ export default function HomePage() {
   const tabs = [
     {
       id: 'username-to-image',
-      label: 'UserName to Image',
+      label: 'AI UserName to Photo Editor',
       icon: Sparkles,
       description: 'Generate a personalized avatar from your username',
       gradient: 'from-orange-500 to-yellow-500'
     },
     {
       id: 'text-to-image',
-      label: 'Text to Image',
+      label: 'AI Text to Photo Editor',
       icon: Wand2,
       description: 'Generate images from text descriptions',
       gradient: 'from-blue-500 to-purple-500'
     },
     {
       id: 'image-to-image',
-      label: 'Image to Image',
+      label: 'AI Photo to Photo Editor',
       icon: Palette,
       description: 'Transform existing images with AI',
       gradient: 'from-green-500 to-teal-500'
@@ -163,51 +163,51 @@ export default function HomePage() {
 
         {/* Logo装饰元素 */}
         <motion.div
-          className="absolute top-20 right-20 w-16 h-16 opacity-10"
-          animate={{
-            rotate: [0, 360],
-            scale: [1, 1.2, 1],
-          }}
-          transition={{
-            duration: 15,
-            repeat: Infinity,
-            ease: "linear"
-          }}
-        >
-          <img src="/Logo.png" alt="NanoBanana Logo" className="w-full h-full object-contain" />
-        </motion.div>
+                      className="absolute top-20 right-20 w-16 h-16 opacity-10"
+            animate={{
+              rotate: [0, 360],
+              scale: [1, 1.2, 1],
+            }}
+            transition={{
+              duration: 15,
+              repeat: Infinity,
+              ease: "linear"
+            }}
+          >
+            <img src="/Logo.png" alt="AI Photo Editor Logo" className="w-full h-full object-contain" />
+          </motion.div>
 
         <motion.div
-          className="absolute bottom-40 right-10 w-12 h-12 opacity-15"
-          animate={{
-            y: [0, -30, 0],
-            rotate: [0, -180, -360],
-            opacity: [0.15, 0.25, 0.15]
-          }}
-          transition={{
-            duration: 8,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-        >
-          <img src="/Logo.png" alt="NanoBanana Logo" className="w-full h-full object-contain" />
-        </motion.div>
+                      className="absolute bottom-40 right-10 w-12 h-12 opacity-15"
+            animate={{
+              y: [0, -30, 0],
+              rotate: [0, -180, -360],
+              opacity: [0.15, 0.25, 0.15]
+            }}
+            transition={{
+              duration: 8,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+          >
+            <img src="/Logo.png" alt="AI Photo Editor Logo" className="w-full h-full object-contain" />
+          </motion.div>
 
         <motion.div
-          className="absolute top-1/3 left-10 w-10 h-10 opacity-12"
-          animate={{
-            x: [0, 20, 0],
-            rotate: [0, 180, 360],
-            scale: [1, 0.8, 1]
-          }}
-          transition={{
-            duration: 12,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-        >
-          <img src="/Logo.png" alt="NanoBanana Logo" className="w-full h-full object-contain" />
-        </motion.div>
+                      className="absolute top-1/3 left-10 w-10 h-10 opacity-12"
+            animate={{
+              x: [0, 20, 0],
+              rotate: [0, 180, 360],
+              scale: [1, 0.8, 1]
+            }}
+            transition={{
+              duration: 12,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+          >
+            <img src="/Logo.png" alt="AI Photo Editor Logo" className="w-full h-full object-contain" />
+          </motion.div>
 
         {/* 小装饰元素 */}
         {[...Array(6)].map((_, i) => (
@@ -257,29 +257,29 @@ export default function HomePage() {
                   transition={{ duration: 2, repeat: Infinity }}
                 />
                 <div className="relative bg-white rounded-2xl p-3 shadow-xl">
-                  <img src="/Logo.png" alt="NanoBanana Logo" className="w-8 h-8 object-contain" />
+                  <img src="/Logo.png" alt="AI Photo Editor Logo" className="w-8 h-8 object-contain" />
                 </div>
               </div>
               <h1 className="ml-4 text-6xl md:text-7xl font-bold">
-                <span className="gradient-text">NanoBanana</span>
-                <span className="text-gray-800"> AI</span>
+                <span className="gradient-text">AI Photo</span>
+                <span className="text-gray-800"> Editor</span>
               </h1>
               
               {/* 装饰性Logo元素 */}
               <motion.div
                 className="absolute -top-6 -right-8 w-6 h-6 opacity-20"
-                animate={{
-                  rotate: [0, 360],
-                  scale: [1, 1.5, 1],
-                }}
-                transition={{
-                  duration: 10,
-                  repeat: Infinity,
-                  ease: "easeInOut"
-                }}
-              >
-                <img src="/Logo.png" alt="NanoBanana Logo" className="w-full h-full object-contain" />
-              </motion.div>
+                                  animate={{
+                    rotate: [0, 360],
+                    scale: [1, 1.5, 1],
+                  }}
+                  transition={{
+                    duration: 10,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                >
+                  <img src="/Logo.png" alt="AI Photo Editor Logo" className="w-full h-full object-contain" />
+                </motion.div>
               
               <motion.div
                 className="absolute -bottom-4 -left-6 w-4 h-4 opacity-15"
@@ -293,7 +293,7 @@ export default function HomePage() {
                   ease: "easeInOut"
                 }}
               >
-                <img src="/Logo.png" alt="NanoBanana Logo" className="w-full h-full object-contain" />
+                <img src="/Logo.png" alt="AI Photo Editor Logo" className="w-full h-full object-contain" />
               </motion.div>
             </motion.div>
             
@@ -310,10 +310,103 @@ export default function HomePage() {
                 <span className="gradient-text"> Visuals</span>
               </h2>
               
-              <p className="text-xl md:text-2xl text-gray-600 mb-8 max-w-3xl mx-auto leading-relaxed">
+              <p className="text-xl md:text-2xl text-gray-600 mb-12 max-w-3xl mx-auto leading-relaxed">
                 Unleash the power of advanced AI to create personalized avatars, generate images from text, 
                 and transform photos with cutting-edge technology.
               </p>
+            </motion.div>
+
+            {/* Logo展示区域 - 位于标题下方 */}
+            <motion.div 
+              className="text-center mb-12"
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 1, delay: 0.4 }}
+            >
+              <div className="relative inline-block">
+                {/* 主Logo */}
+                <motion.div
+                  className="relative z-10"
+                  animate={{ 
+                    y: [0, -10, 0],
+                    rotate: [0, 1, -1, 0]
+                  }}
+                  transition={{ 
+                    duration: 4, 
+                    repeat: Infinity, 
+                    ease: "easeInOut" 
+                  }}
+                  whileHover={{ 
+                    scale: 1.05,
+                    transition: { duration: 0.3 }
+                  }}
+                >
+                  <img 
+                    src="/Logo.png" 
+                    alt="AI Photo Editor - Your Creative Assistant" 
+                    className="w-48 h-48 md:w-56 md:h-56 object-contain drop-shadow-xl cursor-pointer"
+                  />
+                </motion.div>
+                
+                {/* 温和的发光效果 */}
+                <motion.div
+                  className="absolute inset-0 bg-gradient-to-r from-yellow-400/20 via-orange-400/20 to-yellow-400/20 rounded-full blur-2xl"
+                  animate={{ 
+                    scale: [1, 1.1, 1],
+                    opacity: [0.2, 0.4, 0.2]
+                  }}
+                  transition={{ 
+                    duration: 3, 
+                    repeat: Infinity, 
+                    ease: "easeInOut" 
+                  }}
+                />
+                
+                {/* 简化的装饰元素 */}
+                {[...Array(4)].map((_, i) => (
+                  <motion.div
+                    key={i}
+                    className="absolute w-3 h-3 bg-gradient-to-r from-yellow-400 to-orange-400 rounded-full opacity-30"
+                    style={{
+                      top: '50%',
+                      left: '50%',
+                      transformOrigin: '0 0',
+                    }}
+                    animate={{
+                      rotate: [i * 90, (i * 90) + 360],
+                      scale: [1, 1.3, 1],
+                    }}
+                    transition={{
+                      duration: 12,
+                      repeat: Infinity,
+                      ease: "linear",
+                      delay: i * 0.5
+                    }}
+                  >
+                    <div 
+                      className="w-3 h-3 bg-gradient-to-r from-yellow-400 to-orange-400 rounded-full"
+                      style={{
+                        transform: `translate(-50%, -50%) translateY(-70px)`
+                      }}
+                    />
+                  </motion.div>
+                ))}
+              </div>
+              
+              {/* 简化的文字说明 */}
+              <motion.div
+                className="mt-6"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.8 }}
+              >
+                <p className="text-lg font-semibold text-gray-600 mb-1">
+                  🍌 Meet Your Creative Banana Assistant
+                </p>
+                <p className="text-sm text-gray-500">
+                  Making AI photo editing fun & accessible
+                </p>
+              </motion.div>
             </motion.div>
 
             {/* 统计数据 */}
@@ -426,7 +519,7 @@ export default function HomePage() {
               ease: "linear"
             }}
           >
-            <img src="/Logo.png" alt="NanoBanana Logo" className="w-full h-full object-contain" />
+            <img src="/Logo.png" alt="AI Photo Editor Logo" className="w-full h-full object-contain" />
           </motion.div>
           
           <motion.div
@@ -441,7 +534,7 @@ export default function HomePage() {
               ease: "easeInOut"
             }}
           >
-            <img src="/Logo.png" alt="NanoBanana Logo" className="w-full h-full object-contain" />
+            <img src="/Logo.png" alt="AI Photo Editor Logo" className="w-full h-full object-contain" />
           </motion.div>
           
           <motion.div
@@ -577,7 +670,7 @@ export default function HomePage() {
             transition={{ duration: 0.8, delay: 0.2 }}
           >
             <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
-              Why Choose <span className="gradient-text">NanoBanana AI</span>?
+              Why Choose <span className="gradient-text">AI Photo Editor</span>?
             </h2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
               Experience the next generation of AI-powered image creation with our cutting-edge platform.
@@ -673,7 +766,7 @@ export default function HomePage() {
                 Real Results from <span className="gradient-text">Real Users</span>
               </h2>
               <p className="text-lg text-gray-600 max-w-2xl mx-auto mb-6">
-                See how creators worldwide use NanoBanana AI to transform their content and boost engagement.
+                See how creators worldwide use AI Photo Editor to transform their content and boost engagement.
               </p>
               <Link href="/blog/edit-pro-tips-ai">
                 <GradientButton
@@ -799,7 +892,7 @@ export default function HomePage() {
                   ease: "linear"
                 }}
               >
-                <img src="/Logo.png" alt="NanoBanana Logo" className="w-full h-full object-contain" />
+                <img src="/Logo.png" alt="AI Photo Editor Logo" className="w-full h-full object-contain" />
               </motion.div>
               
               {/* 环绕的小Logo */}
@@ -829,7 +922,7 @@ export default function HomePage() {
                       transform: `translate(-50%, -50%) translateY(-40px)`
                     }}
                   >
-                    <img src="/Logo.png" alt="NanoBanana Logo" className="w-full h-full object-contain" />
+                    <img src="/Logo.png" alt="AI Photo Editor Logo" className="w-full h-full object-contain" />
                   </div>
                 </motion.div>
               ))}

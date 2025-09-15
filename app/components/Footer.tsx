@@ -22,11 +22,11 @@ const footerSections = [
   {
     title: 'Product',
     links: [
-      { label: 'NanoBanana AI', href: '/nanobanana' },
+      { label: 'AI Photo Editor', href: '/aiphotoeditor' },
       { label: 'Seedream 4.0', href: '/seedream' },
-      { label: 'Username to Image', href: '/nanobanana' },
-      { label: 'Text to Image', href: '/nanobanana' },
-      { label: 'Image to Image', href: '/nanobanana' },
+      { label: 'AI UserName to Photo Editor', href: '/aiphotoeditor' },
+      { label: 'AI Text to Photo Editor', href: '/aiphotoeditor' },
+      { label: 'AI Photo to Photo Editor', href: '/aiphotoeditor' },
       { label: 'API Access', href: '#' }
     ]
   },
@@ -35,10 +35,10 @@ const footerSections = [
     links: [
       { label: 'AI Editing Blog', href: '/blog' },
       { label: 'Professional AI Tips', href: '/blog/edit-pro-tips-ai' },
-      { label: 'Seedream vs NanoBanana', href: '/blog/nanobanana-vs-seedream' },
-      { label: 'Success Stories', href: '/blog/nanobanana-success-stories' },
-      { label: 'Feature Guides', href: '/blog/nanobanana-features-guide' },
-      { label: 'Future Roadmap', href: '/blog/nanobanana-future-roadmap' }
+      { label: 'Seedream vs AI Photo Editor', href: '/blog/aiphotoeditor-vs-seedream' },
+      { label: 'Success Stories', href: '/blog/aiphotoeditor-success-stories' },
+      { label: 'Feature Guides', href: '/blog/aiphotoeditor-features-guide' },
+      { label: 'Future Roadmap', href: '/blog/aiphotoeditor-future-roadmap' }
     ]
   },
   {
@@ -66,11 +66,11 @@ const footerSections = [
 ]
 
 const socialLinks = [
-  { icon: Twitter, href: 'https://twitter.com/nanobananaai', label: 'Twitter' },
-  { icon: Facebook, href: 'https://facebook.com/nanobananaai', label: 'Facebook' },
-  { icon: Instagram, href: 'https://instagram.com/nanobananaai', label: 'Instagram' },
-  { icon: Linkedin, href: 'https://linkedin.com/company/nanobananaai', label: 'LinkedIn' },
-  { icon: Github, href: 'https://github.com/nanobananaai', label: 'GitHub' }
+  { icon: Twitter, href: 'https://twitter.com/aiphotoeditor', label: 'Twitter' },
+  { icon: Facebook, href: 'https://facebook.com/aiphotoeditor', label: 'Facebook' },
+  { icon: Instagram, href: 'https://instagram.com/aiphotoeditor', label: 'Instagram' },
+  { icon: Linkedin, href: 'https://linkedin.com/company/aiphotoeditor', label: 'LinkedIn' },
+  { icon: Github, href: 'https://github.com/aiphotoeditor', label: 'GitHub' }
 ]
 
 const legalLinks = [
@@ -121,7 +121,7 @@ export default function Footer() {
             ease: "linear"
           }}
         >
-          <img src="/Logo.png" alt="NanoBanana Logo" className="w-full h-full object-contain" />
+          <img src="/Logo.png" alt="AI Photo Editor Logo" className="w-full h-full object-contain" />
         </motion.div>
 
         <motion.div
@@ -136,7 +136,7 @@ export default function Footer() {
             ease: "easeInOut"
           }}
         >
-          <img src="/Logo.png" alt="NanoBanana Logo" className="w-full h-full object-contain" />
+          <img src="/Logo.png" alt="AI Photo Editor Logo" className="w-full h-full object-contain" />
         </motion.div>
       </div>
 
@@ -208,11 +208,11 @@ export default function Footer() {
                 <div className="flex items-center mb-6">
                   <div className="relative">
                     <div className="w-10 h-10 bg-gradient-to-r from-orange-400 to-yellow-400 rounded-xl flex items-center justify-center shadow-lg">
-                      <img src="/Logo.png" alt="NanoBanana Logo" className="w-6 h-6 object-contain" />
+                      <img src="/Logo.png" alt="AI Photo Editor Logo" className="w-6 h-6 object-contain" />
                     </div>
                   </div>
                   <h4 className="ml-3 text-2xl font-bold">
-                    <span className="gradient-text">NanoBanana</span> AI
+                    <span className="gradient-text">AI Photo</span> Editor
                   </h4>
                 </div>
                 
@@ -240,7 +240,7 @@ export default function Footer() {
                 <div className="text-sm text-gray-400 space-y-2">
                   <div className="flex items-center gap-2">
                     <Mail className="w-4 h-4" />
-                    <span>hello@nanobanana.ai</span>
+                    <span>hello@aiphotoeditor.ai</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <MapPin className="w-4 h-4" />
@@ -296,7 +296,7 @@ export default function Footer() {
               className="flex flex-col md:flex-row items-center justify-between gap-4"
             >
               <div className="flex items-center gap-1 text-gray-400">
-                <span>© {currentYear} NanoBanana AI Inc. Made with</span>
+                <span>© {currentYear} AI Photo Editor Inc. Made with</span>
                 <motion.div
                   animate={{ scale: [1, 1.2, 1] }}
                   transition={{ duration: 1, repeat: Infinity }}

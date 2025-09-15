@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next'
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://www.nanobananaai.dev'
+  const baseUrl = 'https://www.aiphotoeditor.dev'
   const currentDate = new Date()
   
   // 静态页面 - 高优先级
@@ -13,7 +13,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 1.0,
     },
     {
-      url: `${baseUrl}/nanobanana`,
+      url: `${baseUrl}/aiphotoeditor`,
       lastModified: currentDate,
       changeFrequency: 'weekly' as const,
       priority: 0.9,
@@ -51,31 +51,31 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.8,
     },
     {
-      url: `${baseUrl}/blog/nanobanana-revolution`,
+      url: `${baseUrl}/blog/aiphotoeditor-revolution`,
       lastModified: currentDate,
       changeFrequency: 'weekly' as const,
       priority: 0.7,
     },
     {
-      url: `${baseUrl}/blog/nanobanana-vs-seedream`,
+      url: `${baseUrl}/blog/aiphotoeditor-vs-seedream`,
       lastModified: currentDate,
       changeFrequency: 'weekly' as const,
       priority: 0.7,
     },
     {
-      url: `${baseUrl}/blog/nanobanana-features-guide`,
+      url: `${baseUrl}/blog/aiphotoeditor-features-guide`,
       lastModified: currentDate,
       changeFrequency: 'weekly' as const,
       priority: 0.7,
     },
     {
-      url: `${baseUrl}/blog/nanobanana-success-stories`,
+      url: `${baseUrl}/blog/aiphotoeditor-success-stories`,
       lastModified: currentDate,
       changeFrequency: 'weekly' as const,
       priority: 0.7,
     },
     {
-      url: `${baseUrl}/blog/nanobanana-future-roadmap`,
+      url: `${baseUrl}/blog/aiphotoeditor-future-roadmap`,
       lastModified: currentDate,
       changeFrequency: 'weekly' as const,
       priority: 0.7,

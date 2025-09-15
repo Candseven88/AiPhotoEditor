@@ -170,7 +170,7 @@ export default function UsernameToImageGenerator() {
       }
 
       const link = document.createElement('a')
-      link.download = `nanobanana-username-avatar-${Date.now()}-${index}.png`
+              link.download = `aiphotoeditor-username-avatar-${Date.now()}-${index}.png`
 
       if (originalUrl.startsWith('data:image/')) {
         link.href = originalUrl

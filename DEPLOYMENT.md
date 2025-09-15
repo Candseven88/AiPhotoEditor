@@ -1,4 +1,4 @@
-# 🚀 NanoBanana AI 图像生成器部署指南
+# 🚀 AI Photo Editor 图像生成器部署指南
 
 ## 📋 部署前准备
 

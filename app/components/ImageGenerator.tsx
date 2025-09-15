@@ -152,7 +152,7 @@ export default function ImageGenerator() {
       }
 
       const link = document.createElement('a')
-      link.download = `nanobanana-generated-${Date.now()}-${index}.png`
+              link.download = `aiphotoeditor-generated-${Date.now()}-${index}.png`
 
       if (originalUrl.startsWith('data:image/')) {
         link.href = originalUrl

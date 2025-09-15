@@ -59,7 +59,7 @@ const caseImages: CaseImage[] = [
     title: 'Cloud Background Enhancement',
     description: 'Add dramatic cloud backgrounds to vehicle photos',
     category: 'vehicle',
-    keywords: ['google nano-banana model', 'background generation', 'ai image enhancement']
+    keywords: ['google ai photo editor model', 'background generation', 'ai image enhancement']
   },
   {
     id: 'skiing-man',
@@ -410,7 +410,7 @@ export default function CaseShowcase({
                 {/* 简化的说明 */}
                 <div className="mt-4 text-center">
                   <p className="text-sm text-gray-500">
-                    Enhanced with <span className="text-orange-600 font-semibold">NanoBanana AI</span>
+                    Enhanced with <span className="text-orange-600 font-semibold">AI Photo Editor</span>
                   </p>
                 </div>
               </div>
@@ -421,7 +421,7 @@ export default function CaseShowcase({
                     <div className="w-16 h-16 bg-orange-200 rounded-full flex items-center justify-center mx-auto mb-3">
                       <span className="text-2xl">✨</span>
                     </div>
-                    <p className="text-orange-600 font-medium">Try NanoBanana AI</p>
+                    <p className="text-orange-600 font-medium">Try AI Photo Editor</p>
                   </div>
                 </div>
               </div>

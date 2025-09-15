@@ -7,18 +7,18 @@ import Script from 'next/script'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'NanoBanana AI - Advanced AI Image Generation',
+  title: 'AI Photo Editor - Advanced AI Image Generation',
   description: 'Transform your ideas into stunning visuals with our advanced AI image generation platform. Create personalized avatars, generate images from text, and transform photos with cutting-edge AI technology.',
-  keywords: 'AI, image generation, artificial intelligence, avatar, text to image, image to image, NanoBanana',
+  keywords: 'AI, image generation, artificial intelligence, avatar, text to image, image to image, AI Photo Editor',
   icons: {
     icon: '/Logo.png',
     shortcut: '/Logo.png',
     apple: '/Logo.png',
   },
   verification: {
-    google: 'Uh1npyWxh6BGlOKaSh88UFliniROrG0pgsD7fQHkahw',
+    google: 'PnF_JUbsBtHyPbnWvat0KgdAXjCaj9TdlBIXBWUmnJQ',
   },
-  metadataBase: new URL('https://www.nanobananaai.dev'),
+  metadataBase: new URL('https://www.aiphotoeditor.dev'),
 }
 
 export default function RootLayout({
@@ -31,7 +31,7 @@ export default function RootLayout({
       <head>
         {/* Google Analytics */}
         <Script
-          src="https://www.googletagmanager.com/gtag/js?id=G-7J29Q5J6PN"
+          src="https://www.googletagmanager.com/gtag/js?id=G-LTQMD39NCB"
           strategy="afterInteractive"
         />
         <Script id="google-analytics" strategy="afterInteractive">
@@ -39,7 +39,7 @@ export default function RootLayout({
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
-            gtag('config', 'G-7J29Q5J6PN');
+            gtag('config', 'G-LTQMD39NCB');
           `}
         </Script>
         
@@ -50,7 +50,7 @@ export default function RootLayout({
                 c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
                 t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
                 y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-            })(window, document, "clarity", "script", "t94fteblqw");
+            })(window, document, "clarity", "script", "tb0ukafpv1");
           `}
         </Script>
       </head>

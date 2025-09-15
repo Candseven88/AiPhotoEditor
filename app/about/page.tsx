@@ -64,7 +64,7 @@ const milestones = [
   {
     year: '2023',
     title: 'Company Founded',
-    description: 'NanoBanana AI was born with a vision to democratize AI image generation.'
+    description: 'AI Photo Editor was born with a vision to democratize AI image generation.'
   },
   {
     year: '2024',
@@ -132,7 +132,7 @@ export default function AboutPage() {
               </div>
               <h1 className="ml-6 text-5xl md:text-6xl font-bold">
                 <span className="text-gray-800">About</span>
-                <span className="gradient-text"> NanoBanana</span>
+                <span className="gradient-text"> AI Photo Editor</span>
               </h1>
             </div>
             
@@ -141,11 +141,100 @@ export default function AboutPage() {
               <span className="gradient-text"> Simple & Accessible</span>
             </h2>
             
-            <p className="text-lg md:text-xl text-gray-600 mb-8 max-w-3xl mx-auto leading-relaxed">
-              We're on a mission to democratize AI-powered creativity. NanoBanana AI empowers 
+            <p className="text-lg md:text-xl text-gray-600 mb-12 max-w-3xl mx-auto leading-relaxed">
+              We're on a mission to democratize AI-powered creativity. AI Photo Editor empowers 
               millions of users worldwide to bring their ideas to life through cutting-edge 
               artificial intelligence technology.
             </p>
+            
+            {/* 品牌故事Logo展示 - 位于描述下方 */}
+            <motion.div 
+              className="text-center mb-12"
+              initial={{ opacity: 0, scale: 0.7 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 1.2, delay: 0.4 }}
+            >
+              <div className="relative inline-block">
+                <motion.div
+                  className="relative z-10"
+                  animate={{ 
+                    rotate: [0, 5, -5, 0],
+                    y: [0, -8, 0]
+                  }}
+                  transition={{ 
+                    duration: 8, 
+                    repeat: Infinity, 
+                    ease: "easeInOut" 
+                  }}
+                  whileHover={{ 
+                    scale: 1.05,
+                    transition: { duration: 0.3 }
+                  }}
+                >
+                  <img 
+                    src="/Logo.png" 
+                    alt="AI Photo Editor - Our Story & Mission" 
+                    className="w-32 h-32 md:w-40 md:h-40 object-contain drop-shadow-lg cursor-pointer"
+                  />
+                </motion.div>
+                
+                {/* 温暖的光环效果 */}
+                <motion.div
+                  className="absolute inset-0 bg-gradient-to-r from-orange-400/15 via-yellow-400/15 to-orange-400/15 rounded-full blur-xl"
+                  animate={{ 
+                    scale: [1, 1.2, 1],
+                    opacity: [0.15, 0.3, 0.15]
+                  }}
+                  transition={{ 
+                    duration: 5, 
+                    repeat: Infinity, 
+                    ease: "easeInOut" 
+                  }}
+                />
+                
+                {/* 简化的使命装饰 */}
+                {['💝', '🌟'].map((icon, i) => (
+                  <motion.div
+                    key={i}
+                    className="absolute text-base opacity-30"
+                    style={{
+                      top: '50%',
+                      left: '50%',
+                      transformOrigin: '0 0',
+                    }}
+                    animate={{
+                      rotate: [i * 180, (i * 180) + 360],
+                      scale: [1, 1.3, 1],
+                    }}
+                    transition={{
+                      duration: 10,
+                      repeat: Infinity,
+                      ease: "linear",
+                      delay: i * 1.2
+                    }}
+                  >
+                    <div 
+                      style={{
+                        transform: `translate(-50%, -50%) translateY(-50px)`
+                      }}
+                    >
+                      {icon}
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+              
+              <motion.div
+                className="mt-3"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.6 }}
+              >
+                <p className="text-sm font-medium text-gray-600">
+                  🍌 Our story & mission
+                </p>
+              </motion.div>
+            </motion.div>
           </motion.div>
         </section>
 
@@ -161,7 +250,7 @@ export default function AboutPage() {
                 <h3 className="text-3xl font-bold text-gray-800 mb-6">Our Story</h3>
                 <div className="space-y-4 text-gray-600 leading-relaxed">
                   <p>
-                    NanoBanana AI was founded in 2023 with a simple yet powerful vision: to make 
+                    AI Photo Editor was founded in 2023 with a simple yet powerful vision: to make 
                     AI image generation accessible to everyone, from professional designers to 
                     creative enthusiasts.
                   </p>
@@ -171,7 +260,7 @@ export default function AboutPage() {
                     creating an intuitive platform that puts the power of AI at your fingertips.
                   </p>
                   <p>
-                    Today, NanoBanana serves millions of users worldwide, helping them create 
+                    Today, AI Photo Editor serves millions of users worldwide, helping them create 
                     stunning visuals for social media, marketing, personal projects, and more. 
                     Our platform has generated over 10 million images and continues to grow.
                   </p>
@@ -214,7 +303,7 @@ export default function AboutPage() {
             <div className="text-center mb-12">
               <h3 className="text-3xl font-bold text-gray-800 mb-4">Our Values</h3>
               <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-                These core principles guide everything we do at NanoBanana AI
+                                  These core principles guide everything we do at AI Photo Editor
               </p>
             </div>
             
@@ -293,7 +382,7 @@ export default function AboutPage() {
             <div className="text-center mb-12">
               <h3 className="text-3xl font-bold text-gray-800 mb-4">Meet Our Team</h3>
               <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-                The passionate individuals behind NanoBanana AI
+                The passionate individuals behind AI Photo Editor
               </p>
             </div>
             
@@ -332,10 +421,10 @@ export default function AboutPage() {
             <Card variant="glass" size="lg" className="max-w-4xl mx-auto">
               <div className="p-12">
                 <h3 className="text-3xl font-bold text-gray-800 mb-6">
-                  Ready to Create with <span className="gradient-text">NanoBanana AI</span>?
+                  Ready to Create with <span className="gradient-text">AI Photo Editor</span>?
                 </h3>
                 <p className="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
-                  Join millions of creators who trust NanoBanana AI to bring their 
+                  Join millions of creators who trust AI Photo Editor to bring their 
                   ideas to life. Start your creative journey today.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">

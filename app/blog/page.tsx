@@ -12,7 +12,7 @@ const blogPosts = [
   {
     id: 'edit-pro-tips-ai',
     title: 'Edit Pro Tips AI: Master Professional AI Image Editing Techniques',
-    excerpt: 'Discover the latest AI editing trends and learn how NanoBanana AI revolutionizes content creation for Instagram, CapCut, and social media platforms.',
+    excerpt: 'Discover the latest AI editing trends and learn how AI Photo Editor revolutionizes content creation for Instagram, CapCut, and social media platforms.',
     date: '2025-01-20',
     author: 'AI Creative Team',
     readTime: '8 min read',
@@ -21,54 +21,54 @@ const blogPosts = [
     featured: true
   },
   {
-    id: 'nanobanana-revolution',
-    title: 'NanoBanana AI: Revolutionizing Creative Workflows for Everyone',
-    excerpt: 'Discover how NanoBanana AI is democratizing artificial intelligence for creators, making professional-grade image generation accessible to all.',
+          id: 'aiphotoeditor-revolution',
+      title: 'AI Photo Editor: Revolutionizing Creative Workflows for Everyone',
+      excerpt: 'Discover how AI Photo Editor is democratizing artificial intelligence for creators, making professional-grade image generation accessible to all.',
     date: '2025-01-18',
-    author: 'NanoBanana Team',
+    author: 'AI Photo Editor Team',
     readTime: '6 min read',
-    tags: ['NanoBanana', 'AI Revolution', 'Creative Workflows'],
+    tags: ['AI Photo Editor', 'AI Revolution', 'Creative Workflows'],
     gradient: 'from-orange-500 to-yellow-500',
     featured: false
   },
   {
-    id: 'nanobanana-vs-seedream',
-    title: 'NanoBanana vs Seedream: Performance Comparison & Which Should You Choose?',
-    excerpt: 'A comprehensive comparison between NanoBanana AI and Seedream models, analyzing speed, quality, features, and value for different use cases.',
+    id: 'aiphotoeditor-vs-seedream',
+    title: 'AI Photo Editor vs Seedream: Performance Comparison & Which Should You Choose?',
+    excerpt: 'A comprehensive comparison between AI Photo Editor and Seedream models, analyzing speed, quality, features, and value for different use cases.',
     date: '2025-01-16',
     author: 'AI Comparison Team',
     readTime: '8 min read',
-    tags: ['NanoBanana', 'Seedream', 'Performance', 'Comparison'],
+    tags: ['AI Photo Editor', 'Seedream', 'Performance', 'Comparison'],
     gradient: 'from-blue-500 to-purple-500'
   },
   {
-    id: 'nanobanana-features-guide',
-    title: 'Complete Guide to NanoBanana AI Features: From Username to Image Magic',
-    excerpt: 'Master all three core features of NanoBanana AI: Username-to-Image generation, Text-to-Image creation, and advanced Image-to-Image transformation.',
+    id: 'aiphotoeditor-features-guide',
+    title: 'Complete Guide to AI Photo Editor Features: From UserName to Photo Magic',
+    excerpt: 'Master all three core features of AI Photo Editor: AI UserName to Photo Editor, AI Text to Photo Editor, and advanced AI Photo to Photo Editor.',
     date: '2025-01-14',
     author: 'Product Team',
     readTime: '10 min read',
-    tags: ['NanoBanana', 'Features', 'Tutorial', 'User Guide'],
+    tags: ['AI Photo Editor', 'Features', 'Tutorial', 'User Guide'],
     gradient: 'from-green-500 to-teal-500'
   },
   {
-    id: 'nanobanana-success-stories',
-    title: 'NanoBanana Success Stories: How 10M+ Users Are Creating Amazing Content',
-    excerpt: 'Real stories from NanoBanana users: social media managers, indie developers, content creators, and businesses transforming their visual content.',
+    id: 'aiphotoeditor-success-stories',
+    title: 'AI Photo Editor Success Stories: How 10M+ Users Are Creating Amazing Content',
+    excerpt: 'Real stories from AI Photo Editor users: social media managers, indie developers, content creators, and businesses transforming their visual content.',
     date: '2025-01-12',
     author: 'Community Team',
     readTime: '7 min read',
-    tags: ['NanoBanana', 'Success Stories', 'Case Studies', 'Community'],
+    tags: ['AI Photo Editor', 'Success Stories', 'Case Studies', 'Community'],
     gradient: 'from-purple-500 to-pink-500'
   },
   {
-    id: 'nanobanana-future-roadmap',
-    title: 'The Future of NanoBanana AI: 2025 Roadmap and Upcoming Features',
-    excerpt: 'Get an exclusive look at what\'s coming to NanoBanana AI: new models, enhanced features, and revolutionary capabilities planned for 2025.',
+    id: 'aiphotoeditor-future-roadmap',
+    title: 'The Future of AI Photo Editor: 2025 Roadmap and Upcoming Features',
+    excerpt: 'Get an exclusive look at what\'s coming to AI Photo Editor: new models, enhanced features, and revolutionary capabilities planned for 2025.',
     date: '2025-01-10',
     author: 'Research & Development',
     readTime: '5 min read',
-    tags: ['NanoBanana', 'Roadmap', 'Future Features', 'Innovation'],
+    tags: ['AI Photo Editor', 'Roadmap', 'Future Features', 'Innovation'],
     gradient: 'from-red-500 to-orange-500'
   }
 ]
@@ -142,10 +142,99 @@ export default function BlogPage() {
               <span className="gradient-text"> AI Image Generation</span>
             </h2>
             
-            <p className="text-lg text-gray-600 mb-6 max-w-3xl mx-auto">
+            <p className="text-lg text-gray-600 mb-8 max-w-3xl mx-auto">
               Stay updated with the latest developments in Seedream AI technology, 
               tutorials, comparisons, and industry insights from our expert team.
             </p>
+            
+            {/* Blog Logo展示区域 - 位于描述下方 */}
+            <motion.div 
+              className="text-center mb-8"
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 1, delay: 0.4 }}
+            >
+              <div className="relative inline-block">
+                <motion.div
+                  className="relative z-10"
+                  animate={{ 
+                    rotate: [0, 3, -3, 0],
+                    y: [0, -6, 0]
+                  }}
+                  transition={{ 
+                    duration: 6, 
+                    repeat: Infinity, 
+                    ease: "easeInOut" 
+                  }}
+                  whileHover={{ 
+                    scale: 1.05,
+                    transition: { duration: 0.2 }
+                  }}
+                >
+                  <img 
+                    src="/Logo.png" 
+                    alt="AI Photo Editor Blog - Learning Hub" 
+                    className="w-24 h-24 md:w-28 md:h-28 object-contain drop-shadow-lg cursor-pointer"
+                  />
+                </motion.div>
+                
+                {/* 知识光环效果 */}
+                <motion.div
+                  className="absolute inset-0 bg-gradient-to-r from-indigo-400/15 via-purple-400/15 to-indigo-400/15 rounded-full blur-lg"
+                  animate={{ 
+                    scale: [1, 1.15, 1],
+                    opacity: [0.15, 0.3, 0.15]
+                  }}
+                  transition={{ 
+                    duration: 4, 
+                    repeat: Infinity, 
+                    ease: "easeInOut" 
+                  }}
+                />
+                
+                {/* 简化的学习图标 */}
+                {['📚', '✍️'].map((emoji, i) => (
+                  <motion.div
+                    key={i}
+                    className="absolute text-sm opacity-25"
+                    style={{
+                      top: '50%',
+                      left: '50%',
+                      transformOrigin: '0 0',
+                    }}
+                    animate={{
+                      rotate: [i * 180, (i * 180) + 360],
+                      scale: [1, 1.2, 1],
+                    }}
+                    transition={{
+                      duration: 8,
+                      repeat: Infinity,
+                      ease: "linear",
+                      delay: i * 1
+                    }}
+                  >
+                    <div 
+                      style={{
+                        transform: `translate(-50%, -50%) translateY(-40px)`
+                      }}
+                    >
+                      {emoji}
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+              
+              <motion.div
+                className="mt-2"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.6 }}
+              >
+                <p className="text-xs font-medium text-gray-500">
+                  📚 Learn with your banana buddy
+                </p>
+              </motion.div>
+            </motion.div>
             
             <div className="flex flex-col sm:flex-row gap-3 justify-center items-center mb-8">
               <Link href="/">

@@ -87,7 +87,7 @@ export async function POST(request: NextRequest) {
         headers: {
           'Accept': 'application/json',
           'Authorization': `Bearer ${apiKey}`,
-          'Stability-Client-ID': 'nano-banana-app',
+          'Stability-Client-ID': 'ai-photo-editor-app',
           'Stability-Client-Version': '1.0.0'
         },
         body: formData

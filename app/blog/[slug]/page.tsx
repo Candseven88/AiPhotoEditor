@@ -12,7 +12,7 @@ const blogPosts = {
   'edit-pro-tips-ai': {
     id: 'edit-pro-tips-ai',
     title: 'Edit Pro Tips AI: Master Professional AI Image Editing Techniques',
-    excerpt: 'Discover the latest AI editing trends and learn how NanoBanana AI revolutionizes content creation for Instagram, CapCut, and social media platforms.',
+    excerpt: 'Discover the latest AI editing trends and learn how AI Photo Editor revolutionizes content creation for Instagram, CapCut, and social media platforms.',
     date: '2025-01-20',
     author: 'AI Creative Team',
     readTime: '8 min read',
@@ -34,17 +34,17 @@ I started seeing this trend everywhere once I knew what to look for. Content cre
 
 What really got my attention was how accessible this technology has become. You don't need to be a tech genius or have any special skills. Anyone can use these tools to create content that actually performs well on social media.
 
-## How I Found NanoBanana AI and Why It Changed Everything
+## How I Found AI Photo Editor and Why It Changed Everything
 
-After researching different AI tools for weeks, I came across NanoBanana AI, and let me tell you, it was exactly what I'd been looking for. The thing that caught my attention first was how simple it looked compared to other platforms that seemed overly complicated.
+After researching different AI tools for weeks, I came across AI Photo Editor, and let me tell you, it was exactly what I'd been looking for. The thing that caught my attention first was how simple it looked compared to other platforms that seemed overly complicated.
 
-I decided to test it out, and within minutes I was creating content that looked better than anything I'd made before. What really impressed me was how fast everything worked. Most AI tools make you wait forever, but NanoBanana generates images in just a few seconds.
+I decided to test it out, and within minutes I was creating content that looked better than anything I'd made before. What really impressed me was how fast everything worked. Most AI tools make you wait forever, but AI Photo Editor generates images in just a few seconds.
 
 ### The Three Features That Actually Matter
 
 Let me break down the features that I actually use and why they work so well:
 
-**Username to Image Generation**
+**AI UserName to Photo Editor**
 This feature is honestly genius. You type in your username or brand name, and it creates personalized avatars and logos. I used this to create consistent branding across all my social media accounts. Instead of having random profile pictures on different platforms, now everything looks cohesive and professional.
 
 The best part is you can choose different styles. I made a professional version for LinkedIn and a more fun, colorful one for Instagram. It takes literally 30 seconds, and you get something unique that nobody else has.
@@ -264,7 +264,7 @@ Seedream represents the latest in AI image generation technology, offering advan
 | Feature | NanoBanana AI | Seedream |
 |---------|---------------|----------|
 | Text to Image | ✅ Fast & Simple | ✅ Advanced Controls |
-| Username to Image | ✅ Unique Feature | ❌ Not Available |
+| AI UserName to Photo Editor | ✅ Unique Feature | ❌ Not Available |
 | Image to Image | ✅ Basic Editing | ✅ Advanced Editing |
 | Batch Generation | ❌ Single Images | ✅ Multiple Outputs |
 | Style Transfer | ✅ Preset Styles | ✅ Custom Styles |

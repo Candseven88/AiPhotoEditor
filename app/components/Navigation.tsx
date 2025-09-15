@@ -21,21 +21,21 @@ export default function Navigation() {
   const navigationItems = [
     {
       id: 'username-to-image',
-      label: 'Username to Image',
+      label: 'AI UserName to Photo Editor',
       icon: Sparkles,
       description: 'Generate personalized avatars',
       type: 'tab'
     },
     {
       id: 'text-to-image',
-      label: 'Text to Image',
+      label: 'AI Text to Photo Editor',
       icon: Wand2,
       description: 'Create images from text',
       type: 'tab'
     },
     {
       id: 'image-to-image',
-      label: 'Image to Image',
+      label: 'AI Photo to Photo Editor',
       icon: Palette,
       description: 'Transform existing images',
       type: 'tab'
@@ -44,11 +44,11 @@ export default function Navigation() {
 
   const pageItems = [
     {
-      id: 'nanobanana',
-      label: 'NanoBanana',
+      id: 'aiphotoeditor',
+      label: 'AI Photo Editor',
       icon: Sparkles,
       description: 'AI Image Generation Tools',
-      href: '/nanobanana',
+      href: '/aiphotoeditor',
       type: 'page'
     },
     {
@@ -99,13 +99,13 @@ export default function Navigation() {
           >
             <div className="relative">
               <div className="w-8 h-8 bg-gradient-to-r from-orange-400 to-yellow-400 rounded-lg flex items-center justify-center shadow-md">
-                <img src="/Logo.png" alt="NanoBanana" className="w-6 h-6 object-contain" />
+                <img src="/Logo.png" alt="AI Photo Editor" className="w-6 h-6 object-contain" />
               </div>
             </div>
             <div>
               <h1 className="text-xl font-bold">
-                <span className="gradient-text">NanoBanana</span>
-                <span className="text-gray-800"> AI</span>
+                <span className="gradient-text">AI Photo</span>
+                <span className="text-gray-800"> Editor</span>
               </h1>
             </div>
           </motion.div>

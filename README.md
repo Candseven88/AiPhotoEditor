@@ -1,4 +1,4 @@
-# NanoBanana AI Image Generator
+# AI Photo Editor
 
 一个基于 BigModel Cogview-3 的简洁AI图像生成器，专注于核心功能。
 
@@ -191,6 +191,6 @@ MIT License
 
 ---
 
-**NanoBanana AI - 让创意更简单** 🍌✨
+**AI Photo Editor - 让创意更简单** ✨📸
 
 **Seedream 4.0 - 专业AI图像生成的未来** ⚡🎨 

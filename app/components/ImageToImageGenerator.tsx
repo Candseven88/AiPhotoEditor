@@ -183,7 +183,7 @@ export default function ImageToImageGenerator() {
 
       // 创建下载链接
       const link = document.createElement('a')
-      link.download = `nano-banana-transformed-${Date.now()}-${index}.png`
+              link.download = `aiphotoeditor-transformed-${Date.now()}-${index}.png`
       
       // 对于 base64 数据，需要特殊处理
       if (originalUrl.startsWith('data:image/')) {
