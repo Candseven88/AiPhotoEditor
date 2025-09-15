@@ -320,6 +320,22 @@ export default function Footer() {
                     )}
                   </span>
                 ))}
+                <span className="text-gray-600">•</span>
+                <motion.a
+                  href="https://goodaitools.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="opacity-80 hover:opacity-100 transition-opacity"
+                  whileHover={{ scale: 1.05 }}
+                  title="Good AI Tools - Featured AI Tools Directory"
+                >
+                  <img 
+                    src="https://goodaitools.com/assets/images/badge.png" 
+                    alt="Good AI Tools" 
+                    height="54"
+                    className="h-[32px] w-auto"
+                  />
+                </motion.a>
               </div>
             </motion.div>
           </div>
