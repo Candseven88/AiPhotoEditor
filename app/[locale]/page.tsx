@@ -32,14 +32,15 @@ import Link from 'next/link'
 import { useTranslation } from '../../lib/use-translation'
 
 interface PageProps {
-  params: {
+  params: Promise<{
     locale: string
-  }
+  }>
 }
 
-export default function HomePage({ params }: PageProps) {
+export default async function HomePage({ params }: PageProps) {
+  const { locale } = await params
   const [activeTab, setActiveTab] = useState<'username-to-image' | 'text-to-image' | 'image-to-image'>('username-to-image')
-  const { t, locale } = useTranslation()
+  const { t } = useTranslation()
   
   // 生成带语言前缀的链接
   const getLocalizedHref = (href: string) => {

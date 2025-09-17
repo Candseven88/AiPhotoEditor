@@ -75,12 +75,13 @@ const sections = [
 ]
 
 interface PageProps {
-  params: {
+  params: Promise<{
     locale: string
-  }
+  }>
 }
 
-export default function PrivacyPage({ params }: PageProps) {
+export default async function PrivacyPage({ params }: PageProps) {
+  const { locale } = await params
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-orange-50/30 relative overflow-hidden">
       <Navigation />

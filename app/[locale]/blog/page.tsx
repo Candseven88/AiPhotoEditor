@@ -76,14 +76,15 @@ const blogPosts = [
 ]
 
 interface PageProps {
-  params: {
+  params: Promise<{
     locale: string
-  }
+  }>
 }
 
 
 
-export default function BlogPage({ params }: PageProps) {
+export default async function BlogPage({ params }: PageProps) {
+  const { locale } = await params
   const { t } = useTranslation()
   const [selectedTag, setSelectedTag] = useState(t('common.all'))
   

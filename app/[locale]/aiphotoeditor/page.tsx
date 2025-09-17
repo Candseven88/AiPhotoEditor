@@ -29,12 +29,13 @@ import GradientButton from '../../components/ui/GradientButton'
 import Card from '../../components/ui/Card'
 
 interface PageProps {
-  params: {
+  params: Promise<{
     locale: string
-  }
+  }>
 }
 
-export default function AIPhotoEditorPage({ params }: PageProps) {
+export default async function AIPhotoEditorPage({ params }: PageProps) {
+  const { locale } = await params
   const [activeTab, setActiveTab] = useState<'username-to-image' | 'text-to-image' | 'image-to-image'>('username-to-image')
   const { t } = useTranslation()
 

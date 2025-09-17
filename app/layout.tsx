@@ -9,8 +9,9 @@ import { SpeedInsights } from '@vercel/speed-insights/next'
 const inter = Inter({ subsets: ['latin'] })
 
 // 生成多语言metadata
-export async function generateMetadata({ params }: { params: { locale?: string } }): Promise<Metadata> {
-  const locale = params?.locale || 'en'
+export async function generateMetadata({ params }: { params: Promise<{ locale?: string }> }): Promise<Metadata> {
+  const resolvedParams = await params
+  const locale = resolvedParams?.locale || 'en'
   
   const metadata = {
     en: {
@@ -71,14 +72,15 @@ export async function generateMetadata({ params }: { params: { locale?: string }
   }
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
   params,
 }: {
   children: React.ReactNode
-  params?: { locale?: string }
+  params?: Promise<{ locale?: string }>
 }) {
-  const locale = params?.locale || 'en'
+  const resolvedParams = params ? await params : {}
+  const locale = resolvedParams?.locale || 'en'
   
   // 结构化数据JSON-LD
   const structuredData = {

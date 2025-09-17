@@ -40,14 +40,15 @@ const examplePrompts = [
 
 
 interface PageProps {
-  params: {
+  params: Promise<{
     locale: string
-  }
+  }>
 }
 
 
 
-export default function SeedreamPage({ params }: PageProps) {
+export default async function SeedreamPage({ params }: PageProps) {
+  const { locale } = await params
   const { t } = useTranslation()
   
   const features = [

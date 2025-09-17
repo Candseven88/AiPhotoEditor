@@ -8,12 +8,13 @@ import GradientButton from '../../components/ui/GradientButton'
 import { useTranslation } from '../../../lib/use-translation'
 
 interface PageProps {
-  params: {
+  params: Promise<{
     locale: string
-  }
+  }>
 }
 
-export default function AboutPage({ params }: PageProps) {
+export default async function AboutPage({ params }: PageProps) {
+  const { locale } = await params
   const { t } = useTranslation()
   
   const values = [
