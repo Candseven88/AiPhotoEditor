@@ -34,10 +34,20 @@ interface PageProps {
   }>
 }
 
-export default async function AIPhotoEditorPage({ params }: PageProps) {
-  const { locale } = await params
+export default function AIPhotoEditorPage({ params }: PageProps) {
+  const [locale, setLocale] = useState('')
+  const [mounted, setMounted] = useState(false)
   const [activeTab, setActiveTab] = useState<'username-to-image' | 'text-to-image' | 'image-to-image'>('username-to-image')
   const { t } = useTranslation()
+
+  useEffect(() => {
+    const getLocale = async () => {
+      const resolvedParams = await params
+      setLocale(resolvedParams.locale)
+      setMounted(true)
+    }
+    getLocale()
+  }, [params])
 
   const tabs = [
     {

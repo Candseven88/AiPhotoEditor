@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 
 import { Sparkles, Wand2, Loader2, Download, ImageIcon, Zap, Star, Clock, Users } from 'lucide-react'
@@ -47,9 +47,19 @@ interface PageProps {
 
 
 
-export default async function SeedreamPage({ params }: PageProps) {
-  const { locale } = await params
+export default function SeedreamPage({ params }: PageProps) {
+  const [locale, setLocale] = useState('')
+  const [mounted, setMounted] = useState(false)
   const { t } = useTranslation()
+
+  useEffect(() => {
+    const getLocale = async () => {
+      const resolvedParams = await params
+      setLocale(resolvedParams.locale)
+      setMounted(true)
+    }
+    getLocale()
+  }, [params])
   
   const features = [
     {

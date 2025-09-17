@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 
 import { Calendar, User, ArrowRight, Sparkles, Zap, TrendingUp } from 'lucide-react'
@@ -77,16 +77,24 @@ const blogPosts = [
 
 interface PageProps {
   params: Promise<{
-    locale: string
-  }>
+      locale: string
+}>
 }
 
-
-
-export default async function BlogPage({ params }: PageProps) {
-  const { locale } = await params
+export default function BlogPage({ params }: PageProps) {
+  const [locale, setLocale] = useState('')
+  const [mounted, setMounted] = useState(false)
   const { t } = useTranslation()
   const [selectedTag, setSelectedTag] = useState(t('common.all'))
+
+  useEffect(() => {
+    const getLocale = async () => {
+      const resolvedParams = await params
+      setLocale(resolvedParams.locale)
+      setMounted(true)
+    }
+    getLocale()
+  }, [params])
   
   const allTags = [t('common.all'), ...Array.from(new Set(blogPosts.flatMap(post => post.tags)))]
   

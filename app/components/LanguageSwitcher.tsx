@@ -15,9 +15,17 @@ export default function LanguageSwitcher() {
   const pathname = usePathname()
   const [isOpen, setIsOpen] = useState(false)
   const [currentLocale, setCurrentLocale] = useState('en')
+  const [mounted, setMounted] = useState(false)
+
+  // 确保只在客户端运行
+  useEffect(() => {
+    setMounted(true)
+  }, [])
 
   // 检测当前语言
   useEffect(() => {
+    if (!mounted) return
+    
     const pathSegments = pathname.split('/')
     const localeFromPath = pathSegments[1]
     if (languages.some(lang => lang.code === localeFromPath)) {
@@ -25,9 +33,19 @@ export default function LanguageSwitcher() {
     } else {
       setCurrentLocale('en')
     }
-  }, [pathname])
+  }, [pathname, mounted])
 
   const currentLanguage = languages.find(lang => lang.code === currentLocale) || languages[0]
+
+  // 防止SSR水合不匹配
+  if (!mounted) {
+    return (
+      <div className="flex items-center gap-1 px-3 py-2 rounded-lg bg-white/50 border border-gray-200/50 backdrop-blur-sm min-w-[120px]">
+        <Globe className="w-4 h-4 text-gray-600" />
+        <span className="text-sm font-medium text-gray-700">English</span>
+      </div>
+    )
+  }
 
   const switchLanguage = (newLocale: string) => {
     setCurrentLocale(newLocale)

@@ -1,13 +1,21 @@
 // 根页面 - 显示简单的重定向页面
 'use client'
 
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 
 export default function RootPage() {
   const router = useRouter()
+  const [mounted, setMounted] = useState(false)
+  
+  // 确保只在客户端运行
+  useEffect(() => {
+    setMounted(true)
+  }, [])
   
   useEffect(() => {
+    if (!mounted) return
+    
     // 检测浏览器语言
     const acceptLanguage = navigator.language || 'en'
     const isJapanese = acceptLanguage.startsWith('ja')
@@ -18,7 +26,7 @@ export default function RootPage() {
     } else {
       router.replace('/en')
     }
-  }, [router])
+  }, [router, mounted])
 
   // 显示加载页面，避免白屏
   return (
