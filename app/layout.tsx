@@ -8,28 +8,52 @@ import { SpeedInsights } from '@vercel/speed-insights/next'
 
 const inter = Inter({ subsets: ['latin'] })
 
-export const metadata: Metadata = {
-  title: 'AI Photo Editor - Advanced AI Image Generation',
-  description: 'Transform your ideas into stunning visuals with our advanced AI image generation platform. Create personalized avatars, generate images from text, and transform photos with cutting-edge AI technology.',
-  keywords: 'AI, image generation, artificial intelligence, avatar, text to image, image to image, AI Photo Editor',
-  icons: {
-    icon: '/Logo.png',
-    shortcut: '/Logo.png',
-    apple: '/Logo.png',
-  },
-  verification: {
-    google: 'PnF_JUbsBtHyPbnWvat0KgdAXjCaj9TdlBIXBWUmnJQ',
-  },
-  metadataBase: new URL('https://www.aiphotoeditor.space'),
+// 生成多语言metadata
+export async function generateMetadata({ params }: { params: { locale?: string } }): Promise<Metadata> {
+  const locale = params?.locale || 'en'
+  
+  const metadata = {
+    en: {
+      title: 'AI Photo Editor - Advanced AI Image Generation',
+      description: 'Transform your ideas into stunning visuals with our advanced AI image generation platform. Create personalized avatars, generate images from text, and transform photos with cutting-edge AI technology.',
+      keywords: 'AI, image generation, artificial intelligence, avatar, text to image, image to image, AI Photo Editor',
+    },
+    ja: {
+      title: 'AI フォトエディター - 高度なAI画像生成',
+      description: '最先端のAI画像生成プラットフォームでアイデアを美しいビジュアルに変換します。パーソナライズされたアバターの作成、テキストからの画像生成、最新のAI技術による写真変換を実現。',
+      keywords: 'AI, 画像生成, 人工知能, アバター, テキストから画像, 画像から画像, AI フォトエディター',
+    }
+  }
+
+  const currentMeta = metadata[locale as keyof typeof metadata] || metadata.en
+
+  return {
+    title: currentMeta.title,
+    description: currentMeta.description,
+    keywords: currentMeta.keywords,
+    icons: {
+      icon: '/Logo.png',
+      shortcut: '/Logo.png',
+      apple: '/Logo.png',
+    },
+    verification: {
+      google: 'PnF_JUbsBtHyPbnWvat0KgdAXjCaj9TdlBIXBWUmnJQ',
+    },
+    metadataBase: new URL('https://www.aiphotoeditor.space'),
+  }
 }
 
 export default function RootLayout({
   children,
+  params,
 }: {
   children: React.ReactNode
+  params?: { locale?: string }
 }) {
+  const locale = params?.locale || 'en'
+  
   return (
-    <html lang="en">
+    <html lang={locale}>
       <head>
         {/* Google Analytics */}
         <Script

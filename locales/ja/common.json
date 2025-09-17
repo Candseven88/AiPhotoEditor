@@ -1,0 +1,96 @@
+{
+  "navigation": {
+    "home": "ホーム",
+    "about": "アバウト",
+    "blog": "ブログ",
+    "aiPhotoEditor": "AI フォトエディター",
+    "seedream": "Seedream 4.0",
+    "backToMainPage": "メインページに戻る",
+    "latestAIInsights": "最新のAI知見",
+    "learnAboutUs": "私たちについて",
+    "aiImageGenerationTools": "AI画像生成ツール",
+    "advancedAIImageGenerator": "高度なAI画像生成器"
+  },
+  "hero": {
+    "title": "AI フォトエディター",
+    "subtitle": "アイデアを美しいビジュアルに変換",
+    "description": "最先端のAI技術でパーソナライズされたアバターを作成し、テキストから画像を生成し、写真を変換します。",
+    "creativeBananaAssistant": "🍌 クリエイティブなバナナアシスタントに出会おう",
+    "funAccessible": "AI写真編集を楽しく・アクセシブルに",
+    "getStartedNow": "今すぐ始める",
+    "learnAIEditingTips": "AI編集のコツを学ぶ",
+    "chooseCreativePath": "クリエイティブパスを選択",
+    "choosePathDescription": "あなたのビジョンを実現する3つの強力なAIツール。あなたのクリエイティブニーズに合う方法から始めましょう。",
+    "trySeadreamPro": "Seedream 4.0 Proを試す",
+    "readSuccessStories": "成功事例を読む"
+  },
+  "stats": {
+    "imagesGenerated": "生成画像数",
+    "happyUsers": "満足ユーザー数",
+    "successRate": "成功率",
+    "responseTime": "応答時間"
+  },
+  "features": {
+    "lightningFast": "高速処理",
+    "lightningFastDesc": "5-10秒で高品質な画像を生成",
+    "premiumQuality": "プレミアム品質",
+    "premiumQualityDesc": "高度なAIモデルによる美しい結果",
+    "userFriendly": "使いやすい",
+    "userFriendlyDesc": "誰でも使えるシンプルなインターフェース",
+    "alwaysAvailable": "常時利用可能",
+    "alwaysAvailableDesc": "24時間365日、待ち時間なしのサービス"
+  },
+  "tabs": {
+    "usernameToImage": "AIユーザー名フォトエディター",
+    "usernameToImageDesc": "ユーザー名からパーソナライズされたアバターを生成",
+    "textToImage": "AIテキストフォトエディター",
+    "textToImageDesc": "テキストの説明から画像を生成",
+    "imageToImage": "AIフォトtoフォトエディター",
+    "imageToImageDesc": "既存の画像をAIで変換"
+  },
+  "benefits": {
+    "whyChoose": "AI フォトエディターを選ぶ理由",
+    "whyChooseDesc": "最先端プラットフォームで次世代のAI画像生成を体験してください。",
+    "creativeFreedom": "創造の自由",
+    "creativeFreedomDesc": "あなたの想像力の無限の可能性",
+    "securePrivate": "安全・プライベート",
+    "securePrivateDesc": "エンタープライズグレードのセキュリティでデータを保護",
+    "professionalResults": "プロフェッショナルな結果",
+    "professionalResultsDesc": "業界をリードするAI技術で最高の成果を"
+  },
+  "showcase": {
+    "realResults": "実際のユーザーからの実際の結果",
+    "realResultsDesc": "世界中のクリエイターがAI フォトエディターを使ってコンテンツを変換し、エンゲージメントを向上させる様子をご覧ください。",
+    "masterProfessionalEditing": "プロフェッショナルなAI編集をマスター",
+    "seeTheMagic": "魔法の瞬間を見る",
+    "seeTheMagicDesc": "実際の例を通して、私たちのAI技術の驚くべき変換力を目撃してください。",
+    "original": "オリジナル",
+    "aiEnhanced": "AI強化版",
+    "styleTransformation": "スタイル変換",
+    "styleTransformationDesc": "クリエイティブなAI強化で写真を変換",
+    "colorEnhancement": "カラー強化",
+    "colorEnhancementDesc": "鮮やかな色とドラマチックな効果を追加",
+    "sceneTransformation": "シーン変換",
+    "sceneTransformationDesc": "背景と環境を変更",
+    "portraitEnhancement": "ポートレート強化",
+    "portraitEnhancementDesc": "美しいAI効果とアーティスティックなスタイルでポートレートを変換。",
+    "backgroundMagic": "背景マジック",
+    "backgroundMagicDesc": "ドラマチックなシーンと環境で背景を置き換え。",
+    "moreAmazingTransformations": "さらに驚きの変換",
+    "vehicleTransformation": "車両変換",
+    "vehicleTransformationDesc": "車両を素晴らしい環境に配置",
+    "colorStyle": "カラー・スタイル",
+    "colorStyleDesc": "色を強化し、アーティスティックな効果を追加"
+  },
+  "common": {
+    "loading": "読み込み中...",
+    "error": "エラー",
+    "success": "成功",
+    "cancel": "キャンセル",
+    "confirm": "確認",
+    "save": "保存",
+    "edit": "編集",
+    "delete": "削除",
+    "close": "閉じる"
+  }
+} 

@@ -14,30 +14,38 @@ import {
   Users
 } from 'lucide-react'
 import Link from 'next/link'
+import { useTranslation } from '../../lib/use-translation'
+import LanguageSwitcher from './LanguageSwitcher'
 
 export default function Navigation() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const { t, locale } = useTranslation()
+
+  // 生成带语言前缀的链接
+  const getLocalizedHref = (href: string) => {
+    return `/${locale}${href}`
+  }
 
   const navigationItems = [
     {
       id: 'username-to-image',
-      label: 'AI UserName to Photo Editor',
+      label: t('tabs.usernameToImage'),
       icon: Sparkles,
-      description: 'Generate personalized avatars',
+      description: t('tabs.usernameToImageDesc'),
       type: 'tab'
     },
     {
       id: 'text-to-image',
-      label: 'AI Text to Photo Editor',
+      label: t('tabs.textToImage'),
       icon: Wand2,
-      description: 'Create images from text',
+      description: t('tabs.textToImageDesc'),
       type: 'tab'
     },
     {
       id: 'image-to-image',
-      label: 'AI Photo to Photo Editor',
+      label: t('tabs.imageToImage'),
       icon: Palette,
-      description: 'Transform existing images',
+      description: t('tabs.imageToImageDesc'),
       type: 'tab'
     }
   ]
@@ -45,34 +53,34 @@ export default function Navigation() {
   const pageItems = [
     {
       id: 'aiphotoeditor',
-      label: 'AI Photo Editor',
+      label: t('navigation.aiPhotoEditor'),
       icon: Sparkles,
-      description: 'AI Image Generation Tools',
-      href: '/aiphotoeditor',
+      description: t('navigation.aiImageGenerationTools'),
+      href: getLocalizedHref('/aiphotoeditor'),
       type: 'page'
     },
     {
       id: 'seedream',
-      label: 'Seedream 4.0',
+      label: t('navigation.seedream'),
       icon: Zap,
-      description: 'Advanced AI Image Generator',
-      href: '/seedream',
+      description: t('navigation.advancedAIImageGenerator'),
+      href: getLocalizedHref('/seedream'),
       type: 'page'
     },
     {
       id: 'blog',
-      label: 'Blog',
+      label: t('navigation.blog'),
       icon: BookOpen,
-      description: 'Latest AI insights',
-      href: '/blog',
+      description: t('navigation.latestAIInsights'),
+      href: getLocalizedHref('/blog'),
       type: 'page'
     },
     {
       id: 'about',
-      label: 'About',
+      label: t('navigation.about'),
       icon: Users,
-      description: 'Learn about us',
-      href: '/about',
+      description: t('navigation.learnAboutUs'),
+      href: getLocalizedHref('/about'),
       type: 'page'
     }
   ]
@@ -104,22 +112,22 @@ export default function Navigation() {
             </div>
             <div>
               <h1 className="text-xl font-bold">
-                <span className="gradient-text">AI Photo</span>
-                <span className="text-gray-800"> Editor</span>
+                <span className="gradient-text">{t('hero.title').split(' ')[0]} {t('hero.title').split(' ')[1]}</span>
+                <span className="text-gray-800"> {t('hero.title').split(' ')[2]}</span>
               </h1>
             </div>
           </motion.div>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-1">
-            <Link href="/">
+            <Link href={`/${locale}`}>
               <motion.button
                 className="flex items-center space-x-2 px-4 py-2 rounded-xl text-gray-700 hover:text-orange-600 hover:bg-orange-50 transition-all duration-200 group"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
                 <Home className="w-4 h-4" />
-                <span className="font-medium">Home</span>
+                <span className="font-medium">{t('navigation.home')}</span>
               </motion.button>
             </Link>
             
@@ -135,6 +143,9 @@ export default function Navigation() {
                 </motion.button>
               </Link>
             ))}
+            
+            {/* Language Switcher */}
+            <LanguageSwitcher />
           </div>
 
           {/* Mobile Menu Button */}
@@ -163,7 +174,7 @@ export default function Navigation() {
             transition={{ duration: 0.3 }}
           >
             <div className="space-y-2">
-              <Link href="/">
+              <Link href={`/${locale}`}>
                 <motion.button
                   onClick={() => setIsMobileMenuOpen(false)}
                   className="flex items-center space-x-3 w-full px-4 py-3 rounded-xl text-gray-700 hover:text-orange-600 hover:bg-orange-50 transition-all duration-200 group"
@@ -172,9 +183,9 @@ export default function Navigation() {
                 >
                   <Home className="w-5 h-5" />
                   <div className="text-left">
-                    <div className="font-medium">Home</div>
+                    <div className="font-medium">{t('navigation.home')}</div>
                     <div className="text-sm text-gray-500 group-hover:text-orange-500">
-                      Back to main page
+                      {t('navigation.backToMainPage')}
                     </div>
                   </div>
                 </motion.button>

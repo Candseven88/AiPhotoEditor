@@ -1,0 +1,96 @@
+{
+  "navigation": {
+    "home": "Home",
+    "about": "About",
+    "blog": "Blog",
+    "aiPhotoEditor": "AI Photo Editor",
+    "seedream": "Seedream 4.0",
+    "backToMainPage": "Back to main page",
+    "latestAIInsights": "Latest AI insights",
+    "learnAboutUs": "Learn about us",
+    "aiImageGenerationTools": "AI Image Generation Tools",
+    "advancedAIImageGenerator": "Advanced AI Image Generator"
+  },
+  "hero": {
+    "title": "AI Photo Editor",
+    "subtitle": "Transform Your Ideas into Stunning Visuals",
+    "description": "Unleash the power of advanced AI to create personalized avatars, generate images from text, and transform photos with cutting-edge technology.",
+    "creativeBananaAssistant": "🍌 Meet Your Creative Banana Assistant",
+    "funAccessible": "Making AI photo editing fun & accessible",
+    "getStartedNow": "Get Started Now",
+    "learnAIEditingTips": "Learn AI Editing Tips",
+    "chooseCreativePath": "Choose Your Creative Path",
+    "choosePathDescription": "Three powerful AI tools to bring your vision to life. Start with any method that suits your creative needs.",
+    "trySeadreamPro": "Try Seedream 4.0 Pro",
+    "readSuccessStories": "Read Success Stories"
+  },
+  "stats": {
+    "imagesGenerated": "Images Generated",
+    "happyUsers": "Happy Users",
+    "successRate": "Success Rate",
+    "responseTime": "Response Time"
+  },
+  "features": {
+    "lightningFast": "Lightning Fast",
+    "lightningFastDesc": "Generate high-quality images in 5-10 seconds",
+    "premiumQuality": "Premium Quality",
+    "premiumQualityDesc": "Powered by advanced AI models for stunning results",
+    "userFriendly": "User Friendly",
+    "userFriendlyDesc": "Simple interface designed for everyone",
+    "alwaysAvailable": "Always Available",
+    "alwaysAvailableDesc": "24/7 service with no waiting queues"
+  },
+  "tabs": {
+    "usernameToImage": "AI UserName to Photo Editor",
+    "usernameToImageDesc": "Generate a personalized avatar from your username",
+    "textToImage": "AI Text to Photo Editor",
+    "textToImageDesc": "Generate images from text descriptions",
+    "imageToImage": "AI Photo to Photo Editor",
+    "imageToImageDesc": "Transform existing images with AI"
+  },
+  "benefits": {
+    "whyChoose": "Why Choose AI Photo Editor?",
+    "whyChooseDesc": "Experience the next generation of AI-powered image creation with our cutting-edge platform.",
+    "creativeFreedom": "Creative Freedom",
+    "creativeFreedomDesc": "Unlimited possibilities for your imagination",
+    "securePrivate": "Secure & Private",
+    "securePrivateDesc": "Your data is protected with enterprise-grade security",
+    "professionalResults": "Professional Results",
+    "professionalResultsDesc": "Industry-leading AI technology for best outcomes"
+  },
+  "showcase": {
+    "realResults": "Real Results from Real Users",
+    "realResultsDesc": "See how creators worldwide use AI Photo Editor to transform their content and boost engagement.",
+    "masterProfessionalEditing": "Master Professional AI Editing",
+    "seeTheMagic": "See the Magic in Action",
+    "seeTheMagicDesc": "Witness the incredible transformation power of our AI technology through real examples.",
+    "original": "Original",
+    "aiEnhanced": "AI Enhanced",
+    "styleTransformation": "Style Transformation",
+    "styleTransformationDesc": "Transform photos with creative AI enhancements",
+    "colorEnhancement": "Color Enhancement",
+    "colorEnhancementDesc": "Add vibrant colors and dramatic effects",
+    "sceneTransformation": "Scene Transformation",
+    "sceneTransformationDesc": "Change backgrounds and environments",
+    "portraitEnhancement": "Portrait Enhancement",
+    "portraitEnhancementDesc": "Transform portraits with stunning AI effects and artistic styles.",
+    "backgroundMagic": "Background Magic",
+    "backgroundMagicDesc": "Replace backgrounds with dramatic scenes and environments.",
+    "moreAmazingTransformations": "More Amazing Transformations",
+    "vehicleTransformation": "Vehicle Transformation",
+    "vehicleTransformationDesc": "Place vehicles in fantastic environments",
+    "colorStyle": "Color & Style",
+    "colorStyleDesc": "Enhance colors and add artistic effects"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "save": "Save",
+    "edit": "Edit",
+    "delete": "Delete",
+    "close": "Close"
+  }
+} 

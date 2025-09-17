@@ -9,7 +9,7 @@
 - 🎭 **Image to Image**: 图像风格转换（付费功能）
 - ⚡ **Seedream 4.0**: 专业级AI图像生成器页面
 - 📝 **博客系统**: Seedream相关技术资讯和教程
-- 🌍 **多语言支持**: 支持英文和中文界面
+- 🌍 **多语言支持**: 支持英文和日文界面，自动语言检测和手动切换
 - 📱 **响应式设计**: 完美适配各种设备
 - ⚡ **快速生成**: 5-10秒生成高质量图像
 
@@ -171,9 +171,39 @@ npm run lint
 ### Do-follow Backlinks
 - **Good AI Tools**: 已获得 [Good AI Tools](https://goodaitools.com) 平台认证，badge 已集成在网站 Footer 中
 
+## 🌍 多语言支持
+
+### 支持的语言
+- **英语 (English)**: 默认语言，路径 `/en`
+- **日语 (日本語)**: 完整日语界面，路径 `/ja`
+
+### 语言切换
+- **自动检测**: 根据浏览器语言设置自动重定向
+- **手动切换**: 导航栏右上角的语言切换器
+- **URL路由**: 基于 `/[locale]` 动态路由实现
+
+### 技术实现
+- **文件结构**: 采用 Next.js App Router 的 `[locale]` 动态路由
+- **翻译管理**: JSON文件存储翻译内容 (`locales/en/common.json`, `locales/ja/common.json`)
+- **Hook系统**: 自定义 `useTranslation` hook 管理翻译状态
+- **SEO优化**: 每种语言独立URL，利于搜索引擎优化
+
+### 添加新语言
+1. 在 `locales/` 文件夹中创建新的语言文件夹
+2. 复制 `en/common.json` 并翻译内容
+3. 更新 `lib/use-translation.ts` 中的 `translations` 对象
+4. 在 `LanguageSwitcher.tsx` 中添加新语言选项
+
 ## 📝 更新日志
 
-### v0.2.3 (最新)
+### v0.3.0 (最新)
+- ✅ 实现完整的多语言支持系统
+- ✅ 添加英语和日语界面
+- ✅ 基于 Next.js App Router 的国际化路由
+- ✅ 自动语言检测和手动切换功能
+- ✅ SEO友好的多语言URL结构
+
+### v0.2.3
 - ✅ 集成 Vercel Speed Insights，实时监控网站性能指标
 - ✅ 添加页面加载速度和Core Web Vitals追踪
 - ✅ 优化性能数据收集，提升用户体验分析能力

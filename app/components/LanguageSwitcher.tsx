@@ -3,11 +3,11 @@
 import { useRouter, usePathname } from 'next/navigation'
 import { motion } from 'framer-motion'
 import { Globe, ChevronDown } from 'lucide-react'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 const languages = [
   { code: 'en', name: 'English', flag: '🇺🇸' },
-  { code: 'zh', name: '中文', flag: '🇨🇳' }
+  { code: 'ja', name: '日本語', flag: '🇯🇵' }
 ]
 
 export default function LanguageSwitcher() {
@@ -16,13 +16,36 @@ export default function LanguageSwitcher() {
   const [isOpen, setIsOpen] = useState(false)
   const [currentLocale, setCurrentLocale] = useState('en')
 
+  // 检测当前语言
+  useEffect(() => {
+    const pathSegments = pathname.split('/')
+    const localeFromPath = pathSegments[1]
+    if (languages.some(lang => lang.code === localeFromPath)) {
+      setCurrentLocale(localeFromPath)
+    } else {
+      setCurrentLocale('en')
+    }
+  }, [pathname])
+
   const currentLanguage = languages.find(lang => lang.code === currentLocale) || languages[0]
 
   const switchLanguage = (newLocale: string) => {
     setCurrentLocale(newLocale)
-    // For now, we'll just update the local state
-    // In the future, you can implement actual language switching
     setIsOpen(false)
+    
+    // 构建新的路径，适应 [locale] 路由结构
+    const pathSegments = pathname.split('/')
+    
+    // 如果当前路径包含语言代码，替换它
+    if (pathSegments[1] && languages.some(lang => lang.code === pathSegments[1])) {
+      pathSegments[1] = newLocale
+    } else {
+      // 如果没有语言代码，添加新的语言代码
+      pathSegments.splice(1, 0, newLocale)
+    }
+    
+    const newPath = pathSegments.join('/')
+    router.push(newPath)
   }
 
   return (
