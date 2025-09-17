@@ -2,8 +2,8 @@
 
 import { motion } from 'framer-motion'
 import { Shield, Eye, Lock, FileText, AlertCircle, Users } from 'lucide-react'
-import Navigation from '../components/Navigation'
-import Card from '../components/ui/Card'
+import Navigation from '../../components/Navigation'
+import Card from '../../components/ui/Card'
 
 const sections = [
   {
@@ -74,7 +74,13 @@ const sections = [
   }
 ]
 
-export default function PrivacyPage() {
+interface PageProps {
+  params: {
+    locale: string
+  }
+}
+
+export default function PrivacyPage({ params }: PageProps) {
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-orange-50/30 relative overflow-hidden">
       <Navigation />

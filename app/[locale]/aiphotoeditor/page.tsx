@@ -19,37 +19,45 @@ import {
   Award,
   Lightbulb
 } from 'lucide-react'
-import ImageGenerator from '../components/ImageGenerator'
-import ImageToImageGenerator from '../components/ImageToImageGenerator'
-import UsernameToImageGenerator from '../components/UsernameToImageGenerator'
-import Navigation from '../components/Navigation'
+import ImageGenerator from '../../components/ImageGenerator'
+import ImageToImageGenerator from '../../components/ImageToImageGenerator'
+import UsernameToImageGenerator from '../../components/UsernameToImageGenerator'
+import Navigation from '../../components/Navigation'
+import { useTranslation } from '../../../lib/use-translation'
 
-import GradientButton from '../components/ui/GradientButton'
-import Card from '../components/ui/Card'
+import GradientButton from '../../components/ui/GradientButton'
+import Card from '../../components/ui/Card'
 
-export default function AIPhotoEditorPage() {
+interface PageProps {
+  params: {
+    locale: string
+  }
+}
+
+export default function AIPhotoEditorPage({ params }: PageProps) {
   const [activeTab, setActiveTab] = useState<'username-to-image' | 'text-to-image' | 'image-to-image'>('username-to-image')
+  const { t } = useTranslation()
 
   const tabs = [
     {
       id: 'username-to-image',
-      label: 'AI UserName to Photo Editor',
+      label: t('tabs.usernameToImage'),
       icon: Sparkles,
-      description: 'Generate a personalized avatar from your username',
+      description: t('tabs.usernameToImageDesc'),
       gradient: 'from-orange-500 to-yellow-500'
     },
     {
       id: 'text-to-image',
-      label: 'AI Text to Photo Editor',
+      label: t('tabs.textToImage'),
       icon: Wand2,
-      description: 'Generate images from text descriptions',
+      description: t('tabs.textToImageDesc'),
       gradient: 'from-blue-500 to-purple-500'
     },
     {
       id: 'image-to-image',
-      label: 'AI Photo to Photo Editor',
+      label: t('tabs.imageToImage'),
       icon: Palette,
-      description: 'Transform existing images with AI',
+      description: t('tabs.imageToImageDesc'),
       gradient: 'from-green-500 to-teal-500'
     }
   ]
@@ -57,26 +65,26 @@ export default function AIPhotoEditorPage() {
   const features = [
     {
       icon: Zap,
-      title: 'Lightning Fast',
-      description: 'Generate high-quality images in 5-10 seconds',
+      title: t('features.lightningFast'),
+      description: t('features.lightningFastDesc'),
       gradient: 'from-yellow-400 to-orange-500'
     },
     {
       icon: Star,
-      title: 'Premium Quality',
-      description: 'Powered by advanced AI models for stunning results',
+      title: t('features.premiumQuality'),
+      description: t('features.premiumQualityDesc'),
       gradient: 'from-purple-400 to-pink-500'
     },
     {
       icon: Users,
-      title: 'User Friendly',
-      description: 'Simple interface designed for everyone',
+      title: t('features.userFriendly'),
+      description: t('features.userFriendlyDesc'),
       gradient: 'from-blue-400 to-indigo-500'
     },
     {
       icon: Clock,
-      title: 'Always Available',
-      description: '24/7 service with no waiting queues',
+      title: t('features.alwaysAvailable'),
+      description: t('features.alwaysAvailableDesc'),
       gradient: 'from-green-400 to-emerald-500'
     }
   ]
@@ -216,8 +224,8 @@ export default function AIPhotoEditorPage() {
                 </div>
               </div>
               <h1 className="ml-4 text-6xl md:text-7xl font-bold">
-                <span className="gradient-text">AI Photo Editor</span>
-                <span className="text-gray-800"> AI</span>
+                <span className="gradient-text">{t('hero.title').split(' ').slice(0, 2).join(' ')}</span>
+                <span className="text-gray-800"> {t('hero.title').split(' ').slice(2).join(' ')}</span>
               </h1>
             </motion.div>
             
@@ -228,13 +236,12 @@ export default function AIPhotoEditorPage() {
               transition={{ duration: 0.8, delay: 0.3 }}
             >
               <h2 className="text-3xl md:text-5xl font-bold text-gray-800 mb-6 leading-tight">
-                Professional AI Image Generation
-                <span className="gradient-text"> Made Simple</span>
+                {t('aiphotoeditor.title')}
+                <span className="gradient-text"> {t('aiphotoeditor.subtitle')}</span>
               </h2>
               
               <p className="text-xl md:text-2xl text-gray-600 mb-12 max-w-4xl mx-auto leading-relaxed">
-                Three powerful AI tools in one platform. Create personalized avatars, 
-                generate images from text, and transform photos with cutting-edge technology.
+                {t('aiphotoeditor.description')}
               </p>
             </motion.div>
 
@@ -321,7 +328,7 @@ export default function AIPhotoEditorPage() {
                 transition={{ duration: 0.6, delay: 0.6 }}
               >
                 <p className="text-base font-medium text-gray-600">
-                  🎨 Professional AI Photo Editing Made Simple
+                  🎨 {t('aiphotoeditor.title')} {t('aiphotoeditor.subtitle')}
                 </p>
               </motion.div>
             </motion.div>
@@ -367,11 +374,10 @@ export default function AIPhotoEditorPage() {
               transition={{ duration: 0.8, delay: 0.5 }}
             >
               <h3 className="text-2xl md:text-3xl font-bold text-gray-800 mb-4">
-                <span className="text-gray-800">Choose Your</span>
-                <span className="gradient-text"> Creative Tool</span>
+                <span className="gradient-text">{t('aiphotoeditor.mainFeatures')}</span>
               </h3>
               <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-                Three powerful AI features to bring your vision to life. Select the tool that matches your creative needs.
+                {t('aiphotoeditor.mainFeaturesDesc')}
               </p>
             </motion.div>
 
@@ -466,10 +472,10 @@ export default function AIPhotoEditorPage() {
             transition={{ duration: 0.8, delay: 0.6 }}
           >
             <h3 className="text-2xl md:text-3xl font-bold text-gray-800 mb-4">
-              Why Choose <span className="gradient-text">AI Photo Editor</span>?
+              {t('aiphotoeditor.whyChoose')}
             </h3>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Experience the next generation of AI-powered image creation with our cutting-edge platform.
+              {t('aiphotoeditor.whyChooseDesc')}
             </p>
           </motion.div>
 

@@ -14,13 +14,13 @@ export async function generateMetadata({ params }: { params: { locale?: string }
   
   const metadata = {
     en: {
-      title: 'AI Photo Editor - Advanced AI Image Generation',
-      description: 'Transform your ideas into stunning visuals with our advanced AI image generation platform. Create personalized avatars, generate images from text, and transform photos with cutting-edge AI technology.',
+      title: 'AI Photo Editor - Advanced AI Image Generation Platform',
+      description: 'Transform ideas into stunning visuals with AI Photo Editor. Generate personalized avatars from usernames, create images from text, enhance photos with AI technology.',
       keywords: 'AI, image generation, artificial intelligence, avatar, text to image, image to image, AI Photo Editor',
     },
     ja: {
-      title: 'AI フォトエディター - 高度なAI画像生成',
-      description: '最先端のAI画像生成プラットフォームでアイデアを美しいビジュアルに変換します。パーソナライズされたアバターの作成、テキストからの画像生成、最新のAI技術による写真変換を実現。',
+      title: 'AI フォトエディター - 高度なAI画像生成プラットフォーム',
+      description: 'AI フォトエディターでアイデアを美しいビジュアルに変換。ユーザー名からアバター生成、テキストから画像作成、AI技術で写真を強化。',
       keywords: 'AI, 画像生成, 人工知能, アバター, テキストから画像, 画像から画像, AI フォトエディター',
     }
   }
@@ -40,6 +40,34 @@ export async function generateMetadata({ params }: { params: { locale?: string }
       google: 'PnF_JUbsBtHyPbnWvat0KgdAXjCaj9TdlBIXBWUmnJQ',
     },
     metadataBase: new URL('https://www.aiphotoeditor.space'),
+    alternates: {
+      canonical: `https://www.aiphotoeditor.space${locale === 'en' ? '' : '/' + locale}`,
+    },
+    // 添加Open Graph和Twitter Card标签
+    openGraph: {
+      title: currentMeta.title,
+      description: currentMeta.description,
+      url: `https://www.aiphotoeditor.space${locale === 'en' ? '' : '/' + locale}`,
+      siteName: 'AI Photo Editor',
+      images: [
+        {
+          url: '/Logo.png',
+          width: 1200,
+          height: 630,
+          alt: 'AI Photo Editor - Advanced AI Image Generation',
+        }
+      ],
+      locale: locale,
+      type: 'website',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: currentMeta.title,
+      description: currentMeta.description,
+      images: ['/Logo.png'],
+      creator: '@aiphotoeditor',
+      site: '@aiphotoeditor',
+    },
   }
 }
 
@@ -52,9 +80,43 @@ export default function RootLayout({
 }) {
   const locale = params?.locale || 'en'
   
+  // 结构化数据JSON-LD
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "AI Photo Editor",
+    "url": "https://www.aiphotoeditor.space",
+    "description": locale === 'ja' ? 
+      "AI フォトエディターでアイデアを美しいビジュアルに変換。ユーザー名からアバター生成、テキストから画像作成、AI技術で写真を強化。" :
+      "Transform ideas into stunning visuals with AI Photo Editor. Generate personalized avatars from usernames, create images from text, enhance photos with AI technology.",
+    "applicationCategory": "MultimediaApplication",
+    "operatingSystem": "Web Browser",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "creator": {
+      "@type": "Organization",
+      "name": "AI Photo Editor"
+    },
+    "featureList": [
+      "Username to Avatar Generation",
+      "Text to Image Generation",
+      "Image to Image Transformation",
+      "AI-Powered Photo Enhancement"
+    ]
+  }
+  
   return (
     <html lang={locale}>
       <head>
+        {/* JSON-LD 结构化数据 */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+        />
+        
         {/* Google Analytics */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-LTQMD39NCB"

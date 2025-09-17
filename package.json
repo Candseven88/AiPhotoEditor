@@ -6,7 +6,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "seo:deploy": "node scripts/seo-deploy.js",
+    "seo:verify": "node scripts/seo-deploy.js --verify-only",
+    "postbuild": "node scripts/seo-deploy.js"
   },
   "dependencies": {
     "@vercel/analytics": "^1.5.0",

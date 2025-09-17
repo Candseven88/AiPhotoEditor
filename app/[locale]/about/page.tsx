@@ -2,88 +2,97 @@
 
 import { motion } from 'framer-motion'
 import { Sparkles, Users, Target, Award, Heart, Zap, Shield, Globe } from 'lucide-react'
-import Navigation from '../components/Navigation'
-import Card from '../components/ui/Card'
-import GradientButton from '../components/ui/GradientButton'
+import Navigation from '../../components/Navigation'
+import Card from '../../components/ui/Card'
+import GradientButton from '../../components/ui/GradientButton'
+import { useTranslation } from '../../../lib/use-translation'
 
-const teamMembers = [
-  {
-    name: 'Alex Chen',
-    role: 'Founder & CEO',
-    description: 'AI researcher with 10+ years experience in machine learning and computer vision.',
-    gradient: 'from-orange-500 to-yellow-500'
-  },
-  {
-    name: 'Sarah Kim',
-    role: 'Head of AI',
-    description: 'Former Google AI engineer specializing in generative models and neural networks.',
-    gradient: 'from-blue-500 to-purple-500'
-  },
-  {
-    name: 'David Rodriguez',
-    role: 'Lead Developer',
-    description: 'Full-stack developer passionate about creating seamless user experiences.',
-    gradient: 'from-green-500 to-teal-500'
-  },
-  {
-    name: 'Emily Watson',
-    role: 'Product Designer',
-    description: 'UX/UI designer focused on making AI technology accessible and intuitive.',
-    gradient: 'from-purple-500 to-pink-500'
+interface PageProps {
+  params: {
+    locale: string
   }
-]
+}
 
-const values = [
-  {
-    icon: Sparkles,
-    title: 'Innovation',
-    description: 'We constantly push the boundaries of AI technology to deliver cutting-edge solutions.',
-    gradient: 'from-yellow-400 to-orange-500'
-  },
-  {
-    icon: Users,
-    title: 'User-Centric',
-    description: 'Every feature we build starts with understanding our users\' needs and goals.',
-    gradient: 'from-blue-400 to-indigo-500'
-  },
-  {
-    icon: Shield,
-    title: 'Privacy & Security',
-    description: 'We prioritize user data protection and maintain the highest security standards.',
-    gradient: 'from-green-400 to-emerald-500'
-  },
-  {
-    icon: Globe,
-    title: 'Accessibility',
-    description: 'We believe AI should be accessible to everyone, regardless of technical expertise.',
-    gradient: 'from-purple-400 to-pink-500'
-  }
-]
+export default function AboutPage({ params }: PageProps) {
+  const { t } = useTranslation()
+  
+  const values = [
+    {
+      icon: Sparkles,
+      title: t('about.innovation'),
+      description: t('about.innovationDesc'),
+      gradient: 'from-yellow-400 to-orange-500'
+    },
+    {
+      icon: Users,
+      title: t('about.userCentric'),
+      description: t('about.userCentricDesc'),
+      gradient: 'from-blue-400 to-indigo-500'
+    },
+    {
+      icon: Shield,
+      title: t('about.privacySecurity'),
+      description: t('about.privacySecurityDesc'),
+      gradient: 'from-green-400 to-emerald-500'
+    },
+    {
+      icon: Globe,
+      title: t('about.accessibility'),
+      description: t('about.accessibilityDesc'),
+      gradient: 'from-purple-400 to-pink-500'
+    }
+  ]
 
-const milestones = [
-  {
-    year: '2023',
-    title: 'Company Founded',
-    description: 'AI Photo Editor was born with a vision to democratize AI image generation.'
-  },
-  {
-    year: '2024',
-    title: 'First Million Users',
-    description: 'Reached 1 million generated images, proving the value of our platform.'
-  },
-  {
-    year: '2024',
-    title: 'Advanced Features',
-    description: 'Launched image-to-image transformation and premium AI capabilities.'
-  },
-  {
-    year: '2025',
-    title: 'Global Expansion',
-    description: 'Expanded to serve users worldwide with multi-language support.'
-  }
-]
+  const milestones = [
+    {
+      year: '2023',
+      title: t('about.companyFounded'),
+      description: t('about.companyFoundedDesc')
+    },
+    {
+      year: '2024',
+      title: t('about.firstMillionUsers'),
+      description: t('about.firstMillionUsersDesc')
+    },
+    {
+      year: '2024',
+      title: t('about.advancedFeatures'),
+      description: t('about.advancedFeaturesDesc')
+    },
+    {
+      year: '2025',
+      title: t('about.globalExpansion'),
+      description: t('about.globalExpansionDesc')
+    }
+  ]
 
-export default function AboutPage() {
+  const teamMembers = [
+    {
+      name: 'Alex Chen',
+      role: t('about.founderCEO'),
+      description: t('about.founderDesc'),
+      gradient: 'from-orange-500 to-yellow-500'
+    },
+    {
+      name: 'Sarah Kim',
+      role: t('about.headOfAI'),
+      description: t('about.headOfAIDesc'),
+      gradient: 'from-blue-500 to-purple-500'
+    },
+    {
+      name: 'David Rodriguez',
+      role: t('about.leadDeveloper'),
+      description: t('about.leadDeveloperDesc'),
+      gradient: 'from-green-500 to-teal-500'
+    },
+    {
+      name: 'Emily Watson',
+      role: t('about.productDesigner'),
+      description: t('about.productDesignerDesc'),
+      gradient: 'from-purple-500 to-pink-500'
+    }
+  ]
+  
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-orange-50/30 relative overflow-hidden">
       <Navigation />
@@ -131,20 +140,16 @@ export default function AboutPage() {
                 </div>
               </div>
               <h1 className="ml-6 text-5xl md:text-6xl font-bold">
-                <span className="text-gray-800">About</span>
-                <span className="gradient-text"> AI Photo Editor</span>
+                <span className="text-gray-800">{t('about.title')}</span>
               </h1>
             </div>
             
             <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-6 leading-tight">
-              Making AI Image Generation
-              <span className="gradient-text"> Simple & Accessible</span>
+              <span className="gradient-text">{t('about.subtitle')}</span>
             </h2>
             
             <p className="text-lg md:text-xl text-gray-600 mb-12 max-w-3xl mx-auto leading-relaxed">
-              We're on a mission to democratize AI-powered creativity. AI Photo Editor empowers 
-              millions of users worldwide to bring their ideas to life through cutting-edge 
-              artificial intelligence technology.
+              {t('about.description')}
             </p>
             
             {/* 品牌故事Logo展示 - 位于描述下方 */}
@@ -247,44 +252,38 @@ export default function AboutPage() {
           >
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               <div>
-                <h3 className="text-3xl font-bold text-gray-800 mb-6">Our Story</h3>
+                <h3 className="text-3xl font-bold text-gray-800 mb-6">{t('about.ourStory')}</h3>
                 <div className="space-y-4 text-gray-600 leading-relaxed">
                   <p>
-                    AI Photo Editor was founded in 2023 with a simple yet powerful vision: to make 
-                    AI image generation accessible to everyone, from professional designers to 
-                    creative enthusiasts.
+                    {t('about.ourStoryDesc1')}
                   </p>
                   <p>
-                    We noticed that while AI technology was advancing rapidly, many tools remained 
-                    complex and intimidating for everyday users. We set out to change that by 
-                    creating an intuitive platform that puts the power of AI at your fingertips.
+                    {t('about.ourStoryDesc2')}
                   </p>
                   <p>
-                    Today, AI Photo Editor serves millions of users worldwide, helping them create 
-                    stunning visuals for social media, marketing, personal projects, and more. 
-                    Our platform has generated over 10 million images and continues to grow.
+                    {t('about.ourStoryDesc3')}
                   </p>
                 </div>
               </div>
               
               <Card variant="glass" hover={true} className="p-8">
-                <div className="text-center">
+                                  <div className="text-center">
                   <div className="grid grid-cols-2 gap-6">
                     <div>
                       <div className="text-3xl font-bold gradient-text mb-2">10M+</div>
-                      <div className="text-sm text-gray-600">Images Generated</div>
+                      <div className="text-sm text-gray-600">{t('about.imagesGenerated')}</div>
                     </div>
                     <div>
                       <div className="text-3xl font-bold gradient-text mb-2">2M+</div>
-                      <div className="text-sm text-gray-600">Active Users</div>
+                      <div className="text-sm text-gray-600">{t('about.activeUsers')}</div>
                     </div>
                     <div>
                       <div className="text-3xl font-bold gradient-text mb-2">150+</div>
-                      <div className="text-sm text-gray-600">Countries</div>
+                      <div className="text-sm text-gray-600">{t('about.countries')}</div>
                     </div>
                     <div>
                       <div className="text-3xl font-bold gradient-text mb-2">99.9%</div>
-                      <div className="text-sm text-gray-600">Uptime</div>
+                      <div className="text-sm text-gray-600">{t('about.uptime')}</div>
                     </div>
                   </div>
                 </div>
@@ -301,9 +300,9 @@ export default function AboutPage() {
             transition={{ duration: 0.8, delay: 0.4 }}
           >
             <div className="text-center mb-12">
-              <h3 className="text-3xl font-bold text-gray-800 mb-4">Our Values</h3>
+              <h3 className="text-3xl font-bold text-gray-800 mb-4">{t('about.ourValues')}</h3>
               <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-                                  These core principles guide everything we do at AI Photo Editor
+                {t('about.ourValuesDesc')}
               </p>
             </div>
             
@@ -338,9 +337,9 @@ export default function AboutPage() {
             transition={{ duration: 0.8, delay: 0.6 }}
           >
             <div className="text-center mb-12">
-              <h3 className="text-3xl font-bold text-gray-800 mb-4">Our Journey</h3>
+              <h3 className="text-3xl font-bold text-gray-800 mb-4">{t('about.ourJourney')}</h3>
               <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-                Key milestones in our mission to democratize AI creativity
+                {t('about.journeyDesc')}
               </p>
             </div>
             
@@ -380,9 +379,9 @@ export default function AboutPage() {
             transition={{ duration: 0.8, delay: 0.8 }}
           >
             <div className="text-center mb-12">
-              <h3 className="text-3xl font-bold text-gray-800 mb-4">Meet Our Team</h3>
+              <h3 className="text-3xl font-bold text-gray-800 mb-4">{t('about.meetOurTeam')}</h3>
               <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-                The passionate individuals behind AI Photo Editor
+                {t('about.teamDesc')}
               </p>
             </div>
             
@@ -421,11 +420,10 @@ export default function AboutPage() {
             <Card variant="glass" size="lg" className="max-w-4xl mx-auto">
               <div className="p-12">
                 <h3 className="text-3xl font-bold text-gray-800 mb-6">
-                  Ready to Create with <span className="gradient-text">AI Photo Editor</span>?
+                  {t('about.readyToCreate')}
                 </h3>
                 <p className="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
-                  Join millions of creators who trust AI Photo Editor to bring their 
-                  ideas to life. Start your creative journey today.
+                  {t('about.readyToCreateDesc')}
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <GradientButton
@@ -436,7 +434,7 @@ export default function AboutPage() {
                     glow={true}
                     onClick={() => window.location.href = '/'}
                   >
-                    Start Creating Now
+                    {t('about.startCreatingNow')}
                   </GradientButton>
                   <GradientButton
                     size="lg"
@@ -444,7 +442,7 @@ export default function AboutPage() {
                     leftIcon={<Zap className="w-5 h-5" />}
                     onClick={() => window.location.href = '/seedream'}
                   >
-                    Try Seedream 4.0
+                    {t('about.trySeadreamPro')}
                   </GradientButton>
                 </div>
               </div>

@@ -2,11 +2,13 @@
 
 import { useState } from 'react'
 import { motion } from 'framer-motion'
+
 import { Calendar, User, ArrowRight, Sparkles, Zap, TrendingUp } from 'lucide-react'
-import Navigation from '../components/Navigation'
-import Card from '../components/ui/Card'
-import GradientButton from '../components/ui/GradientButton'
+import Navigation from '../../components/Navigation'
+import Card from '../../components/ui/Card'
+import GradientButton from '../../components/ui/GradientButton'
 import Link from 'next/link'
+import { useTranslation } from '../../../lib/use-translation'
 
 const blogPosts = [
   {
@@ -73,12 +75,21 @@ const blogPosts = [
   }
 ]
 
-export default function BlogPage() {
-  const [selectedTag, setSelectedTag] = useState('All')
+interface PageProps {
+  params: {
+    locale: string
+  }
+}
+
+
+
+export default function BlogPage({ params }: PageProps) {
+  const { t } = useTranslation()
+  const [selectedTag, setSelectedTag] = useState(t('common.all'))
   
-  const allTags = ['All', ...Array.from(new Set(blogPosts.flatMap(post => post.tags)))]
+  const allTags = [t('common.all'), ...Array.from(new Set(blogPosts.flatMap(post => post.tags)))]
   
-  const filteredPosts = selectedTag === 'All' 
+  const filteredPosts = selectedTag === t('common.all') 
     ? blogPosts 
     : blogPosts.filter(post => post.tags.includes(selectedTag))
 
@@ -132,19 +143,16 @@ export default function BlogPage() {
                 </div>
               </div>
               <h1 className="ml-4 text-5xl md:text-6xl font-bold">
-                <span className="gradient-text">Seedream</span>
-                <span className="text-gray-800"> Blog</span>
+                <span className="gradient-text">{t('blog.title')}</span>
               </h1>
             </div>
             
             <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-6">
-              Latest News & Insights on
-              <span className="gradient-text"> AI Image Generation</span>
+              <span className="gradient-text">{t('blog.subtitle')}</span>
             </h2>
             
             <p className="text-lg text-gray-600 mb-8 max-w-3xl mx-auto">
-              Stay updated with the latest developments in Seedream AI technology, 
-              tutorials, comparisons, and industry insights from our expert team.
+              {t('blog.description')}
             </p>
             
             {/* Blog Logo展示区域 - 位于描述下方 */}
@@ -286,7 +294,7 @@ export default function BlogPage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
             >
-              <h3 className="text-2xl font-bold text-gray-800 mb-8 text-center">Featured Article</h3>
+              <h3 className="text-2xl font-bold text-gray-800 mb-8 text-center">{t('blog.featuredArticle')}</h3>
               <Card variant="glass" size="lg" hover={true} className="overflow-hidden">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                   <div className="p-8">
@@ -361,7 +369,7 @@ export default function BlogPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
           >
-            <h3 className="text-2xl font-bold text-gray-800 mb-8 text-center">Latest Articles</h3>
+            <h3 className="text-2xl font-bold text-gray-800 mb-8 text-center">{t('blog.allPosts')}</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {filteredPosts.map((post, index) => (
                 <motion.div
@@ -416,7 +424,7 @@ export default function BlogPage() {
                           rightIcon={<ArrowRight className="w-3 h-3" />}
                           className="w-full"
                         >
-                          Read More
+                          {t('blog.readMore')}
                         </GradientButton>
                       </Link>
                     </div>

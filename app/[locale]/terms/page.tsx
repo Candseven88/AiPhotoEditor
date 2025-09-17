@@ -2,8 +2,8 @@
 
 import { motion } from 'framer-motion'
 import { FileText, Shield, Users, AlertTriangle, Scale, Clock } from 'lucide-react'
-import Navigation from '../components/Navigation'
-import Card from '../components/ui/Card'
+import Navigation from '../../components/Navigation'
+import Card from '../../components/ui/Card'
 
 const sections = [
   {
@@ -107,7 +107,13 @@ const additionalTerms = [
   }
 ]
 
-export default function TermsPage() {
+interface PageProps {
+  params: {
+    locale: string
+  }
+}
+
+export default function TermsPage({ params }: PageProps) {
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-orange-50/30 relative overflow-hidden">
       <Navigation />

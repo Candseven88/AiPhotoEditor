@@ -13,10 +13,12 @@ import {
   ArrowRight,
   Sparkles,
   Heart,
-  ExternalLink
+  ExternalLink,
+  MessageCircle
 } from 'lucide-react'
 import Link from 'next/link'
 import GradientButton from './ui/GradientButton'
+import { useTranslation } from '../../lib/use-translation'
 
 const footerSections = [
   {
@@ -83,6 +85,7 @@ const legalLinks = [
 
 export default function Footer() {
   const currentYear = new Date().getFullYear()
+  const { t } = useTranslation()
 
   return (
     <footer className="bg-gradient-to-br from-gray-900 via-gray-800 to-orange-900/20 text-white relative overflow-hidden">
@@ -250,6 +253,15 @@ export default function Footer() {
                     <Phone className="w-4 h-4" />
                     <span>+1 (555) 123-4567</span>
                   </div>
+                  {/* Webmaster Feedback Email */}
+                  <motion.a
+                    href="mailto:candseven2015@gmail.com?subject=Feedback for AI Photo Editor"
+                    className="flex items-center gap-2 text-orange-400 hover:text-orange-300 transition-colors cursor-pointer mt-4 group"
+                    whileHover={{ x: 5 }}
+                  >
+                    <MessageCircle className="w-4 h-4 group-hover:scale-110 transition-transform" />
+                    <span className="font-medium">{t('contact.feedbackToWebmaster')}</span>
+                  </motion.a>
                 </div>
               </motion.div>
             </div>

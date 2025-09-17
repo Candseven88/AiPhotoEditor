@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { 
   Sparkles,
   Wand2,
@@ -11,7 +11,13 @@ import {
   Home,
   BookOpen,
   Zap,
-  Users
+  Users,
+  MessageCircle,
+  ChevronDown,
+  Info,
+  Shield,
+  FileText,
+  MoreHorizontal
 } from 'lucide-react'
 import Link from 'next/link'
 import { useTranslation } from '../../lib/use-translation'
@@ -19,7 +25,23 @@ import LanguageSwitcher from './LanguageSwitcher'
 
 export default function Navigation() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [isMoreMenuOpen, setIsMoreMenuOpen] = useState(false)
   const { t, locale } = useTranslation()
+  const moreMenuRef = useRef<HTMLDivElement>(null)
+
+  // 点击外部关闭下拉菜单
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (moreMenuRef.current && !moreMenuRef.current.contains(event.target as Node)) {
+        setIsMoreMenuOpen(false)
+      }
+    }
+
+    if (isMoreMenuOpen) {
+      document.addEventListener('mousedown', handleClickOutside)
+      return () => document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [isMoreMenuOpen])
 
   // 生成带语言前缀的链接
   const getLocalizedHref = (href: string) => {
@@ -50,7 +72,8 @@ export default function Navigation() {
     }
   ]
 
-  const pageItems = [
+  // 主要页面 - 显示在顶部菜单
+  const primaryPageItems = [
     {
       id: 'aiphotoeditor',
       label: t('navigation.aiPhotoEditor'),
@@ -66,7 +89,11 @@ export default function Navigation() {
       description: t('navigation.advancedAIImageGenerator'),
       href: getLocalizedHref('/seedream'),
       type: 'page'
-    },
+    }
+  ]
+
+  // 次要页面 - 收拢到"更多"菜单
+  const secondaryPageItems = [
     {
       id: 'blog',
       label: t('navigation.blog'),
@@ -82,8 +109,34 @@ export default function Navigation() {
       description: t('navigation.learnAboutUs'),
       href: getLocalizedHref('/about'),
       type: 'page'
+    },
+    {
+      id: 'privacy',
+      label: t('navigation.privacy'),
+      icon: Shield,
+      description: 'Privacy Policy and Data Protection',
+      href: getLocalizedHref('/privacy'),
+      type: 'page'
+    },
+    {
+      id: 'terms',
+      label: t('navigation.terms'),
+      icon: FileText,
+      description: 'Terms and Conditions',
+      href: getLocalizedHref('/terms'),
+      type: 'page'
     }
   ]
+
+  // Feedback email item
+  const feedbackItem = {
+    id: 'feedback',
+    label: t('navigation.feedback'),
+    icon: MessageCircle,
+    description: t('contact.feedbackToWebmaster'),
+    href: 'mailto:candseven2015@gmail.com?subject=Feedback for AI Photo Editor',
+    type: 'external'
+  }
 
   // 切换功能标签
   const switchTab = (tabId: string) => {
@@ -111,10 +164,10 @@ export default function Navigation() {
               </div>
             </div>
             <div>
-              <h1 className="text-xl font-bold">
+              <div className="text-xl font-bold">
                 <span className="gradient-text">{t('hero.title').split(' ')[0]} {t('hero.title').split(' ')[1]}</span>
                 <span className="text-gray-800"> {t('hero.title').split(' ')[2]}</span>
-              </h1>
+              </div>
             </div>
           </motion.div>
 
@@ -131,7 +184,8 @@ export default function Navigation() {
               </motion.button>
             </Link>
             
-            {pageItems.map((item) => (
+            {/* Primary navigation items */}
+            {primaryPageItems.map((item) => (
               <Link key={item.id} href={item.href}>
                 <motion.button
                   className="flex items-center space-x-2 px-4 py-2 rounded-xl text-gray-700 hover:text-orange-600 hover:bg-orange-50 transition-all duration-200 group"
@@ -143,6 +197,67 @@ export default function Navigation() {
                 </motion.button>
               </Link>
             ))}
+
+            {/* More dropdown menu */}
+            <div className="relative" ref={moreMenuRef}>
+              <motion.button
+                onClick={() => setIsMoreMenuOpen(!isMoreMenuOpen)}
+                className="flex items-center space-x-2 px-4 py-2 rounded-xl text-gray-700 hover:text-orange-600 hover:bg-orange-50 transition-all duration-200 group"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <MoreHorizontal className="w-4 h-4" />
+                <span className="font-medium">{t('navigation.more')}</span>
+                <ChevronDown className={`w-3 h-3 transition-transform duration-200 ${isMoreMenuOpen ? 'rotate-180' : ''}`} />
+              </motion.button>
+
+              {/* Dropdown menu */}
+              {isMoreMenuOpen && (
+                <motion.div
+                  className="absolute top-full right-0 mt-2 w-56 bg-white/95 backdrop-blur-md border border-orange-100 rounded-xl shadow-lg py-2 z-50"
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  {secondaryPageItems.map((item) => (
+                    <Link key={item.id} href={item.href}>
+                      <motion.button
+                        onClick={() => setIsMoreMenuOpen(false)}
+                        className="flex items-center space-x-3 w-full px-4 py-3 text-gray-700 hover:text-orange-600 hover:bg-orange-50 transition-all duration-200 group"
+                        whileHover={{ x: 5 }}
+                      >
+                        <item.icon className="w-4 h-4" />
+                        <div className="text-left">
+                          <div className="font-medium">{item.label}</div>
+                          <div className="text-xs text-gray-500 group-hover:text-orange-500">
+                            {item.description}
+                          </div>
+                        </div>
+                      </motion.button>
+                    </Link>
+                  ))}
+                  
+                  <div className="border-t border-orange-100 my-2"></div>
+                  
+                  {/* Feedback in dropdown */}
+                  <motion.a
+                    href={feedbackItem.href}
+                    onClick={() => setIsMoreMenuOpen(false)}
+                    className="flex items-center space-x-3 w-full px-4 py-3 text-gray-700 hover:text-orange-600 hover:bg-orange-50 transition-all duration-200 group"
+                    whileHover={{ x: 5 }}
+                  >
+                    <feedbackItem.icon className="w-4 h-4" />
+                    <div className="text-left">
+                      <div className="font-medium">{feedbackItem.label}</div>
+                      <div className="text-xs text-gray-500 group-hover:text-orange-500">
+                        {feedbackItem.description}
+                      </div>
+                    </div>
+                  </motion.a>
+                </motion.div>
+              )}
+            </div>
             
             {/* Language Switcher */}
             <LanguageSwitcher />
@@ -191,7 +306,8 @@ export default function Navigation() {
                 </motion.button>
               </Link>
               
-              {pageItems.map((item) => (
+              {/* Primary pages */}
+              {primaryPageItems.map((item) => (
                 <Link key={item.id} href={item.href}>
                   <motion.button
                     onClick={() => setIsMobileMenuOpen(false)}
@@ -209,6 +325,43 @@ export default function Navigation() {
                   </motion.button>
                 </Link>
               ))}
+
+              {/* Secondary pages */}
+              {secondaryPageItems.map((item) => (
+                <Link key={item.id} href={item.href}>
+                  <motion.button
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="flex items-center space-x-3 w-full px-4 py-3 rounded-xl text-gray-700 hover:text-orange-600 hover:bg-orange-50 transition-all duration-200 group"
+                    whileHover={{ x: 5 }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    <item.icon className="w-5 h-5" />
+                    <div className="text-left">
+                      <div className="font-medium">{item.label}</div>
+                      <div className="text-sm text-gray-500 group-hover:text-orange-500">
+                        {item.description}
+                      </div>
+                    </div>
+                  </motion.button>
+                </Link>
+              ))}
+
+              {/* Mobile Feedback Link */}
+              <motion.a
+                href={feedbackItem.href}
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="flex items-center space-x-3 w-full px-4 py-3 rounded-xl text-gray-700 hover:text-orange-600 hover:bg-orange-50 transition-all duration-200 group"
+                whileHover={{ x: 5 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                <feedbackItem.icon className="w-5 h-5" />
+                <div className="text-left">
+                  <div className="font-medium">{feedbackItem.label}</div>
+                  <div className="text-sm text-gray-500 group-hover:text-orange-500">
+                    {feedbackItem.description}
+                  </div>
+                </div>
+              </motion.a>
               
               {navigationItems.map((item) => (
                 <motion.button

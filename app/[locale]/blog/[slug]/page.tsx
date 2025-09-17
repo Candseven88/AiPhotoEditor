@@ -3,9 +3,9 @@
 import { notFound } from 'next/navigation'
 import { motion } from 'framer-motion'
 import { Calendar, User, Clock, ArrowLeft, Share2, Bookmark, Sparkles, Zap } from 'lucide-react'
-import Navigation from '../../components/Navigation'
-import Card from '../../components/ui/Card'
-import GradientButton from '../../components/ui/GradientButton'
+import Navigation from '../../../components/Navigation'
+import Card from '../../../components/ui/Card'
+import GradientButton from '../../../components/ui/GradientButton'
 import Link from 'next/link'
 
 const blogPosts = {
@@ -369,12 +369,13 @@ Ready to try NanoBanana AI? Start creating today with our free tier and discover
 
 interface BlogPostPageProps {
   params: Promise<{
+    locale: string
     slug: string
   }>
 }
 
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
-  const { slug } = await params
+  const { locale, slug } = await params
   const post = blogPosts[slug as keyof typeof blogPosts]
   
   if (!post) {

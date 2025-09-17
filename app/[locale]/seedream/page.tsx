@@ -2,13 +2,15 @@
 
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+
 import { Sparkles, Wand2, Loader2, Download, ImageIcon, Zap, Star, Clock, Users } from 'lucide-react'
-import Navigation from '../components/Navigation'
-import Card from '../components/ui/Card'
-import GradientButton from '../components/ui/GradientButton'
-import EmptyState from '../components/ui/EmptyState'
-import { useToast } from '../components/ui/Toast'
+import Navigation from '../../components/Navigation'
+import Card from '../../components/ui/Card'
+import GradientButton from '../../components/ui/GradientButton'
+import EmptyState from '../../components/ui/EmptyState'
+import { useToast } from '../../components/ui/Toast'
 import Link from 'next/link'
+import { useTranslation } from '../../../lib/use-translation'
 
 interface GenerationRequest {
   prompt: string
@@ -22,15 +24,7 @@ interface GenerationResponse {
   }>
 }
 
-const sizeOptions = [
-  { label: '1024x1024 (Square)', value: '1024x1024', description: 'Perfect for social media' },
-  { label: '768x1344 (Portrait)', value: '768x1344', description: 'Great for phone wallpapers' },
-  { label: '864x1152 (Tall)', value: '864x1152', description: 'Ideal for posters' },
-  { label: '1344x768 (Landscape)', value: '1344x768', description: 'Perfect for headers' },
-  { label: '1152x864 (Wide)', value: '1152x864', description: 'Great for banners' },
-  { label: '1440x720 (Ultrawide)', value: '1440x720', description: 'Cinema format' },
-  { label: '720x1440 (Tall)', value: '720x1440', description: 'Story format' }
-]
+
 
 const examplePrompts = [
   "A majestic dragon soaring through nebula clouds, digital art style",
@@ -43,34 +37,56 @@ const examplePrompts = [
   "Peaceful zen garden with cherry blossoms and koi pond"
 ]
 
-const features = [
-  {
-    icon: Zap,
-    title: 'Lightning Fast',
-    description: 'Generate stunning images in seconds with Seedream 4.0',
-    gradient: 'from-yellow-400 to-orange-500'
-  },
-  {
-    icon: Star,
-    title: 'Premium Quality',
-    description: 'Professional-grade 4K resolution output',
-    gradient: 'from-purple-400 to-pink-500'
-  },
-  {
-    icon: Clock,
-    title: 'Always Available',
-    description: '24/7 service with no waiting queues',
-    gradient: 'from-green-400 to-emerald-500'
-  },
-  {
-    icon: Users,
-    title: 'Trusted by Millions',
-    description: 'Join over 10M+ creators worldwide',
-    gradient: 'from-blue-400 to-indigo-500'
-  }
-]
 
-export default function SeedreamPage() {
+
+interface PageProps {
+  params: {
+    locale: string
+  }
+}
+
+
+
+export default function SeedreamPage({ params }: PageProps) {
+  const { t } = useTranslation()
+  
+  const features = [
+    {
+      icon: Zap,
+      title: t('seedream.lightningFast'),
+      description: t('seedream.lightningFastDesc'),
+      gradient: 'from-yellow-400 to-orange-500'
+    },
+    {
+      icon: Star,
+      title: t('seedream.premiumQuality'),
+      description: t('seedream.premiumQualityDesc'),
+      gradient: 'from-purple-400 to-pink-500'
+    },
+    {
+      icon: Clock,
+      title: t('seedream.alwaysAvailable'),
+      description: t('seedream.alwaysAvailableDesc'),
+      gradient: 'from-green-400 to-emerald-500'
+    },
+    {
+      icon: Users,
+      title: t('seedream.trustedByMillions'),
+      description: t('seedream.trustedByMillionsDesc'),
+      gradient: 'from-blue-400 to-indigo-500'
+    }
+  ]
+
+  const sizeOptions = [
+    { label: `1024x1024 (${t('seedream.square')})`, value: '1024x1024', description: t('seedream.perfectForSocialMedia') },
+    { label: `768x1344 (${t('seedream.portrait')})`, value: '768x1344', description: t('seedream.greatForWallpapers') },
+    { label: `864x1152 (${t('seedream.tall')})`, value: '864x1152', description: t('seedream.idealForPosters') },
+    { label: `1344x768 (${t('seedream.landscape')})`, value: '1344x768', description: t('seedream.perfectForHeaders') },
+    { label: `1152x864 (${t('seedream.wide')})`, value: '1152x864', description: t('seedream.greatForBanners') },
+    { label: `1440x720 (${t('seedream.ultrawide')})`, value: '1440x720', description: t('seedream.cinemaFormat') },
+    { label: `720x1440 (${t('seedream.tall')})`, value: '720x1440', description: t('seedream.storyFormat') }
+  ]
+  
   const [prompt, setPrompt] = useState('')
   const [selectedSize, setSelectedSize] = useState(sizeOptions[0])
   const [isGenerating, setIsGenerating] = useState(false)
@@ -246,20 +262,16 @@ export default function SeedreamPage() {
                 </div>
               </div>
               <h1 className="ml-6 text-6xl md:text-7xl font-bold">
-                <span className="gradient-text">Seedream</span>
-                <span className="text-gray-800"> 4.0</span>
+                <span className="gradient-text">{t('seedream.title')}</span>
               </h1>
             </div>
             
             <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-6 leading-tight">
-              Next-Generation
-              <span className="gradient-text"> AI Image Generator</span>
+              <span className="gradient-text">{t('seedream.subtitle')}</span>
             </h2>
             
             <p className="text-xl md:text-2xl text-gray-600 mb-8 max-w-4xl mx-auto leading-relaxed">
-              Experience the power of Seedream 4.0 - the most advanced AI model for creating 
-              stunning visuals from your imagination. Generate, edit, and perfect your ideas with 
-              cutting-edge artificial intelligence.
+              {t('seedream.description')}
             </p>
 
             {/* Features Grid */}
@@ -326,10 +338,10 @@ export default function SeedreamPage() {
               <div className="p-8">
                 <div className="text-center mb-8">
                   <h3 className="text-2xl md:text-3xl font-bold text-gray-800 mb-4">
-                    Create with <span className="gradient-text">Seedream 4.0</span>
+                    <span className="gradient-text">{t('seedream.powerfulAI')}</span>
                   </h3>
                   <p className="text-lg text-gray-600">
-                    Describe your vision and watch Seedream 4.0 bring it to life in seconds
+                    {t('seedream.powerfulAIDesc')}
                   </p>
                 </div>
 
@@ -338,14 +350,14 @@ export default function SeedreamPage() {
                   {/* Prompt Input */}
                   <div className="lg:col-span-2">
                     <label className="block text-sm font-medium text-gray-700 mb-3">
-                      Describe Your Image
+                      {t('seedream.enterPrompt')}
                     </label>
                     <div className="relative">
                       <textarea
                         value={prompt}
                         onChange={(e) => setPrompt(e.target.value)}
                         onKeyPress={handleKeyPress}
-                        placeholder="A magical forest with glowing mushrooms and fireflies, digital art style..."
+                        placeholder={t('seedream.promptPlaceholder')}
                         className="w-full h-32 px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-orange-500 resize-none bg-white/80 backdrop-blur-sm"
                         disabled={isGenerating}
                       />
@@ -356,7 +368,7 @@ export default function SeedreamPage() {
 
                     {/* Example Prompts */}
                     <div className="mt-4">
-                      <p className="text-sm font-medium text-gray-700 mb-2">Try these examples:</p>
+                      <p className="text-sm font-medium text-gray-700 mb-2">{t('seedream.examplePrompts')}:</p>
                       <div className="flex flex-wrap gap-2">
                         {examplePrompts.slice(0, 4).map((example, index) => (
                           <button
@@ -375,7 +387,7 @@ export default function SeedreamPage() {
                   {/* Size Selection */}
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-3">
-                      Image Size
+                      {t('seedream.selectSize')}
                     </label>
                     <div className="space-y-2">
                       {sizeOptions.slice(0, 4).map((size) => (
@@ -418,7 +430,7 @@ export default function SeedreamPage() {
                     glow={!isGenerating}
                     className="min-w-[200px]"
                   >
-                    {isGenerating ? 'Generating...' : 'Generate with Seedream 4.0'}
+                    {isGenerating ? t('seedream.generating') : t('seedream.generateWithSeedream')}
                   </GradientButton>
                   
                   {isGenerating && generationProgress && (

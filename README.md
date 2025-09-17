@@ -12,6 +12,7 @@
 - 🌍 **多语言支持**: 支持英文和日文界面，自动语言检测和手动切换
 - 📱 **响应式设计**: 完美适配各种设备
 - ⚡ **快速生成**: 5-10秒生成高质量图像
+- 📧 **站长反馈**: 用户可直接通过邮件联系站长反馈意见和建议
 
 ## 🚀 快速开始
 
@@ -101,6 +102,13 @@ app/
 - **集成指南**: ComfyUI等第三方工具集成教程
 - **多语言分析**: 中英双语AI模型技术解析
 
+### 站长反馈系统
+- **导航栏反馈**: 用户可在导航栏找到"反馈"按钮，点击后直接打开邮件客户端
+- **页脚反馈**: 在页脚联系信息区域提供"站长反馈"邮箱链接
+- **多语言支持**: 反馈功能支持英文和日文界面
+- **邮件地址**: candseven2015@gmail.com
+- **邮件主题**: 自动设置为"Feedback for AI Photo Editor"
+
 #### 博客文章列表
 1. **Seedream 4.0发布**: 革命性AI图像生成模型介绍
 2. **功能探索**: 深入了解Seedream的高级功能
@@ -114,13 +122,68 @@ app/
 
 1. 推送代码到 GitHub
 2. 在 Vercel 中导入项目  
-3. 添加环境变量 `BIGMODEL_API_KEY`
+3. 添加环境变量
 4. 部署完成
 
 ### 环境变量
 
 生产环境需要设置:
 - `BIGMODEL_API_KEY`: BigModel API 密钥
+- `INDEXNOW_KEY`: IndexNow API密钥 (可选，默认已配置)
+
+## 🔍 SEO和搜索引擎优化
+
+### IndexNow快速索引
+- **自动通知**: 内容更新时自动通知Bing等支持IndexNow的搜索引擎
+- **API接口**: `/api/indexnow` - 提交单个或多个URL进行快速索引
+- **支持引擎**: Bing、IndexNow API等
+
+### Sitemap自动提交
+- **多引擎支持**: Google、Bing、Yahoo、百度、Yandex
+- **API接口**: `/api/submit-sitemap` - 一键提交sitemap到所有搜索引擎
+- **状态监控**: 实时查看提交状态和结果
+
+### SEO优化功能
+- ✅ **多语言SEO**: 完整的hreflang标签支持
+- ✅ **结构化数据**: JSON-LD格式的丰富片段
+- ✅ **优化的Meta标签**: 每页面独立的SEO配置
+- ✅ **安全头设置**: 完整的安全策略头
+- ✅ **缓存优化**: 智能缓存策略提升性能
+- ✅ **图像优化**: WebP/AVIF支持和响应式尺寸
+
+### 使用方法
+
+#### 1. 自动IndexNow提交
+```javascript
+import { submitToIndexNow } from '@/lib/indexnow'
+
+// 提交单个URL
+await submitToIndexNow('https://www.aiphotoeditor.space/new-page')
+
+// 提交多个URL
+await submitMultipleToIndexNow([
+  'https://www.aiphotoeditor.space/page1',
+  'https://www.aiphotoeditor.space/page2'
+])
+```
+
+#### 2. 手动提交到搜索引擎
+访问以下管理链接手动提交:
+- [Google Search Console](https://search.google.com/search-console)
+- [Bing Webmaster Tools](https://www.bing.com/webmasters)
+- [百度站长工具](https://ziyuan.baidu.com/)
+- [Yandex Webmaster](https://webmaster.yandex.com/)
+
+#### 3. API调用示例
+```bash
+# 提交到IndexNow
+curl -X POST https://www.aiphotoeditor.space/api/indexnow \
+  -H "Content-Type: application/json" \
+  -d '{"url": "https://www.aiphotoeditor.space/"}'
+
+# 提交Sitemap到搜索引擎
+curl -X POST https://www.aiphotoeditor.space/api/submit-sitemap
+```
 
 ## 🔧 开发
 
@@ -171,6 +234,9 @@ npm run lint
 ### Do-follow Backlinks
 - **Good AI Tools**: 已获得 [Good AI Tools](https://goodaitools.com) 平台认证，badge 已集成在网站 Footer 中
 
+### Related Articles
+- **独立开发前线**: [独立开发者必备，提升内容与SEO的AI图片编辑工具——aiphotoeditor.space 实战分享](https://91wink.com/%e7%8b%ac%e7%ab%8b%e5%bc%80%e5%8f%91%e8%80%85%e5%bf%85%e5%a4%87%ef%bc%8c%e6%8f%90%e5%8d%87%e5%86%85%e5%ae%b9%e4%b8%8eseo%e7%9a%84ai%e5%9b%be%e7%89%87%e7%bc%96%e8%be%91%e5%b7%a5%e5%85%b7/) - 详细介绍了AI Photo Editor在独立开发中的应用价值
+
 ## 🌍 多语言支持
 
 ### 支持的语言
@@ -196,7 +262,25 @@ npm run lint
 
 ## 📝 更新日志
 
-### v0.3.0 (最新)
+### v0.4.0 (最新) - SEO优化和IndexNow集成
+- 🚀 **IndexNow API集成**: 实现快速通知搜索引擎内容更新
+- 🔍 **搜索引擎优化**: 全面优化robots.txt，支持多种爬虫和crawl delay
+- 📊 **高级Sitemap**: 优化sitemap配置，按页面重要性设置优先级和更新频率
+- 🛡️ **安全头设置**: 添加完整的安全头和缓存策略
+- 📈 **SEO管理面板**: 管理员可视化SEO工具，一键提交sitemap和IndexNow
+- 🌐 **多引擎支持**: 支持Google、Bing、Yahoo、百度、Yandex等搜索引擎
+- ⚡ **自动提交**: 支持自动提交sitemap到各大搜索引擎
+- 📋 **结构化数据**: 完善的JSON-LD结构化数据支持
+- 🎯 **页面级SEO**: 每个页面独立的SEO配置和meta标签
+- 🔗 **Hreflang标签**: 完整的多语言SEO支持
+
+### v0.3.1
+- ✅ 添加站长反馈邮箱功能
+- ✅ 在导航栏和页脚增加反馈链接
+- ✅ 支持一键发送反馈邮件至 candseven2015@gmail.com
+- ✅ 优化用户体验，方便用户意见收集
+
+### v0.3.0
 - ✅ 实现完整的多语言支持系统
 - ✅ 添加英语和日语界面
 - ✅ 基于 Next.js App Router 的国际化路由

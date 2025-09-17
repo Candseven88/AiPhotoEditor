@@ -1,125 +1,69 @@
 import { MetadataRoute } from 'next'
-
+ 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = 'https://www.aiphotoeditor.space'
+  const locales = ['en', 'ja']
   const currentDate = new Date()
   
-  // 静态页面 - 高优先级
-  const staticPages = [
-    {
-      url: baseUrl,
-      lastModified: currentDate,
-      changeFrequency: 'daily' as const,
-      priority: 1.0,
-    },
-    {
-      url: `${baseUrl}/aiphotoeditor`,
-      lastModified: currentDate,
-      changeFrequency: 'weekly' as const,
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/seedream`,
-      lastModified: currentDate,
-      changeFrequency: 'weekly' as const,
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/blog`,
-      lastModified: currentDate,
-      changeFrequency: 'weekly' as const,
-      priority: 0.8,
-    },
+  // 主要页面 - 按重要性排序
+  const mainPages = [
+    { path: '', priority: 1.0, changeFreq: 'daily' as const },
+    { path: '/aiphotoeditor', priority: 0.9, changeFreq: 'weekly' as const },
+    { path: '/seedream', priority: 0.9, changeFreq: 'weekly' as const },
+    { path: '/blog', priority: 0.8, changeFreq: 'weekly' as const },
+    { path: '/about', priority: 0.6, changeFreq: 'monthly' as const },
+    { path: '/payment/success', priority: 0.5, changeFreq: 'monthly' as const },
+    { path: '/payment/cancel', priority: 0.3, changeFreq: 'monthly' as const },
+    { path: '/privacy', priority: 0.4, changeFreq: 'yearly' as const },
+    { path: '/terms', priority: 0.4, changeFreq: 'yearly' as const },
   ]
-
-  // 信息页面 - 中等优先级
-  const infoPages = [
-    {
-      url: `${baseUrl}/about`,
-      lastModified: currentDate,
-      changeFrequency: 'monthly' as const,
-      priority: 0.6,
-    },
+  
+  // 博客文章
+  const blogPosts = [
+    '/blog/seedream-4-release',
+    '/blog/feature-exploration',
+    '/blog/model-comparison',
+    '/blog/comfyui-integration',
+    '/blog/multilingual-support',
   ]
-
-  // 博客页面 - 动态内容
-  const blogPages = [
-    {
-      url: `${baseUrl}/blog/edit-pro-tips-ai`,
-      lastModified: currentDate,
-      changeFrequency: 'weekly' as const,
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/blog/aiphotoeditor-revolution`,
-      lastModified: currentDate,
-      changeFrequency: 'weekly' as const,
-      priority: 0.7,
-    },
-    {
-      url: `${baseUrl}/blog/aiphotoeditor-vs-seedream`,
-      lastModified: currentDate,
-      changeFrequency: 'weekly' as const,
-      priority: 0.7,
-    },
-    {
-      url: `${baseUrl}/blog/aiphotoeditor-features-guide`,
-      lastModified: currentDate,
-      changeFrequency: 'weekly' as const,
-      priority: 0.7,
-    },
-    {
-      url: `${baseUrl}/blog/aiphotoeditor-success-stories`,
-      lastModified: currentDate,
-      changeFrequency: 'weekly' as const,
-      priority: 0.7,
-    },
-    {
-      url: `${baseUrl}/blog/aiphotoeditor-future-roadmap`,
-      lastModified: currentDate,
-      changeFrequency: 'weekly' as const,
-      priority: 0.7,
-    },
-  ]
-
-  // 法律页面 - 低优先级
-  const legalPages = [
-    {
-      url: `${baseUrl}/privacy`,
-      lastModified: currentDate,
-      changeFrequency: 'yearly' as const,
-      priority: 0.3,
-    },
-    {
-      url: `${baseUrl}/terms`,
-      lastModified: currentDate,
-      changeFrequency: 'yearly' as const,
-      priority: 0.3,
-    },
-  ]
-
-  // 支付相关页面 - 中等优先级
-  const paymentPages = [
-    {
-      url: `${baseUrl}/payment/success`,
-      lastModified: currentDate,
-      changeFrequency: 'monthly' as const,
-      priority: 0.5,
-    },
-    {
-      url: `${baseUrl}/payment/cancel`,
-      lastModified: currentDate,
-      changeFrequency: 'monthly' as const,
-      priority: 0.5,
-    },
-  ]
-
-  // 合并所有页面
-  return [
-    ...staticPages,
-    ...infoPages,
-    ...blogPages,
-    ...legalPages,
-    ...paymentPages,
-  ]
+  
+  const sitemap: MetadataRoute.Sitemap = []
+  
+  // 为每个语言版本添加主要页面
+  locales.forEach(locale => {
+    mainPages.forEach(pageInfo => {
+      const url = locale === 'en' ? `${baseUrl}${pageInfo.path}` : `${baseUrl}/${locale}${pageInfo.path}`
+      sitemap.push({
+        url: url,
+        lastModified: currentDate,
+        changeFrequency: pageInfo.changeFreq,
+        priority: pageInfo.priority,
+        alternates: {
+          languages: {
+            en: `${baseUrl}${pageInfo.path}`,
+            ja: `${baseUrl}/ja${pageInfo.path}`,
+          }
+        }
+      })
+    })
+    
+    // 添加博客文章
+    blogPosts.forEach(post => {
+      const url = locale === 'en' ? `${baseUrl}${post}` : `${baseUrl}/${locale}${post}`
+      sitemap.push({
+        url: url,
+        lastModified: currentDate,
+        changeFrequency: 'monthly',
+        priority: 0.7,
+        alternates: {
+          languages: {
+            en: `${baseUrl}${post}`,
+            ja: `${baseUrl}/ja${post}`,
+          }
+        }
+      })
+    })
+  })
+  
+  return sitemap
 } 
