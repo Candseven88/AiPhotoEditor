@@ -352,56 +352,19 @@ export default function AIPhotoEditorPage() {
           </motion.div>
         </section>
 
-        {/* 功能特性卡片 */}
-        <section className="container mx-auto px-4 py-8">
-          <motion.div
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-          >
-            {features.map((feature, index) => (
-              <Card 
-                key={feature.title}
-                variant="glass"
-                hover={true}
-                glow={true}
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.5 + index * 0.1 }}
-                className="text-center group"
-              >
-                <motion.div
-                  className={`w-16 h-16 bg-gradient-to-br ${feature.gradient} rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg`}
-                  whileHover={{ scale: 1.1, rotate: 5 }}
-                  transition={{ type: "spring", stiffness: 300 }}
-                >
-                  <feature.icon className="w-8 h-8 text-white" />
-                </motion.div>
-                <h3 className="text-xl font-semibold text-gray-800 mb-3 group-hover:text-orange-600 transition-colors">
-                  {feature.title}
-                </h3>
-                <p className="text-gray-600 leading-relaxed">
-                  {feature.description}
-                </p>
-              </Card>
-            ))}
-          </motion.div>
-        </section>
-
-        {/* 主要功能区域 */}
+        {/* 主要功能区域 - 移动到前面 */}
         <section id="ai-generation" className="container mx-auto px-4 py-16">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
           >
             {/* 服务介绍 */}
             <motion.div
               className="text-center mb-12"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ duration: 0.8, delay: 0.8 }}
+              transition={{ duration: 0.8, delay: 0.5 }}
             >
               <h3 className="text-2xl md:text-3xl font-bold text-gray-800 mb-4">
                 <span className="text-gray-800">Choose Your</span>
@@ -491,6 +454,57 @@ export default function AIPhotoEditorPage() {
                 )}
               </AnimatePresence>
             </Card>
+          </motion.div>
+        </section>
+
+        {/* 功能特性卡片 - 移动到后面 */}
+        <section className="container mx-auto px-4 py-8">
+          <motion.div
+            className="text-center mb-12"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.6 }}
+          >
+            <h3 className="text-2xl md:text-3xl font-bold text-gray-800 mb-4">
+              Why Choose <span className="gradient-text">AI Photo Editor</span>?
+            </h3>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              Experience the next generation of AI-powered image creation with our cutting-edge platform.
+            </p>
+          </motion.div>
+
+          <motion.div
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.7 }}
+          >
+            {features.map((feature, index) => (
+              <Card 
+                key={feature.title}
+                variant="glass"
+                hover={true}
+                glow={true}
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.8 + index * 0.1 }}
+                className="text-center group"
+              >
+                <motion.div
+                  className={`w-16 h-16 bg-gradient-to-br ${feature.gradient} rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg`}
+                  whileHover={{ scale: 1.1, rotate: 5 }}
+                  transition={{ type: "spring", stiffness: 300 }}
+                >
+                  <feature.icon className="w-8 h-8 text-white" />
+                </motion.div>
+                <h3 className="text-xl font-semibold text-gray-800 mb-3 group-hover:text-orange-600 transition-colors">
+                  {feature.title}
+                </h3>
+                <p className="text-gray-600 leading-relaxed">
+                  {feature.description}
+                </p>
+              </Card>
+            ))}
           </motion.div>
         </section>
       </div>

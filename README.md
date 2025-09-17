@@ -45,7 +45,7 @@ npm run dev
 - **动画**: Framer Motion
 - **图标**: Lucide React
 - **AI模型**: BigModel Cogview-3-Flash
-- **数据分析**: Vercel Analytics
+- **数据分析**: Vercel Analytics + Speed Insights
 
 ## 📁 项目结构
 
@@ -173,7 +173,12 @@ npm run lint
 
 ## 📝 更新日志
 
-### v0.2.2 (最新)
+### v0.2.3 (最新)
+- ✅ 集成 Vercel Speed Insights，实时监控网站性能指标
+- ✅ 添加页面加载速度和Core Web Vitals追踪
+- ✅ 优化性能数据收集，提升用户体验分析能力
+
+### v0.2.2
 - ✅ 集成 Vercel Analytics，提供详细的用户行为数据分析
 - ✅ 添加页面访问统计和用户交互追踪
 - ✅ 优化数据分析能力，为产品优化提供数据支持
