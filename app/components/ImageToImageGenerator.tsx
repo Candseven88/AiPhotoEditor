@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { Palette, Loader2 } from 'lucide-react'
+import { Palette, Loader2, X, Upload, Lock, Download } from 'lucide-react'
 import PaymentModal from './PaymentModal'
 import EnvironmentIndicator from './EnvironmentIndicator'
 import ImageUploader from './ImageUploader'
