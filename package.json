@@ -10,8 +10,7 @@
     "seo:deploy": "node scripts/seo-deploy.js",
     "seo:verify": "node scripts/seo-deploy.js --verify-only",
     "postbuild": "node scripts/seo-deploy.js",
-    "optimize:images": "node scripts/optimize-images.js",
-    "prebuild": "npm run optimize:images"
+    "optimize:images": "node scripts/optimize-images.js"
   },
   "dependencies": {
     "@vercel/analytics": "^1.5.0",

@@ -151,9 +151,15 @@ const nextConfig = {
               )
             },
             name(module) {
-              const hash = crypto.createHash('sha1')
-              hash.update(module.identifier())
-              return hash.digest('hex').substring(0, 8)
+              // 使用简单的哈希方法替代crypto
+              const identifier = module.identifier()
+              let hash = 0
+              for (let i = 0; i < identifier.length; i++) {
+                const char = identifier.charCodeAt(i)
+                hash = ((hash << 5) - hash) + char
+                hash = hash & hash // 转换为32位整数
+              }
+              return Math.abs(hash).toString(16).substring(0, 8)
             },
             priority: 30,
             minChunks: 1,
@@ -179,4 +185,4 @@ const nextConfig = {
   },
 }
 
-module.exports = nextConfig; 
+module.exports = nextConfig 
