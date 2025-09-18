@@ -665,6 +665,142 @@ export default function HomePage({ params }: PageProps) {
           </motion.div>
         </section>
 
+        {/* 新增：AI图像编辑功能介绍 */}
+        <section className="container mx-auto px-4 py-16 bg-gradient-to-r from-orange-50 to-yellow-50">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.9 }}
+            className="text-center mb-12"
+          >
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-6">
+              Complete AI Image Editing Solution
+            </h2>
+            <p className="text-lg text-gray-600 max-w-3xl mx-auto mb-8">
+              Our comprehensive AI photo editor combines multiple powerful tools in one platform. 
+              Whether you need to fix photos, enhance images, or create entirely new visuals, 
+              our AI image modifier delivers professional results instantly.
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {/* AI Photo Fixer */}
+            <Card variant="glass" hover={true} className="text-center p-6">
+              <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                <Shield className="w-8 h-8 text-white" />
+              </div>
+              <h3 className="text-xl font-semibold text-gray-800 mb-3">AI Photo Fixer</h3>
+              <p className="text-gray-600 leading-relaxed">
+                Automatically detect and fix photo imperfections. Our AI image fixer 
+                removes noise, corrects exposure, and enhances clarity with one click.
+              </p>
+            </Card>
+
+            {/* AI Image Modifier */}
+            <Card variant="glass" hover={true} className="text-center p-6">
+              <div className="w-16 h-16 bg-gradient-to-br from-green-500 to-teal-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                <Palette className="w-8 h-8 text-white" />
+              </div>
+              <h3 className="text-xl font-semibold text-gray-800 mb-3">AI Image Modifier</h3>
+              <p className="text-gray-600 leading-relaxed">
+                Transform your images with intelligent modifications. Change styles, 
+                adjust colors, and apply artistic effects using advanced AI algorithms.
+              </p>
+            </Card>
+
+            {/* Best AI Image Editor */}
+            <Card variant="glass" hover={true} className="text-center p-6">
+              <div className="w-16 h-16 bg-gradient-to-br from-orange-500 to-red-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                <Award className="w-8 h-8 text-white" />
+              </div>
+              <h3 className="text-xl font-semibold text-gray-800 mb-3">Best AI Image Editor</h3>
+              <p className="text-gray-600 leading-relaxed">
+                Experience why users choose our platform as the best AI image editor. 
+                Professional features, intuitive interface, and lightning-fast processing.
+              </p>
+            </Card>
+          </div>
+
+          {/* AI Editing Capabilities */}
+          <div className="mt-16">
+            <h3 className="text-2xl font-bold text-center text-gray-800 mb-8">
+              Professional AI Photo Editing Capabilities
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div className="space-y-4">
+                <div className="flex items-start space-x-3">
+                  <div className="w-6 h-6 bg-orange-500 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <span className="text-white text-sm font-bold">✓</span>
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-gray-800">AI Edit Image with Precision</h4>
+                    <p className="text-gray-600 text-sm">
+                      Make precise edits to any part of your image using AI-powered selection and modification tools.
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-start space-x-3">
+                  <div className="w-6 h-6 bg-orange-500 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <span className="text-white text-sm font-bold">✓</span>
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-gray-800">Free AI Photo Editor Access</h4>
+                    <p className="text-gray-600 text-sm">
+                      Enjoy full access to our free AI photo editor with no watermarks or limitations on basic features.
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-start space-x-3">
+                  <div className="w-6 h-6 bg-orange-500 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <span className="text-white text-sm font-bold">✓</span>
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-gray-800">AI Picture Editor for All Formats</h4>
+                    <p className="text-gray-600 text-sm">
+                      Support for all major image formats with intelligent format optimization and conversion.
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div className="space-y-4">
+                <div className="flex items-start space-x-3">
+                  <div className="w-6 h-6 bg-orange-500 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <span className="text-white text-sm font-bold">✓</span>
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-gray-800">Photo Editing AI Technology</h4>
+                    <p className="text-gray-600 text-sm">
+                      Powered by cutting-edge photo editing AI that understands context and delivers natural results.
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-start space-x-3">
+                  <div className="w-6 h-6 bg-orange-500 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <span className="text-white text-sm font-bold">✓</span>
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-gray-800">AI Photoshop Alternative</h4>
+                    <p className="text-gray-600 text-sm">
+                      Get Photoshop-level editing capabilities without the complexity or subscription fees.
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-start space-x-3">
+                  <div className="w-6 h-6 bg-orange-500 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <span className="text-white text-sm font-bold">✓</span>
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-gray-800">Instant AI Image Processing</h4>
+                    <p className="text-gray-600 text-sm">
+                      Experience lightning-fast AI image processing with results delivered in seconds, not minutes.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* 前后对比滑块 */}
         <section className="container mx-auto px-4 py-8">
           <motion.div
