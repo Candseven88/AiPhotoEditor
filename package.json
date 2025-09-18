@@ -9,7 +9,9 @@
     "lint": "next lint",
     "seo:deploy": "node scripts/seo-deploy.js",
     "seo:verify": "node scripts/seo-deploy.js --verify-only",
-    "postbuild": "node scripts/seo-deploy.js"
+    "postbuild": "node scripts/seo-deploy.js",
+    "optimize:images": "node scripts/optimize-images.js",
+    "prebuild": "npm run optimize:images"
   },
   "dependencies": {
     "@vercel/analytics": "^1.5.0",
@@ -23,6 +25,7 @@
     "tailwind-merge": "^2.2.0"
   },
   "devDependencies": {
+    "@squoosh/lib": "^0.3.1",
     "@types/node": "^20.0.0",
     "@types/react": "^18.2.0",
     "@types/react-dom": "^18.2.0",

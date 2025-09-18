@@ -162,96 +162,62 @@ export default function HomePage({ params }: PageProps) {
       {/* 导航栏 */}
       <Navigation />
 
-      {/* 背景装饰元素 - 优化版本 */}
+      {/* 简化的背景装饰元素 - 减少动画复杂度 */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        {/* 主要装饰球 */}
+        {/* 主要装饰球 - 简化动画 */}
         <motion.div
           className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-orange-200/20 to-yellow-200/20 rounded-full"
           animate={{ 
             scale: [1, 1.1, 1],
-            rotate: [0, 180, 360],
             opacity: [0.3, 0.5, 0.3]
           }}
-          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
         />
         
         <motion.div
           className="absolute -bottom-32 -left-32 w-64 h-64 bg-gradient-to-tr from-blue-200/20 to-purple-200/20 rounded-full"
           animate={{ 
             scale: [1.1, 1, 1.1],
-            rotate: [360, 180, 0],
             opacity: [0.4, 0.2, 0.4]
           }}
-          transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
         />
 
-        {/* Logo装饰元素 */}
+        {/* 减少装饰Logo数量，简化动画 */}
         <motion.div
-                      className="absolute top-20 right-20 w-16 h-16 opacity-10"
-            animate={{
-              rotate: [0, 360],
-              scale: [1, 1.2, 1],
-            }}
-            transition={{
-              duration: 15,
-              repeat: Infinity,
-              ease: "linear"
-            }}
-          >
-            <img src="/Logo.png" alt="AI Photo Editor Logo" className="w-full h-full object-contain" />
-          </motion.div>
+          className="absolute top-20 right-20 w-16 h-16 opacity-10"
+          animate={{
+            rotate: [0, 360],
+            scale: [1, 1.2, 1],
+          }}
+          transition={{
+            duration: 20,
+            repeat: Infinity,
+            ease: "linear"
+          }}
+        >
+          <img src="/Logo.png" alt="AI Photo Editor Logo" className="w-full h-full object-contain" loading="lazy" />
+        </motion.div>
 
-        <motion.div
-                      className="absolute bottom-40 right-10 w-12 h-12 opacity-15"
-            animate={{
-              y: [0, -30, 0],
-              rotate: [0, -180, -360],
-              opacity: [0.15, 0.25, 0.15]
-            }}
-            transition={{
-              duration: 8,
-              repeat: Infinity,
-              ease: "easeInOut"
-            }}
-          >
-            <img src="/Logo.png" alt="AI Photo Editor Logo" className="w-full h-full object-contain" />
-          </motion.div>
-
-        <motion.div
-                      className="absolute top-1/3 left-10 w-10 h-10 opacity-12"
-            animate={{
-              x: [0, 20, 0],
-              rotate: [0, 180, 360],
-              scale: [1, 0.8, 1]
-            }}
-            transition={{
-              duration: 12,
-              repeat: Infinity,
-              ease: "easeInOut"
-            }}
-          >
-            <img src="/Logo.png" alt="AI Photo Editor Logo" className="w-full h-full object-contain" />
-          </motion.div>
-
-        {/* 小装饰元素 */}
-        {[...Array(6)].map((_, i) => (
+        {/* 减少小装饰元素数量 */}
+        {[...Array(3)].map((_, i) => (
           <motion.div
             key={i}
             className={`absolute w-2 h-2 bg-gradient-to-r ${
               i % 2 === 0 ? 'from-orange-400 to-yellow-400' : 'from-blue-400 to-purple-400'
             } rounded-full`}
             style={{
-              top: `${20 + i * 15}%`,
-              left: `${10 + i * 12}%`,
+              top: `${30 + i * 20}%`,
+              left: `${15 + i * 15}%`,
             }}
             animate={{
               y: [0, -20, 0],
               opacity: [0.4, 0.8, 0.4],
             }}
             transition={{
-              duration: 3 + i * 0.5,
+              duration: 4 + i,
               repeat: Infinity,
-              delay: i * 0.3,
+              delay: i * 0.5,
               ease: "easeInOut"
             }}
           />
@@ -259,73 +225,42 @@ export default function HomePage({ params }: PageProps) {
       </div>
 
       <div className="relative z-10 pt-20">
-        {/* Hero Section - 重新设计 */}
+        {/* Hero Section - 优化加载 */}
         <section className="container mx-auto px-4 py-16">
           <motion.div 
             className="text-center max-w-5xl mx-auto"
-            initial={{ opacity: 0, y: -30 }}
+            initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.6 }}
           >
-            {/* Logo和品牌 */}
+            {/* Logo和品牌 - 简化动画 */}
             <motion.div 
               className="flex items-center justify-center mb-8"
-              initial={{ scale: 0.8 }}
+              initial={{ scale: 0.9 }}
               animate={{ scale: 1 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
+              transition={{ duration: 0.4, delay: 0.1 }}
             >
               <div className="relative">
                 <motion.div
                   className="absolute inset-0 bg-gradient-to-r from-orange-400 to-yellow-400 rounded-2xl blur-lg opacity-30"
                   animate={{ scale: [1, 1.05, 1] }}
-                  transition={{ duration: 2, repeat: Infinity }}
+                  transition={{ duration: 3, repeat: Infinity }}
                 />
                 <div className="relative bg-white rounded-2xl p-3 shadow-xl">
-                  <img src="/Logo.png" alt="AI Photo Editor Logo" className="w-8 h-8 object-contain" />
+                  <img src="/Logo.png" alt="AI Photo Editor Logo" className="w-8 h-8 object-contain" loading="eager" />
                 </div>
               </div>
               <h1 className="ml-4 text-6xl md:text-7xl font-bold">
                 <span className="gradient-text">{t('hero.title').split(' ').slice(0, 2).join(' ')}</span>
                 <span className="text-gray-800"> {t('hero.title').split(' ').slice(2).join(' ')}</span>
               </h1>
-              
-              {/* 装饰性Logo元素 */}
-              <motion.div
-                className="absolute -top-6 -right-8 w-6 h-6 opacity-20"
-                                  animate={{
-                    rotate: [0, 360],
-                    scale: [1, 1.5, 1],
-                  }}
-                  transition={{
-                    duration: 10,
-                    repeat: Infinity,
-                    ease: "easeInOut"
-                  }}
-                >
-                  <img src="/Logo.png" alt="AI Photo Editor Logo" className="w-full h-full object-contain" />
-                </motion.div>
-              
-              <motion.div
-                className="absolute -bottom-4 -left-6 w-4 h-4 opacity-15"
-                animate={{
-                  y: [0, -10, 0],
-                  rotate: [0, -180, -360],
-                }}
-                transition={{
-                  duration: 6,
-                  repeat: Infinity,
-                  ease: "easeInOut"
-                }}
-              >
-                <img src="/Logo.png" alt="AI Photo Editor Logo" className="w-full h-full object-contain" />
-              </motion.div>
             </motion.div>
             
             {/* 主标题和描述 */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.3 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
             >
               <h2 className="text-3xl md:text-5xl font-bold text-gray-800 mb-6 leading-tight">
                 {t('hero.subtitle')}
@@ -336,23 +271,22 @@ export default function HomePage({ params }: PageProps) {
               </p>
             </motion.div>
 
-            {/* Logo展示区域 - 位于标题下方 */}
+            {/* Logo展示区域 - 简化动画 */}
             <motion.div 
               className="text-center mb-12"
-              initial={{ opacity: 0, scale: 0.8 }}
+              initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 1, delay: 0.4 }}
+              transition={{ duration: 0.8, delay: 0.3 }}
             >
               <div className="relative inline-block">
-                {/* 主Logo */}
+                {/* 主Logo - 减少动画复杂度 */}
                 <motion.div
                   className="relative z-10"
                   animate={{ 
-                    y: [0, -10, 0],
-                    rotate: [0, 1, -1, 0]
+                    y: [0, -8, 0]
                   }}
                   transition={{ 
-                    duration: 4, 
+                    duration: 6, 
                     repeat: Infinity, 
                     ease: "easeInOut" 
                   }}
@@ -365,10 +299,11 @@ export default function HomePage({ params }: PageProps) {
                     src="/Logo.png" 
                     alt="AI Photo Editor - Your Creative Assistant" 
                     className="w-48 h-48 md:w-56 md:h-56 object-contain drop-shadow-xl cursor-pointer"
+                    loading="eager"
                   />
                 </motion.div>
                 
-                {/* 温和的发光效果 */}
+                {/* 简化的发光效果 */}
                 <motion.div
                   className="absolute inset-0 bg-gradient-to-r from-yellow-400/20 via-orange-400/20 to-yellow-400/20 rounded-full blur-2xl"
                   animate={{ 
@@ -376,41 +311,11 @@ export default function HomePage({ params }: PageProps) {
                     opacity: [0.2, 0.4, 0.2]
                   }}
                   transition={{ 
-                    duration: 3, 
+                    duration: 4, 
                     repeat: Infinity, 
                     ease: "easeInOut" 
                   }}
                 />
-                
-                {/* 简化的装饰元素 */}
-                {[...Array(4)].map((_, i) => (
-                  <motion.div
-                    key={i}
-                    className="absolute w-3 h-3 bg-gradient-to-r from-yellow-400 to-orange-400 rounded-full opacity-30"
-                    style={{
-                      top: '50%',
-                      left: '50%',
-                      transformOrigin: '0 0',
-                    }}
-                    animate={{
-                      rotate: [i * 90, (i * 90) + 360],
-                      scale: [1, 1.3, 1],
-                    }}
-                    transition={{
-                      duration: 12,
-                      repeat: Infinity,
-                      ease: "linear",
-                      delay: i * 0.5
-                    }}
-                  >
-                    <div 
-                      className="w-3 h-3 bg-gradient-to-r from-yellow-400 to-orange-400 rounded-full"
-                      style={{
-                        transform: `translate(-50%, -50%) translateY(-70px)`
-                      }}
-                    />
-                  </motion.div>
-                ))}
               </div>
               
               {/* 简化的文字说明 */}
@@ -418,7 +323,7 @@ export default function HomePage({ params }: PageProps) {
                 className="mt-6"
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.8 }}
+                transition={{ duration: 0.5, delay: 0.5 }}
               >
                 <p className="text-lg font-semibold text-gray-600 mb-1">
                   {t('hero.creativeBananaAssistant')}
@@ -432,9 +337,9 @@ export default function HomePage({ params }: PageProps) {
             {/* 统计数据 */}
             <motion.div
               className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12"
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.5 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
             >
               {stats.map((stat, index) => (
                 <motion.div
@@ -442,7 +347,7 @@ export default function HomePage({ params }: PageProps) {
                   className="text-center"
                   initial={{ scale: 0 }}
                   animate={{ scale: 1 }}
-                  transition={{ duration: 0.5, delay: 0.6 + index * 0.1 }}
+                  transition={{ duration: 0.4, delay: 0.5 + index * 0.1 }}
                 >
                   <div className="inline-flex items-center justify-center w-12 h-12 bg-gradient-to-r from-orange-100 to-yellow-100 rounded-full mb-3">
                     <stat.icon className="w-6 h-6 text-orange-600" />
@@ -456,9 +361,9 @@ export default function HomePage({ params }: PageProps) {
             {/* CTA按钮 */}
             <motion.div
               className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16"
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.7 }}
+              transition={{ duration: 0.6, delay: 0.6 }}
             >
               <GradientButton
                 size="lg"
@@ -491,7 +396,7 @@ export default function HomePage({ params }: PageProps) {
               className="text-center mb-12"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ duration: 0.8, delay: 0.8 }}
+              transition={{ duration: 0.6, delay: 0.7 }}
             >
               <h3 className="text-2xl md:text-3xl font-bold text-gray-800 mb-4">
                 <span className="gradient-text">{t('hero.chooseCreativePath')}</span>
@@ -523,44 +428,13 @@ export default function HomePage({ params }: PageProps) {
           </motion.div>
         </section>
 
-        {/* 功能特性卡片 */}
+        {/* 功能特性卡片 - 减少装饰元素 */}
         <section className="container mx-auto px-4 py-8 relative">
-          {/* 区域装饰Logo */}
-          <motion.div
-            className="absolute top-4 left-4 w-8 h-8 opacity-10"
-            animate={{
-              rotate: [0, 360],
-              scale: [1, 1.3, 1],
-            }}
-            transition={{
-              duration: 20,
-              repeat: Infinity,
-              ease: "linear"
-            }}
-          >
-            <img src="/Logo.png" alt="AI Photo Editor Logo" className="w-full h-full object-contain" />
-          </motion.div>
-          
-          <motion.div
-            className="absolute bottom-4 right-4 w-6 h-6 opacity-12"
-            animate={{
-              y: [0, -15, 0],
-              rotate: [0, -180, -360],
-            }}
-            transition={{
-              duration: 14,
-              repeat: Infinity,
-              ease: "easeInOut"
-            }}
-          >
-            <img src="/Logo.png" alt="AI Photo Editor Logo" className="w-full h-full object-contain" />
-          </motion.div>
-          
           <motion.div
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16"
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
           >
             {features.map((feature, index) => (
               <Card 
@@ -568,9 +442,9 @@ export default function HomePage({ params }: PageProps) {
                 variant="glass"
                 hover={true}
                 glow={true}
-                initial={{ opacity: 0, y: 30 }}
+                initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.5 + index * 0.1 }}
+                transition={{ duration: 0.4, delay: 0.4 + index * 0.1 }}
                 className="text-center group"
               >
                 <motion.div
@@ -591,14 +465,14 @@ export default function HomePage({ params }: PageProps) {
           </motion.div>
         </section>
 
-        {/* 主要功能区域 - 重新设计 */}
+        {/* 主要功能区域 */}
         <section id="ai-generation" className="container mx-auto px-4 py-16">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
+            transition={{ duration: 0.6, delay: 0.5 }}
           >
-            {/* 标签页导航 - 改进版本 */}
+            {/* 标签页导航 */}
             <div className="flex flex-wrap justify-center gap-4 mb-12">
               {tabs.map((tab) => (
                 <motion.button
@@ -614,16 +488,6 @@ export default function HomePage({ params }: PageProps) {
                   whileHover={{ scale: activeTab === tab.id ? 1.05 : 1.02 }}
                   whileTap={{ scale: 0.98 }}
                 >
-                  {/* 闪光效果 */}
-                  {activeTab === tab.id && (
-                    <motion.div
-                      className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
-                      initial={{ x: '-100%' }}
-                      animate={{ x: '100%' }}
-                      transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}
-                    />
-                  )}
-                  
                   <div className="relative z-10 flex items-center gap-3">
                     <tab.icon className="w-5 h-5" />
                     <div className="text-left">
@@ -637,16 +501,16 @@ export default function HomePage({ params }: PageProps) {
               ))}
             </div>
 
-            {/* 标签页内容 - 改进版本 */}
+            {/* 标签页内容 */}
             <Card variant="glass" size="lg" hover={false} className="min-h-[600px]">
               <AnimatePresence mode="wait">
                 {activeTab === 'username-to-image' && (
                   <motion.div
                     key="username-to-image"
-                    initial={{ opacity: 0, x: -20 }}
+                    initial={{ opacity: 0, x: -10 }}
                     animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: 20 }}
-                    transition={{ duration: 0.3 }}
+                    exit={{ opacity: 0, x: 10 }}
+                    transition={{ duration: 0.2 }}
                   >
                     <UsernameToImageGenerator />
                   </motion.div>
@@ -655,10 +519,10 @@ export default function HomePage({ params }: PageProps) {
                 {activeTab === 'text-to-image' && (
                   <motion.div
                     key="text-to-image"
-                    initial={{ opacity: 0, x: -20 }}
+                    initial={{ opacity: 0, x: -10 }}
                     animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: 20 }}
-                    transition={{ duration: 0.3 }}
+                    exit={{ opacity: 0, x: 10 }}
+                    transition={{ duration: 0.2 }}
                   >
                     <ImageGenerator />
                   </motion.div>
@@ -667,10 +531,10 @@ export default function HomePage({ params }: PageProps) {
                 {activeTab === 'image-to-image' && (
                   <motion.div
                     key="image-to-image"
-                    initial={{ opacity: 0, x: -20 }}
+                    initial={{ opacity: 0, x: -10 }}
                     animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: 20 }}
-                    transition={{ duration: 0.3 }}
+                    exit={{ opacity: 0, x: 10 }}
+                    transition={{ duration: 0.2 }}
                   >
                     <ImageToImageGenerator />
                   </motion.div>
@@ -684,9 +548,9 @@ export default function HomePage({ params }: PageProps) {
         <section className="container mx-auto px-4 py-8">
           <motion.div
             className="text-center mb-12"
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
           >
             <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
               {t('benefits.whyChoose')}
@@ -696,12 +560,12 @@ export default function HomePage({ params }: PageProps) {
             </p>
           </motion.div>
 
-          {/* 对比图片展示 */}
+          {/* 对比图片展示 - 延迟加载 */}
           <motion.div
             className="mb-16"
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
           >
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
               {/* 第一个对比 */}
@@ -756,9 +620,9 @@ export default function HomePage({ params }: PageProps) {
               <motion.div
                 key={benefit.title}
                 className="text-center"
-                initial={{ opacity: 0, y: 30 }}
+                initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.6 + index * 0.1 }}
+                transition={{ duration: 0.5, delay: 0.6 + index * 0.1 }}
               >
                 <div className="relative inline-flex items-center justify-center w-16 h-16 mb-6">
                   <div className="absolute inset-0 bg-gradient-to-r from-orange-400 to-yellow-400 rounded-full opacity-20 animate-pulse" />
@@ -776,9 +640,9 @@ export default function HomePage({ params }: PageProps) {
         {/* 案例展示 */}
         <section className="container mx-auto px-4 py-16">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.8 }}
+            transition={{ duration: 0.6, delay: 0.8 }}
           >
             <div className="text-center mb-12">
               <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
@@ -804,9 +668,9 @@ export default function HomePage({ params }: PageProps) {
         {/* 前后对比滑块 */}
         <section className="container mx-auto px-4 py-8">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 1.0 }}
+            transition={{ duration: 0.6, delay: 1.0 }}
           >
             <div className="text-center mb-12">
               <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
@@ -852,9 +716,9 @@ export default function HomePage({ params }: PageProps) {
             {/* 更多对比示例 */}
             <motion.div
               className="mt-16"
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 1.2 }}
+              transition={{ duration: 0.6, delay: 1.2 }}
             >
               <h3 className="text-2xl font-bold text-center text-gray-800 mb-8">{t('showcase.moreAmazingTransformations')}</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -890,13 +754,13 @@ export default function HomePage({ params }: PageProps) {
           </motion.div>
         </section>
         
-        {/* 页面底部Logo装饰 */}
+        {/* 简化的页面底部Logo装饰 */}
         <section className="container mx-auto px-4 py-16 relative">
           <motion.div
             className="flex justify-center items-center"
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 1.4 }}
+            transition={{ duration: 0.6, delay: 1.4 }}
           >
             <div className="relative">
               <motion.div
@@ -906,45 +770,13 @@ export default function HomePage({ params }: PageProps) {
                   scale: [1, 1.1, 1],
                 }}
                 transition={{
-                  duration: 25,
+                  duration: 30,
                   repeat: Infinity,
                   ease: "linear"
                 }}
               >
-                <img src="/Logo.png" alt="AI Photo Editor Logo" className="w-full h-full object-contain" />
+                <img src="/Logo.png" alt="AI Photo Editor Logo" className="w-full h-full object-contain" loading="lazy" />
               </motion.div>
-              
-              {/* 环绕的小Logo */}
-              {[...Array(8)].map((_, i) => (
-                <motion.div
-                  key={i}
-                  className="absolute w-4 h-4 opacity-10"
-                  style={{
-                    top: '50%',
-                    left: '50%',
-                    transformOrigin: '0 0',
-                  }}
-                  animate={{
-                    rotate: [i * 45, (i * 45) + 360],
-                    scale: [1, 1.2, 1],
-                  }}
-                  transition={{
-                    duration: 30,
-                    repeat: Infinity,
-                    ease: "linear",
-                    delay: i * 0.5
-                  }}
-                >
-                  <div 
-                    className="w-4 h-4"
-                    style={{
-                      transform: `translate(-50%, -50%) translateY(-40px)`
-                    }}
-                  >
-                    <img src="/Logo.png" alt="AI Photo Editor Logo" className="w-full h-full object-contain" />
-                  </div>
-                </motion.div>
-              ))}
             </div>
           </motion.div>
         </section>

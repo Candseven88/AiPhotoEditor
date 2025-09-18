@@ -6,7 +6,14 @@ import Script from 'next/script'
 import { Analytics } from '@vercel/analytics/react'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 
-const inter = Inter({ subsets: ['latin'] })
+// 优化字体加载
+const inter = Inter({ 
+  subsets: ['latin'],
+  display: 'swap', // 使用 font-display: swap 优化字体加载
+  preload: true,
+  fallback: ['system-ui', 'arial', 'sans-serif'],
+  variable: '--font-inter', // 添加CSS变量
+})
 
 // 生成多语言metadata
 export async function generateMetadata({ params }: { params: Promise<{ locale?: string }> }): Promise<Metadata> {
@@ -111,15 +118,26 @@ export default async function RootLayout({
   }
   
   return (
-    <html lang={locale}>
+    <html lang={locale} className={inter.variable}>
       <head>
+        {/* 预连接到重要的外部域名 */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
+        <link rel="preconnect" href="https://www.googletagmanager.com" />
+        <link rel="preconnect" href="https://www.clarity.ms" />
+        <link rel="preconnect" href="https://open.bigmodel.cn" />
+        <link rel="dns-prefetch" href="https://vercel.live" />
+        
+        {/* 预加载关键资源 */}
+        <link rel="preload" href="/Logo.png" as="image" type="image/png" />
+        
         {/* JSON-LD 结构化数据 */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
         />
         
-        {/* Google Analytics */}
+        {/* 优化Google Analytics加载 */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-LTQMD39NCB"
           strategy="afterInteractive"
@@ -129,12 +147,15 @@ export default async function RootLayout({
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
-            gtag('config', 'G-LTQMD39NCB');
+            gtag('config', 'G-LTQMD39NCB', {
+              page_title: document.title,
+              page_location: window.location.href
+            });
           `}
         </Script>
         
-        {/* Microsoft Clarity */}
-        <Script id="microsoft-clarity" strategy="afterInteractive">
+        {/* 延迟加载Microsoft Clarity */}
+        <Script id="microsoft-clarity" strategy="lazyOnload">
           {`
             (function(c,l,a,r,i,t,y){
                 c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
@@ -144,7 +165,7 @@ export default async function RootLayout({
           `}
         </Script>
       </head>
-      <body className={inter.className}>
+      <body className={`${inter.className} font-sans antialiased`}>
         {children}
         <Footer />
         <Analytics />

@@ -3,6 +3,21 @@ import { NextRequest, NextResponse } from 'next/server'
 const locales = ['en', 'ja']
 const defaultLocale = 'en'
 
+// 获取首选语言
+function getPreferredLocale(request: NextRequest) {
+  // 从Accept-Language头获取首选语言
+  const acceptLanguage = request.headers.get('accept-language')
+  
+  if (acceptLanguage) {
+    // 检查是否包含日语
+    if (acceptLanguage.includes('ja')) {
+      return 'ja'
+    }
+  }
+  
+  return defaultLocale
+}
+
 export function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname
   
@@ -16,9 +31,10 @@ export function middleware(request: NextRequest) {
     return NextResponse.next()
   }
 
-  // 如果是根路径，让客户端处理重定向
+  // 如果是根路径，服务器端重定向到合适的语言版本
   if (pathname === '/') {
-    return NextResponse.next()
+    const preferredLocale = getPreferredLocale(request)
+    return NextResponse.redirect(new URL(`/${preferredLocale}`, request.url))
   }
 
   // 对于其他没有语言前缀的路径，重定向到英语版本

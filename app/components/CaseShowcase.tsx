@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ChevronLeft, ChevronRight, Play, Pause, Maximize2, RotateCcw } from 'lucide-react'
 import BeforeAfterSlider from './BeforeAfterSlider'
+import Image from 'next/image'
 
 interface CaseImage {
   id: string
