@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
+import Image from 'next/image'
 
 interface BeforeAfterSliderProps {
   beforeImage: string
@@ -141,11 +142,13 @@ export default function BeforeAfterSlider({
       >
         {/* Before Image (左半部分) */}
         <div className="absolute inset-0 w-full h-full">
-        <img
+        <Image
           src={beforeImage}
           alt="Before"
-          className="w-full h-full object-cover object-center"
+          fill
+          className="object-cover object-center"
           loading="lazy"
+          sizes="(max-width: 768px) 100vw, 50vw"
         />
         </div>
         
@@ -157,11 +160,13 @@ export default function BeforeAfterSlider({
             transform: 'translateZ(0)' // 启用硬件加速
           }}
         >
-          <img
+          <Image
             src={afterImage}
             alt="After"
-            className="w-full h-full object-cover object-center"
+            fill
+            className="object-cover object-center"
             loading="lazy"
+            sizes="(max-width: 768px) 100vw, 50vw"
           />
         </div>
         

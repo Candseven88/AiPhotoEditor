@@ -1,5 +1,12 @@
 /** @type {import('next').NextConfig} */
+const crypto = require('crypto')
+
 const nextConfig = {
+  // 性能优化 - Next.js 15中SWC已默认启用
+  experimental: {
+    optimizePackageImports: ['framer-motion', 'lucide-react'], // 按需导入优化
+  },
+
   // 图像优化配置
   images: {
     formats: ['image/webp', 'image/avif'], // 现代图像格式
@@ -25,6 +32,8 @@ const nextConfig = {
     removeConsole: process.env.NODE_ENV === 'production' ? {
       exclude: ['error'] // 生产环境移除console.log但保留console.error
     } : false,
+    // 移除React开发时的额外属性
+    reactRemoveProperties: process.env.NODE_ENV === 'production' ? true : false,
   },
 
   // 压缩和优化
@@ -33,6 +42,8 @@ const nextConfig = {
   
   // 缓存优化
   generateEtags: true,
+  
+
   
   // 头部配置
   async headers() {
@@ -68,7 +79,7 @@ const nextConfig = {
           },
         ],
       },
-      // 静态资源缓存
+      // 静态资源缓存优化
       {
         source: '/Logo.png',
         headers: [
@@ -98,6 +109,53 @@ const nextConfig = {
         ],
       },
     ]
+  },
+
+  // webpack优化
+  webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
+    // 生产环境优化
+    if (!dev && !isServer) {
+      // 代码分割优化
+      config.optimization.splitChunks = {
+        chunks: 'all',
+        cacheGroups: {
+          default: false,
+          vendors: false,
+          // 框架代码分离
+          framework: {
+            chunks: 'all',
+            name: 'framework',
+            test: /(?<!node_modules.*)[\\/]node_modules[\\/](react|react-dom|scheduler|prop-types|use-subscription)[\\/]/,
+            priority: 40,
+            enforce: true,
+          },
+          // 第三方库代码分离
+          lib: {
+            test(module) {
+              return module.size() > 160000 &&
+                /node_modules[/\\]/.test(module.identifier())
+            },
+            name(module) {
+              const hash = crypto.createHash('sha1')
+              hash.update(module.identifier())
+              return hash.digest('hex').substring(0, 8)
+            },
+            priority: 30,
+            minChunks: 1,
+            reuseExistingChunk: true,
+          },
+          // 公共代码分离
+          commons: {
+            name: 'commons',
+            priority: 20,
+            minChunks: 2,
+            reuseExistingChunk: true,
+          },
+        },
+      }
+    }
+
+    return config
   },
 }
 

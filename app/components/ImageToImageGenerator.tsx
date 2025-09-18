@@ -2,9 +2,11 @@
 
 import { useState, useRef, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { Upload, X, Palette, Loader2, Download, ImageIcon, Lock } from 'lucide-react'
+import { Palette, Loader2 } from 'lucide-react'
 import PaymentModal from './PaymentModal'
 import EnvironmentIndicator from './EnvironmentIndicator'
+import ImageUploader from './ImageUploader'
+import ImageResults from './ImageResults'
 import GradientButton from './ui/GradientButton'
 import EmptyState from './ui/EmptyState'
 import { useToast } from './ui/Toast'

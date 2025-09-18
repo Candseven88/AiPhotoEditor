@@ -20,15 +20,19 @@ import {
   Lightbulb
 } from 'lucide-react'
 import ImageGenerator from '../components/ImageGenerator'
-import ImageToImageGenerator from '../components/ImageToImageGenerator'
-import CaseShowcase from '../components/CaseShowcase'
+import ImageToImageGeneratorV2 from '../components/ImageToImageGeneratorV2'
+import CaseShowcaseV2 from '../components/CaseShowcaseV2'
 import UsernameToImageGenerator from '../components/UsernameToImageGenerator'
 import BeforeAfterSlider from '../components/BeforeAfterSlider'
-import Navigation from '../components/Navigation'
+import NavigationV2 from '../components/NavigationV2'
+import HeroSection from '../components/HeroSection'
+import FeaturesSection from '../components/FeaturesSection'
+import BackgroundDecorations from '../components/BackgroundDecorations'
 
 import GradientButton from '../components/ui/GradientButton'
 import Card from '../components/ui/Card'
 import Link from 'next/link'
+import Image from 'next/image'
 import { useTranslation } from '../../lib/use-translation'
 
 interface PageProps {
@@ -105,39 +109,7 @@ export default function HomePage({ params }: PageProps) {
     }
   ]
 
-  const features = [
-    {
-      icon: Zap,
-      title: t('features.lightningFast'),
-      description: t('features.lightningFastDesc'),
-      gradient: 'from-yellow-400 to-orange-500'
-    },
-    {
-      icon: Star,
-      title: t('features.premiumQuality'),
-      description: t('features.premiumQualityDesc'),
-      gradient: 'from-purple-400 to-pink-500'
-    },
-    {
-      icon: Users,
-      title: t('features.userFriendly'),
-      description: t('features.userFriendlyDesc'),
-      gradient: 'from-blue-400 to-indigo-500'
-    },
-    {
-      icon: Clock,
-      title: t('features.alwaysAvailable'),
-      description: t('features.alwaysAvailableDesc'),
-      gradient: 'from-green-400 to-emerald-500'
-    }
-  ]
 
-  const stats = [
-    { label: t('stats.imagesGenerated'), value: '1M+', icon: ImageIcon },
-    { label: t('stats.happyUsers'), value: '50K+', icon: Users },
-    { label: t('stats.successRate'), value: '99.9%', icon: Award },
-    { label: t('stats.responseTime'), value: '<5s', icon: Rocket }
-  ]
 
   const benefits = [
     {
@@ -160,310 +132,17 @@ export default function HomePage({ params }: PageProps) {
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-orange-50/30 relative overflow-hidden">
       {/* 导航栏 */}
-      <Navigation />
+      <NavigationV2 />
 
-      {/* 简化的背景装饰元素 - 减少动画复杂度 */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        {/* 主要装饰球 - 简化动画 */}
-        <motion.div
-          className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-orange-200/20 to-yellow-200/20 rounded-full"
-          animate={{ 
-            scale: [1, 1.1, 1],
-            opacity: [0.3, 0.5, 0.3]
-          }}
-          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-        />
-        
-        <motion.div
-          className="absolute -bottom-32 -left-32 w-64 h-64 bg-gradient-to-tr from-blue-200/20 to-purple-200/20 rounded-full"
-          animate={{ 
-            scale: [1.1, 1, 1.1],
-            opacity: [0.4, 0.2, 0.4]
-          }}
-          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-        />
-
-        {/* 减少装饰Logo数量，简化动画 */}
-        <motion.div
-          className="absolute top-20 right-20 w-16 h-16 opacity-10"
-          animate={{
-            rotate: [0, 360],
-            scale: [1, 1.2, 1],
-          }}
-          transition={{
-            duration: 20,
-            repeat: Infinity,
-            ease: "linear"
-          }}
-        >
-          <img src="/Logo.png" alt="AI Photo Editor Logo" className="w-full h-full object-contain" loading="lazy" />
-        </motion.div>
-
-        {/* 减少小装饰元素数量 */}
-        {[...Array(3)].map((_, i) => (
-          <motion.div
-            key={i}
-            className={`absolute w-2 h-2 bg-gradient-to-r ${
-              i % 2 === 0 ? 'from-orange-400 to-yellow-400' : 'from-blue-400 to-purple-400'
-            } rounded-full`}
-            style={{
-              top: `${30 + i * 20}%`,
-              left: `${15 + i * 15}%`,
-            }}
-            animate={{
-              y: [0, -20, 0],
-              opacity: [0.4, 0.8, 0.4],
-            }}
-            transition={{
-              duration: 4 + i,
-              repeat: Infinity,
-              delay: i * 0.5,
-              ease: "easeInOut"
-            }}
-          />
-        ))}
-      </div>
+      {/* 简化的背景装饰 */}
+      <BackgroundDecorations />
 
       <div className="relative z-10 pt-20">
-        {/* Hero Section - 优化加载 */}
-        <section className="container mx-auto px-4 py-16">
-          <motion.div 
-            className="text-center max-w-5xl mx-auto"
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-          >
-            {/* Logo和品牌 - 简化动画 */}
-            <motion.div 
-              className="flex items-center justify-center mb-8"
-              initial={{ scale: 0.9 }}
-              animate={{ scale: 1 }}
-              transition={{ duration: 0.4, delay: 0.1 }}
-            >
-              <div className="relative">
-                <motion.div
-                  className="absolute inset-0 bg-gradient-to-r from-orange-400 to-yellow-400 rounded-2xl blur-lg opacity-30"
-                  animate={{ scale: [1, 1.05, 1] }}
-                  transition={{ duration: 3, repeat: Infinity }}
-                />
-                <div className="relative bg-white rounded-2xl p-3 shadow-xl">
-                  <img src="/Logo.png" alt="AI Photo Editor Logo" className="w-8 h-8 object-contain" loading="eager" />
-                </div>
-              </div>
-              <h1 className="ml-4 text-6xl md:text-7xl font-bold">
-                <span className="gradient-text">{t('hero.title').split(' ').slice(0, 2).join(' ')}</span>
-                <span className="text-gray-800"> {t('hero.title').split(' ').slice(2).join(' ')}</span>
-              </h1>
-            </motion.div>
-            
-            {/* 主标题和描述 */}
-            <motion.div
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-            >
-              <h2 className="text-3xl md:text-5xl font-bold text-gray-800 mb-6 leading-tight">
-                {t('hero.subtitle')}
-              </h2>
-              
-              <p className="text-xl md:text-2xl text-gray-600 mb-12 max-w-3xl mx-auto leading-relaxed">
-                {t('hero.description')}
-              </p>
-            </motion.div>
+        {/* Hero Section - 拆分组件 */}
+        <HeroSection locale={locale} onScrollToFeatures={scrollToFeatures} />
 
-            {/* Logo展示区域 - 简化动画 */}
-            <motion.div 
-              className="text-center mb-12"
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.8, delay: 0.3 }}
-            >
-              <div className="relative inline-block">
-                {/* 主Logo - 减少动画复杂度 */}
-                <motion.div
-                  className="relative z-10"
-                  animate={{ 
-                    y: [0, -8, 0]
-                  }}
-                  transition={{ 
-                    duration: 6, 
-                    repeat: Infinity, 
-                    ease: "easeInOut" 
-                  }}
-                  whileHover={{ 
-                    scale: 1.05,
-                    transition: { duration: 0.3 }
-                  }}
-                >
-                  <img 
-                    src="/Logo.png" 
-                    alt="AI Photo Editor - Your Creative Assistant" 
-                    className="w-48 h-48 md:w-56 md:h-56 object-contain drop-shadow-xl cursor-pointer"
-                    loading="eager"
-                  />
-                </motion.div>
-                
-                {/* 简化的发光效果 */}
-                <motion.div
-                  className="absolute inset-0 bg-gradient-to-r from-yellow-400/20 via-orange-400/20 to-yellow-400/20 rounded-full blur-2xl"
-                  animate={{ 
-                    scale: [1, 1.1, 1],
-                    opacity: [0.2, 0.4, 0.2]
-                  }}
-                  transition={{ 
-                    duration: 4, 
-                    repeat: Infinity, 
-                    ease: "easeInOut" 
-                  }}
-                />
-              </div>
-              
-              {/* 简化的文字说明 */}
-              <motion.div
-                className="mt-6"
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.5 }}
-              >
-                <p className="text-lg font-semibold text-gray-600 mb-1">
-                  {t('hero.creativeBananaAssistant')}
-                </p>
-                <p className="text-sm text-gray-500">
-                  {t('hero.funAccessible')}
-                </p>
-              </motion.div>
-            </motion.div>
-
-            {/* 统计数据 */}
-            <motion.div
-              className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-            >
-              {stats.map((stat, index) => (
-                <motion.div
-                  key={stat.label}
-                  className="text-center"
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  transition={{ duration: 0.4, delay: 0.5 + index * 0.1 }}
-                >
-                  <div className="inline-flex items-center justify-center w-12 h-12 bg-gradient-to-r from-orange-100 to-yellow-100 rounded-full mb-3">
-                    <stat.icon className="w-6 h-6 text-orange-600" />
-                  </div>
-                  <div className="text-2xl font-bold text-gray-800">{stat.value}</div>
-                  <div className="text-sm text-gray-600">{stat.label}</div>
-                </motion.div>
-              ))}
-            </motion.div>
-
-            {/* CTA按钮 */}
-            <motion.div
-              className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16"
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.6 }}
-            >
-              <GradientButton
-                size="lg"
-                variant="primary"
-                onClick={scrollToFeatures}
-                leftIcon={<Rocket className="w-5 h-5" />}
-                rightIcon={<ArrowRight className="w-5 h-5" />}
-                shine={true}
-                glow={true}
-                className="min-w-[200px]"
-              >
-{t('hero.getStartedNow')}
-              </GradientButton>
-              
-              <Link href="/blog/edit-pro-tips-ai">
-                <GradientButton
-                  size="lg"
-                  variant="secondary"
-                  leftIcon={<Sparkles className="w-5 h-5" />}
-                  className="min-w-[200px]"
-                >
-{t('hero.learnAIEditingTips')}
-                </GradientButton>
-              </Link>
-
-            </motion.div>
-
-            {/* 服务介绍 */}
-            <motion.div
-              className="text-center mb-12"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.6, delay: 0.7 }}
-            >
-              <h3 className="text-2xl md:text-3xl font-bold text-gray-800 mb-4">
-                <span className="gradient-text">{t('hero.chooseCreativePath')}</span>
-              </h3>
-              <p className="text-lg text-gray-600 max-w-2xl mx-auto mb-6">
-                {t('hero.choosePathDescription')}
-              </p>
-              <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
-                <Link href={getLocalizedHref('/seedream')}>
-                  <GradientButton
-                    size="sm"
-                    variant="secondary"
-                    leftIcon={<Zap className="w-4 h-4" />}
-                  >
-                    {t('hero.trySeadreamPro')}
-                  </GradientButton>
-                </Link>
-                <Link href={getLocalizedHref('/blog')}>
-                  <GradientButton
-                    size="sm"
-                    variant="outline"
-                    leftIcon={<User className="w-4 h-4" />}
-                  >
-                    {t('hero.readSuccessStories')}
-                  </GradientButton>
-                </Link>
-              </div>
-            </motion.div>
-          </motion.div>
-        </section>
-
-        {/* 功能特性卡片 - 减少装饰元素 */}
-        <section className="container mx-auto px-4 py-8 relative">
-          <motion.div
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-          >
-            {features.map((feature, index) => (
-              <Card 
-                key={feature.title}
-                variant="glass"
-                hover={true}
-                glow={true}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, delay: 0.4 + index * 0.1 }}
-                className="text-center group"
-              >
-                <motion.div
-                  className={`w-16 h-16 bg-gradient-to-br ${feature.gradient} rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg`}
-                  whileHover={{ scale: 1.1, rotate: 5 }}
-                  transition={{ type: "spring", stiffness: 300 }}
-                >
-                  <feature.icon className="w-8 h-8 text-white" />
-                </motion.div>
-                <h3 className="text-xl font-semibold text-gray-800 mb-3 group-hover:text-orange-600 transition-colors">
-                  {feature.title}
-                </h3>
-                <p className="text-gray-600 leading-relaxed">
-                  {feature.description}
-                </p>
-              </Card>
-            ))}
-          </motion.div>
-        </section>
+        {/* 功能特性卡片 - 拆分组件 */}
+        <FeaturesSection />
 
         {/* 主要功能区域 */}
         <section id="ai-generation" className="container mx-auto px-4 py-16">
@@ -536,7 +215,7 @@ export default function HomePage({ params }: PageProps) {
                     exit={{ opacity: 0, x: 10 }}
                     transition={{ duration: 0.2 }}
                   >
-                    <ImageToImageGenerator />
+                    <ImageToImageGeneratorV2 />
                   </motion.div>
                 )}
               </AnimatePresence>
@@ -661,7 +340,7 @@ export default function HomePage({ params }: PageProps) {
                 </GradientButton>
               </Link>
             </div>
-            <CaseShowcase variant="comparison" />
+            <CaseShowcaseV2 variant="comparison" />
           </motion.div>
         </section>
 
@@ -911,7 +590,15 @@ export default function HomePage({ params }: PageProps) {
                   ease: "linear"
                 }}
               >
-                <img src="/Logo.png" alt="AI Photo Editor Logo" className="w-full h-full object-contain" loading="lazy" />
+                <Image 
+                  src="/Logo.png" 
+                  alt="AI Photo Editor Logo" 
+                  width={96}
+                  height={96}
+                  className="w-full h-full object-contain" 
+                  loading="lazy"
+                  priority={false}
+                />
               </motion.div>
             </div>
           </motion.div>
