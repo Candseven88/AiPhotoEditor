@@ -1,0 +1,7 @@
+# ads.txt file for aiphotoeditor.space
+# This file is used to declare authorized digital sellers
+# Currently no advertising partnerships established
+# Last updated: December 2024
+
+# Future advertising partnerships will be listed here
+# Format: domain.com, publisher-account-id, relationship-type, certification-authority-id

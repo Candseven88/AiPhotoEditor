@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chrome Extension Icon Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .icon-preview {
+            display: flex;
+            gap: 30px;
+            margin: 30px 0;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .icon-size {
+            text-align: center;
+        }
+        .icon-canvas {
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+        button {
+            background: linear-gradient(135deg, #f59e0b 0%, #f97316 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            margin: 10px;
+        }
+        button:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+        }
+        .instructions {
+            background: #fef3c7;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 4px solid #f59e0b;
+        }
+        .download-links {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎨 AI Photo Editor - Chrome Extension Icons</h1>
+        <p>这个页面会生成Chrome扩展所需的三种尺寸图标（16x16, 48x48, 128x128）</p>
+        
+        <div class="instructions">
+            <h3>📋 使用说明：</h3>
+            <ol>
+                <li>点击"生成图标"按钮创建图标</li>
+                <li>右键点击每个图标选择"图片另存为"</li>
+                <li>保存为对应的文件名：icon16.png, icon48.png, icon128.png</li>
+                <li>将文件放到 chrome-extension/assets/icons/ 目录下</li>
+            </ol>
+        </div>
+
+        <div style="text-align: center;">
+            <button onclick="generateIcons()">🚀 生成图标</button>
+            <button onclick="downloadAll()">📥 下载所有图标</button>
+        </div>
+
+        <div class="icon-preview">
+            <div class="icon-size">
+                <canvas id="icon16" class="icon-canvas" width="16" height="16"></canvas>
+                <div>16x16 (工具栏)</div>
+                <button onclick="downloadIcon('icon16', 'icon16.png')">下载</button>
+            </div>
+            <div class="icon-size">
+                <canvas id="icon48" class="icon-canvas" width="48" height="48"></canvas>
+                <div>48x48 (扩展管理)</div>
+                <button onclick="downloadIcon('icon48', 'icon48.png')">下载</button>
+            </div>
+            <div class="icon-size">
+                <canvas id="icon128" class="icon-canvas" width="128" height="128"></canvas>
+                <div>128x128 (Chrome商店)</div>
+                <button onclick="downloadIcon('icon128', 'icon128.png')">下载</button>
+            </div>
+        </div>
+
+        <div class="instructions">
+            <h3>🎯 图标设计说明：</h3>
+            <ul>
+                <li><strong>主色调</strong>：橙黄渐变（与网站主题一致）</li>
+                <li><strong>图标元素</strong>：AI + 图像符号</li>
+                <li><strong>风格</strong>：现代化、简洁、易识别</li>
+                <li><strong>背景</strong>：圆角矩形，适合各种背景</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        function generateIcons() {
+            // 生成16x16图标
+            drawIcon('icon16', 16);
+            // 生成48x48图标
+            drawIcon('icon48', 48);
+            // 生成128x128图标
+            drawIcon('icon128', 128);
+        }
+
+        function drawIcon(canvasId, size) {
+            const canvas = document.getElementById(canvasId);
+            const ctx = canvas.getContext('2d');
+            
+            // 清空画布
+            ctx.clearRect(0, 0, size, size);
+            
+            // 创建渐变背景
+            const gradient = ctx.createLinearGradient(0, 0, size, size);
+            gradient.addColorStop(0, '#f59e0b');
+            gradient.addColorStop(1, '#f97316');
+            
+            // 绘制圆角矩形背景
+            const radius = size * 0.15;
+            ctx.fillStyle = gradient;
+            ctx.beginPath();
+            ctx.roundRect(0, 0, size, size, radius);
+            ctx.fill();
+            
+            // 绘制AI图标元素
+            ctx.fillStyle = 'white';
+            ctx.font = `bold ${size * 0.4}px Arial`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            
+            if (size >= 48) {
+                // 大图标显示"AI"文字
+                ctx.fillText('AI', size / 2, size / 2);
+                
+                // 添加装饰元素（闪光点）
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
+                const sparkleSize = size * 0.08;
+                
+                // 左上角闪光
+                ctx.beginPath();
+                ctx.arc(size * 0.25, size * 0.25, sparkleSize, 0, Math.PI * 2);
+                ctx.fill();
+                
+                // 右下角闪光
+                ctx.beginPath();
+                ctx.arc(size * 0.75, size * 0.75, sparkleSize, 0, Math.PI * 2);
+                ctx.fill();
+                
+            } else {
+                // 小图标只显示一个简单的图像符号
+                ctx.font = `bold ${size * 0.6}px Arial`;
+                ctx.fillText('⚡', size / 2, size / 2);
+            }
+            
+            // 添加边框
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.3)';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.roundRect(0.5, 0.5, size - 1, size - 1, radius);
+            ctx.stroke();
+        }
+
+        function downloadIcon(canvasId, filename) {
+            const canvas = document.getElementById(canvasId);
+            const link = document.createElement('a');
+            link.download = filename;
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        }
+
+        function downloadAll() {
+            setTimeout(() => downloadIcon('icon16', 'icon16.png'), 100);
+            setTimeout(() => downloadIcon('icon48', 'icon48.png'), 200);
+            setTimeout(() => downloadIcon('icon128', 'icon128.png'), 300);
+        }
+
+        // 页面加载时自动生成图标
+        window.onload = function() {
+            generateIcons();
+        };
+    </script>
+</body>
+</html> 

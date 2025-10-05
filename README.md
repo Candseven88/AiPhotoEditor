@@ -56,19 +56,27 @@ app/
 │   ├── ImageGenerator.tsx           # 文本转图像
 │   ├── UsernameToImageGenerator.tsx # 用户名转头像
 │   ├── ImageToImageGenerator.tsx    # 图像转图像
-│   ├── Navigation.tsx               # 导航栏
+│   ├── NavigationV2.tsx             # 统一导航栏组件
 │   └── ui/                         # UI组件
+├── [locale]/            # 多语言页面（仅用于非英语语言）
+│   ├── ja/              # 日语页面
+│   │   ├── page.tsx     # 日语首页
+│   │   ├── aiphotoeditor/ # 日语AI图片编辑器页面
+│   │   ├── seedream/    # 日语Seedream页面
+│   │   └── vheer/       # 日语Vheer页面
+├── aiphotoeditor/       # 英语AI图片编辑器页面
+├── seedream/            # 英语Seedream页面  
+├── vheer/               # 英语Vheer页面
+├── blog/                # 英语博客页面
+├── about/               # 英语关于页面
+├── privacy/             # 英语隐私页面
+├── terms/               # 英语条款页面
 ├── api/
 │   ├── generate/                   # 图像生成API
 │   ├── generate-image-to-image/    # 图像转图像API
 │   └── paypal/                     # 支付API
-├── seedream/                       # Seedream 4.0 专业页面
-│   └── page.tsx                    # Seedream生成器
-├── blog/                           # 博客系统
-│   ├── page.tsx                    # 博客首页
-│   └── [slug]/                     # 文章详情页
 ├── globals.css                     # 全局样式
-└── page.tsx                        # 主页面
+└── page.tsx                        # 英语首页（根页面）
 ```
 
 ## 🎯 功能说明
@@ -308,7 +316,16 @@ npm run build  # 会自动运行图片优化
 
 ## 📝 更新日志
 
-### v0.4.0 (最新) - SEO优化和IndexNow集成
+### v0.5.0 (最新) - 架构优化和多语言重构
+- 🏗️ **架构重构**: 彻底优化项目结构，解决路由混乱问题
+- 🌐 **多语言优化**: 英语作为默认语言不显示URL前缀，日语显示/ja前缀
+- 🧹 **代码清理**: 删除冗余的Navigation组件，统一使用NavigationV2
+- 🔧 **翻译系统修复**: 修复翻译键名显示问题，现在正确显示翻译内容
+- 📱 **导航优化**: AI工具归类到下拉菜单，节省导航栏空间
+- 🎯 **路由简化**: 根级别页面用于英语，[locale]路由仅用于其他语言
+- ✅ **一致性提升**: 所有页面使用统一的导航和翻译系统
+
+### v0.4.0 - SEO优化和IndexNow集成
 - 🚀 **IndexNow API集成**: 实现快速通知搜索引擎内容更新
 - 🔍 **搜索引擎优化**: 全面优化robots.txt，支持多种爬虫和crawl delay
 - 📊 **高级Sitemap**: 优化sitemap配置，按页面重要性设置优先级和更新频率

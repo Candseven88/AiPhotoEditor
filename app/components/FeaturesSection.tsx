@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion'
 import { Zap, Star, Users, Clock } from 'lucide-react'
 import Card from './ui/Card'
-import { useTranslation } from '../../lib/use-translation'
+import { useTranslation } from '../../lib/texts'
 
 export default function FeaturesSection() {
   const { t } = useTranslation()

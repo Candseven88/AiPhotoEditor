@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Photo Editor</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <div class="header">
+      <div class="logo">
+        <img src="../assets/icons/icon48.png" alt="AI Photo Editor" class="logo-icon">
+        <h1>AI Photo Editor</h1>
+      </div>
+      <div class="tagline">Free AI Image Generator</div>
+    </div>
+
+    <!-- Tab Navigation -->
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="text-to-image">
+        <span class="tab-icon">🎨</span>
+        Text to Image
+      </button>
+      <button class="tab-btn" data-tab="username-to-avatar">
+        <span class="tab-icon">👤</span>
+        Username Avatar
+      </button>
+    </div>
+
+    <!-- Tab Content -->
+    <div class="tab-content">
+      <!-- Text to Image Tab -->
+      <div class="tab-pane active" id="text-to-image">
+        <div class="form-group">
+          <label for="textPrompt">Describe your image:</label>
+          <textarea 
+            id="textPrompt" 
+            placeholder="A beautiful sunset over mountains..."
+            rows="3"
+            maxlength="500"
+          ></textarea>
+          <div class="char-count">
+            <span id="charCount">0</span>/500
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="imageSize">Image Size:</label>
+          <select id="imageSize">
+            <option value="1024x1024">Square (1024x1024)</option>
+            <option value="768x1344">Portrait (768x1344)</option>
+            <option value="1344x768">Landscape (1344x768)</option>
+          </select>
+        </div>
+
+        <button id="generateText" class="generate-btn">
+          <span class="btn-icon">✨</span>
+          Generate Image
+        </button>
+      </div>
+
+      <!-- Username to Avatar Tab -->
+      <div class="tab-pane" id="username-to-avatar">
+        <div class="form-group">
+          <label for="username">Enter Username:</label>
+          <input 
+            type="text" 
+            id="username" 
+            placeholder="john_doe"
+            maxlength="50"
+          >
+        </div>
+        
+        <div class="form-group">
+          <label for="avatarStyle">Avatar Style:</label>
+          <select id="avatarStyle">
+            <option value="professional">Professional</option>
+            <option value="cartoon">Cartoon</option>
+            <option value="artistic">Artistic</option>
+            <option value="minimal">Minimal</option>
+          </select>
+        </div>
+
+        <button id="generateAvatar" class="generate-btn">
+          <span class="btn-icon">👤</span>
+          Generate Avatar
+        </button>
+      </div>
+    </div>
+
+    <!-- Loading State -->
+    <div class="loading-state" id="loadingState" style="display: none;">
+      <div class="spinner"></div>
+      <div class="loading-text">Generating your image...</div>
+      <div class="loading-progress">
+        <div class="progress-bar">
+          <div class="progress-fill" id="progressFill"></div>
+        </div>
+        <div class="progress-text" id="progressText">Initializing...</div>
+      </div>
+    </div>
+
+    <!-- Result Display -->
+    <div class="result-section" id="resultSection" style="display: none;">
+      <div class="result-header">
+        <h3>Generated Image</h3>
+        <button class="close-result" id="closeResult">×</button>
+      </div>
+      <div class="image-container">
+        <img id="generatedImage" alt="Generated Image" />
+        <div class="image-actions">
+          <button class="action-btn download-btn" id="downloadBtn">
+            <span class="btn-icon">⬇️</span>
+            Download
+          </button>
+          <button class="action-btn copy-btn" id="copyBtn">
+            <span class="btn-icon">📋</span>
+            Copy
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Upgrade Prompt -->
+    <div class="upgrade-section">
+      <div class="upgrade-card">
+        <div class="upgrade-icon">🚀</div>
+        <div class="upgrade-content">
+          <h3>Want More Features?</h3>
+          <p>Image-to-Image conversion, 4K resolution, and advanced editing tools</p>
+          <button class="upgrade-btn" id="upgradeBtn">
+            Visit Full Website
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Usage Stats -->
+    <div class="stats-section">
+      <div class="stat-item">
+        <span class="stat-number" id="totalGenerated">0</span>
+        <span class="stat-label">Images Generated</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number" id="todayGenerated">0</span>
+        <span class="stat-label">Today</span>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      <div class="footer-links">
+        <a href="#" id="historyLink">History</a>
+        <a href="#" id="settingsLink">Settings</a>
+        <a href="#" id="helpLink">Help</a>
+      </div>
+      <div class="footer-text">
+        Made with ❤️ by AI Photo Editor
+      </div>
+    </div>
+  </div>
+
+  <script src="../shared/utils.js"></script>
+  <script src="../shared/api-test.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html> 

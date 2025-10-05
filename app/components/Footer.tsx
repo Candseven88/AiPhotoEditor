@@ -18,7 +18,7 @@ import {
 } from 'lucide-react'
 import Link from 'next/link'
 import GradientButton from './ui/GradientButton'
-import { useTranslation } from '../../lib/use-translation'
+import { useTranslation } from '../../lib/texts'
 
 const footerSections = [
   {

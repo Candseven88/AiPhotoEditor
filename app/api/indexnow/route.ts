@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 
-// IndexNow API Key - 生产环境应该放在环境变量中
-const INDEXNOW_KEY = process.env.INDEXNOW_KEY || 'f47ac10b-58cc-4372-a567-0e02b2c3d479'
+const INDEXNOW_KEY = 'f47ac10b58cc4372a5670e02b2c3d479'
+const BASE_URL = 'https://www.aiphotoeditor.space'
 
 export async function POST(request: NextRequest) {
   try {
@@ -18,7 +18,7 @@ export async function POST(request: NextRequest) {
     const searchEngines = [
       'https://api.indexnow.org/indexnow',  // Bing
       'https://www.bing.com/indexnow',
-      // 可以添加其他支持IndexNow的搜索引擎
+      'https://yandex.com/indexnow',        // Yandex
     ]
 
     const results = []
@@ -33,7 +33,7 @@ export async function POST(request: NextRequest) {
           body: JSON.stringify({
             host: 'www.aiphotoeditor.space',
             key: INDEXNOW_KEY,
-            keyLocation: `https://www.aiphotoeditor.space/${INDEXNOW_KEY}.txt`,
+            keyLocation: `${BASE_URL}/indexnow-key.txt`,
             urlList: urlList,
           }),
         })
@@ -66,11 +66,64 @@ export async function POST(request: NextRequest) {
   }
 }
 
-// GET 方法用于验证API状态
+// GET 方法 - 自动提交主要页面
 export async function GET() {
-  return NextResponse.json({
-    message: 'IndexNow API is running',
-    keyLocation: `https://www.aiphotoeditor.space/${INDEXNOW_KEY}.txt`,
-    supportedEngines: ['Bing', 'IndexNow API'],
-  })
+  const mainUrls = [
+    `${BASE_URL}`,
+    `${BASE_URL}/aiphotoeditor`,
+    `${BASE_URL}/vheer`,
+    `${BASE_URL}/seedream`,
+  ]
+
+  try {
+    const searchEngines = [
+      'https://api.indexnow.org/indexnow',
+      'https://www.bing.com/indexnow',
+      'https://yandex.com/indexnow',
+    ]
+
+    const results = []
+
+    for (const engine of searchEngines) {
+      try {
+        const response = await fetch(engine, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json; charset=utf-8',
+          },
+          body: JSON.stringify({
+            host: 'www.aiphotoeditor.space',
+            key: INDEXNOW_KEY,
+            keyLocation: `${BASE_URL}/indexnow-key.txt`,
+            urlList: mainUrls,
+          }),
+        })
+
+        results.push({
+          engine: engine,
+          status: response.status,
+          success: response.ok,
+        })
+      } catch (error) {
+        results.push({
+          engine: engine,
+          error: error instanceof Error ? error.message : 'Unknown error',
+          success: false,
+        })
+      }
+    }
+
+    return NextResponse.json({
+      message: 'IndexNow notifications sent for main pages',
+      keyLocation: `${BASE_URL}/indexnow-key.txt`,
+      supportedEngines: ['Bing', 'Yandex', 'IndexNow API'],
+      results,
+      submittedUrls: mainUrls,
+    })
+  } catch (error) {
+    return NextResponse.json(
+      { error: 'Failed to submit to IndexNow' },
+      { status: 500 }
+    )
+  }
 } 

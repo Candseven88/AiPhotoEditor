@@ -48,15 +48,15 @@ export default function ImageResults({
               >
                 <div className="relative rounded-lg overflow-hidden bg-white shadow-lg">
                   {/* 图片预览 */}
-                  <div className="relative">
+                  <div className="relative aspect-[4/3] overflow-hidden">
                     <Image
                       src={imageUrl}
                       alt={`Generated image ${index + 1}`}
-                      width={400}
-                      height={300}
-                      className={`w-full h-64 object-cover transition-all duration-300 ${
+                      fill
+                      className={`object-cover transition-all duration-300 ${
                         !isUnlocked ? 'blur-sm' : ''
                       }`}
+                      sizes="(max-width: 768px) 100vw, 50vw"
                     />
                     
                     {/* 未解锁遮罩 */}

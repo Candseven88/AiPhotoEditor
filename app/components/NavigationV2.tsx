@@ -18,15 +18,16 @@ import {
   MoreHorizontal
 } from 'lucide-react'
 import Link from 'next/link'
-import { useTranslation } from '../../lib/use-translation'
-import LanguageSwitcher from './LanguageSwitcher'
+import { useTranslation } from '../../lib/texts'
 import Image from 'next/image'
 
 export default function NavigationV2() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [isMoreMenuOpen, setIsMoreMenuOpen] = useState(false)
-  const { t, locale } = useTranslation()
+  const [isAiToolsMenuOpen, setIsAiToolsMenuOpen] = useState(false)
+  const { t } = useTranslation()
   const moreMenuRef = useRef<HTMLDivElement>(null)
+  const aiToolsMenuRef = useRef<HTMLDivElement>(null)
 
   // 点击外部关闭下拉菜单
   useEffect(() => {
@@ -34,36 +35,48 @@ export default function NavigationV2() {
       if (moreMenuRef.current && !moreMenuRef.current.contains(event.target as Node)) {
         setIsMoreMenuOpen(false)
       }
+      if (aiToolsMenuRef.current && !aiToolsMenuRef.current.contains(event.target as Node)) {
+        setIsAiToolsMenuOpen(false)
+      }
     }
 
-    if (isMoreMenuOpen) {
+    if (isMoreMenuOpen || isAiToolsMenuOpen) {
       document.addEventListener('mousedown', handleClickOutside)
       return () => document.removeEventListener('mousedown', handleClickOutside)
     }
-  }, [isMoreMenuOpen])
+  }, [isMoreMenuOpen, isAiToolsMenuOpen])
 
-  // 生成带语言前缀的链接
+  // 简化链接生成（不再需要多语言前缀）
   const getLocalizedHref = (href: string) => {
-    return `/${locale}${href}`
+    return href
   }
 
-  // 主要页面 - 显示在顶部菜单
-  const primaryPageItems = [
+  // AI功能页面 - 归类到AI Tools下拉菜单
+  const aiToolsItems = [
     {
       id: 'aiphotoeditor',
       label: t('navigation.aiPhotoEditor'),
       icon: Sparkles,
+      description: 'Professional AI image editor with 3-in-1 tools',
       href: getLocalizedHref('/aiphotoeditor'),
     },
     {
       id: 'seedream',
       label: t('navigation.seedream'),
       icon: Zap,
+      description: 'Advanced 4K AI image generator',
       href: getLocalizedHref('/seedream'),
+    },
+    {
+      id: 'vheer',
+      label: 'Vheer AI',
+      icon: Wand2,
+      description: t('navigation.vheerDesc'),
+      href: getLocalizedHref('/vheer'),
     }
   ]
 
-  // 次要页面 - 收拢到"更多"菜单
+  // 其他页面 - 收拢到"更多"菜单
   const secondaryPageItems = [
     {
       id: 'blog',
@@ -108,7 +121,7 @@ export default function NavigationV2() {
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           {/* Logo - 简化 */}
-          <Link href={`/${locale}`} className="flex items-center space-x-3 hover:opacity-80 transition-opacity">
+          <Link href={getLocalizedHref('/')} className="flex items-center space-x-3 hover:opacity-80 transition-opacity">
             <div className="w-8 h-8 bg-gradient-to-r from-orange-400 to-yellow-400 rounded-lg flex items-center justify-center shadow-md">
               <Image src="/Logo.png" alt="AI Photo Editor" width={24} height={24} className="object-contain" />
             </div>
@@ -120,22 +133,46 @@ export default function NavigationV2() {
 
           {/* Desktop Navigation - 简化动画 */}
           <div className="hidden md:flex items-center space-x-1">
-            <Link href={`/${locale}`}>
+            <Link href={getLocalizedHref('/')}>
               <button className="flex items-center space-x-2 px-4 py-2 rounded-xl text-gray-700 hover:text-orange-600 hover:bg-orange-50 transition-colors duration-200">
                 <Home className="w-4 h-4" />
                 <span className="font-medium">{t('navigation.home')}</span>
               </button>
             </Link>
             
-            {/* Primary navigation items */}
-            {primaryPageItems.map((item) => (
-              <Link key={item.id} href={item.href}>
-                <button className="flex items-center space-x-2 px-4 py-2 rounded-xl text-gray-700 hover:text-orange-600 hover:bg-orange-50 transition-colors duration-200">
-                  <item.icon className="w-4 h-4" />
-                  <span className="font-medium">{item.label}</span>
-                </button>
-              </Link>
-            ))}
+            {/* AI Tools dropdown menu */}
+            <div className="relative" ref={aiToolsMenuRef}>
+              <button
+                onClick={() => setIsAiToolsMenuOpen(!isAiToolsMenuOpen)}
+                className="flex items-center space-x-2 px-4 py-2 rounded-xl text-gray-700 hover:text-orange-600 hover:bg-orange-50 transition-colors duration-200"
+              >
+                <Sparkles className="w-4 h-4" />
+                <span className="font-medium">AI Tools</span>
+                <ChevronDown className={`w-3 h-3 transition-transform duration-200 ${isAiToolsMenuOpen ? 'rotate-180' : ''}`} />
+              </button>
+
+              {/* AI Tools dropdown content */}
+              {isAiToolsMenuOpen && (
+                <div className="absolute top-full left-0 mt-2 w-72 bg-white/95 backdrop-blur-md border border-orange-100 rounded-xl shadow-lg py-2 z-50 animate-in fade-in slide-in-from-top-2 duration-200">
+                  {aiToolsItems.map((item) => (
+                    <Link key={item.id} href={item.href}>
+                      <button
+                        onClick={() => setIsAiToolsMenuOpen(false)}
+                        className="flex items-center space-x-3 w-full px-4 py-3 text-gray-700 hover:text-orange-600 hover:bg-orange-50 transition-colors duration-200"
+                      >
+                        <item.icon className="w-5 h-5" />
+                        <div className="text-left">
+                          <div className="font-medium">{item.label}</div>
+                          <div className="text-xs text-gray-500">
+                            {item.description}
+                          </div>
+                        </div>
+                      </button>
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
 
             {/* More dropdown menu - 简化 */}
             <div className="relative" ref={moreMenuRef}>
@@ -189,7 +226,7 @@ export default function NavigationV2() {
             </div>
 
             {/* Language Switcher */}
-            <LanguageSwitcher />
+            {/* 语言切换器已移除 */}
           </div>
 
           {/* Mobile Menu Button - 简化 */}
@@ -207,7 +244,7 @@ export default function NavigationV2() {
         {isMobileMenuOpen && (
           <div className="md:hidden py-4 border-t border-orange-100 animate-in slide-in-from-top duration-200">
             <div className="space-y-2">
-              <Link href={`/${locale}`}>
+              <Link href={getLocalizedHref('/')}>
                 <button 
                   onClick={() => setIsMobileMenuOpen(false)}
                   className="flex items-center space-x-3 w-full px-4 py-3 text-gray-700 hover:text-orange-600 hover:bg-orange-50 rounded-lg transition-colors duration-200"
@@ -217,18 +254,31 @@ export default function NavigationV2() {
                 </button>
               </Link>
 
-              {primaryPageItems.map((item) => (
-                <Link key={item.id} href={item.href}>
-                  <button 
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className="flex items-center space-x-3 w-full px-4 py-3 text-gray-700 hover:text-orange-600 hover:bg-orange-50 rounded-lg transition-colors duration-200"
-                  >
-                    <item.icon className="w-5 h-5" />
-                    <span className="font-medium">{item.label}</span>
-                  </button>
-                </Link>
-              ))}
+              {/* AI Tools Section in Mobile */}
+              <div className="px-4 py-2">
+                <div className="text-sm font-semibold text-gray-500 mb-2 flex items-center">
+                  <Sparkles className="w-4 h-4 mr-2" />
+                  AI Tools
+                </div>
+                {aiToolsItems.map((item) => (
+                  <Link key={item.id} href={item.href}>
+                    <button 
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className="flex items-center space-x-3 w-full px-4 py-3 text-gray-700 hover:text-orange-600 hover:bg-orange-50 rounded-lg transition-colors duration-200 ml-2"
+                    >
+                      <item.icon className="w-5 h-5" />
+                      <div className="text-left">
+                        <div className="font-medium">{item.label}</div>
+                        <div className="text-xs text-gray-500">{item.description}</div>
+                      </div>
+                    </button>
+                  </Link>
+                ))}
+              </div>
 
+              <div className="border-t border-orange-100 my-2"></div>
+
+              {/* Other Pages */}
               {secondaryPageItems.map((item) => (
                 <Link key={item.id} href={item.href}>
                   <button 
@@ -253,7 +303,7 @@ export default function NavigationV2() {
               </a>
 
               <div className="pt-4">
-                <LanguageSwitcher />
+                {/* 语言切换器已移除 */}
               </div>
             </div>
           </div>

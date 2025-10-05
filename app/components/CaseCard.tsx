@@ -40,15 +40,15 @@ export default function CaseCard({
     >
       <div className="relative">
         {caseItem.processed ? (
-          <div className="relative h-48 overflow-hidden">
+          <div className="relative aspect-[4/3] overflow-hidden">
             {/* 原图 */}
             <Image
               src={caseItem.original}
               alt={`${caseItem.title} - Original`}
-              width={400}
-              height={192}
-              className="w-full h-full object-cover"
+              fill
+              className="object-cover"
               loading="lazy"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             />
             
             {/* 处理后图片覆盖层 - 悬停时显示 */}
@@ -56,10 +56,10 @@ export default function CaseCard({
               <Image
                 src={caseItem.processed}
                 alt={`${caseItem.title} - Enhanced`}
-                width={400}
-                height={192}
-                className="w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                fill
+                className="object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-500"
                 loading="lazy"
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               />
               
               {/* 简化的分割线指示器 */}
@@ -77,14 +77,16 @@ export default function CaseCard({
             </div>
           </div>
         ) : (
-          <Image
-            src={caseItem.original}
-            alt={caseItem.title}
-            width={400}
-            height={192}
-            className="w-full h-48 object-cover"
-            loading="lazy"
-          />
+          <div className="relative aspect-[4/3] overflow-hidden">
+            <Image
+              src={caseItem.original}
+              alt={caseItem.title}
+              fill
+              className="object-cover"
+              loading="lazy"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            />
+          </div>
         )}
         
         {/* 放大图标 */}

@@ -16,19 +16,18 @@ import {
 import Image from 'next/image'
 import Link from 'next/link'
 import GradientButton from './ui/GradientButton'
-import { useTranslation } from '../../lib/use-translation'
+import { useTranslation } from '../../lib/texts'
 
 interface HeroSectionProps {
-  locale: string
   onScrollToFeatures: () => void
 }
 
-export default function HeroSection({ locale, onScrollToFeatures }: HeroSectionProps) {
+export default function HeroSection({ onScrollToFeatures }: HeroSectionProps) {
   const { t } = useTranslation()
   
-  // 生成带语言前缀的链接
+  // 简化链接生成（不再需要多语言前缀）
   const getLocalizedHref = (href: string) => {
-    return `/${locale}${href}`
+    return href
   }
 
   const stats = [

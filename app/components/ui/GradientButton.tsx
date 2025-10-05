@@ -104,7 +104,7 @@ export default function GradientButton({
       )}
 
       {/* 内容区域 */}
-      <div className="relative z-10 flex items-center justify-center gap-2">
+      <div className="relative z-10 flex items-center justify-center gap-2 whitespace-nowrap">
         {loading ? (
           <Loader2 className="w-4 h-4 animate-spin" />
         ) : leftIcon ? (

@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { Palette, Loader2, X, Upload, Lock, Download } from 'lucide-react'
+import Image from 'next/image'
 import PaymentModal from './PaymentModal'
 import EnvironmentIndicator from './EnvironmentIndicator'
 import ImageUploader from './ImageUploader'
@@ -273,14 +274,20 @@ export default function ImageToImageGenerator() {
               <div className="border-2 border-dashed border-orange-300 rounded-xl p-6 text-center hover:border-orange-400 transition-colors">
                 {uploadedImage ? (
                   <div className="relative">
-                    <motion.img
-                      src={uploadedImage}
-                      alt="Uploaded"
-                      className="max-w-full h-auto max-h-64 mx-auto rounded-lg shadow-lg"
+                    <motion.div
+                      className="relative aspect-video max-w-md mx-auto rounded-lg overflow-hidden shadow-lg"
                       initial={{ scale: 0.8, opacity: 0 }}
                       animate={{ scale: 1, opacity: 1 }}
                       transition={{ duration: 0.5 }}
-                    />
+                    >
+                      <Image
+                        src={uploadedImage}
+                        alt="Uploaded"
+                        fill
+                        className="object-contain bg-gray-100"
+                        sizes="(max-width: 768px) 100vw, 50vw"
+                      />
+                    </motion.div>
                     <motion.button
                       onClick={removeUploadedImage}
                       className="absolute top-2 right-2 bg-red-500 text-white rounded-full p-2 hover:bg-red-600 transition-colors shadow-lg"
@@ -463,18 +470,20 @@ export default function ImageToImageGenerator() {
                       whileHover={{ y: -5, scale: 1.02 }}
                     >
                       {/* 图像预览 */}
-                      <div className="relative group bg-gray-50">
-                        <motion.img
+                      <div className="relative group bg-gray-50 aspect-[4/3] overflow-hidden">
+                        <Image
                           src={image}
                           alt={`Transformed image ${index + 1}`}
-                          className={`w-full h-auto max-h-96 object-contain rounded-t-xl transition-all duration-300 ${
+                          fill
+                          className={`object-cover transition-all duration-300 ${
                             unlockedImages.has(index) ? 'image-preview-unlocked' : 'image-preview-blur'
                           }`}
-                          onLoad={(e) => {
+                          sizes="(max-width: 768px) 100vw, 50vw"
+                          onLoad={(e: React.SyntheticEvent<HTMLImageElement>) => {
                             const target = e.target as HTMLImageElement
                             target.style.opacity = '1'
                           }}
-                          onError={(e) => {
+                          onError={(e: React.SyntheticEvent<HTMLImageElement>) => {
                             const target = e.target as HTMLImageElement
                             target.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZmZmN2VkIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgZmlsbD0iI2Y5NzMxNiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkltYWdlIExvYWQgRXJyb3I8L3RleHQ+PC9zdmc+'
                           }}

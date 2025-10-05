@@ -28,9 +28,12 @@ export default function LanguageSwitcher() {
     
     const pathSegments = pathname.split('/')
     const localeFromPath = pathSegments[1]
-    if (languages.some(lang => lang.code === localeFromPath)) {
-      setCurrentLocale(localeFromPath)
+    
+    // 如果路径以 /ja 开头，则是日语
+    if (localeFromPath === 'ja') {
+      setCurrentLocale('ja')
     } else {
+      // 否则默认为英语（包括根路径和其他无前缀路径）
       setCurrentLocale('en')
     }
   }, [pathname, mounted])
@@ -51,18 +54,28 @@ export default function LanguageSwitcher() {
     setCurrentLocale(newLocale)
     setIsOpen(false)
     
-    // 构建新的路径，适应 [locale] 路由结构
-    const pathSegments = pathname.split('/')
+    let newPath: string
     
-    // 如果当前路径包含语言代码，替换它
-    if (pathSegments[1] && languages.some(lang => lang.code === pathSegments[1])) {
-      pathSegments[1] = newLocale
+    if (newLocale === 'en') {
+      // 切换到英语：移除语言前缀
+      if (pathname.startsWith('/ja')) {
+        // 从日语切换到英语
+        newPath = pathname.slice(3) || '/'
+      } else {
+        // 已经是英语，保持不变
+        newPath = pathname
+      }
     } else {
-      // 如果没有语言代码，添加新的语言代码
-      pathSegments.splice(1, 0, newLocale)
+      // 切换到其他语言：添加语言前缀
+      if (pathname.startsWith('/ja')) {
+        // 从一种非英语语言切换到另一种
+        newPath = `/${newLocale}${pathname.slice(3)}`
+      } else {
+        // 从英语切换到其他语言
+        newPath = `/${newLocale}${pathname === '/' ? '' : pathname}`
+      }
     }
     
-    const newPath = pathSegments.join('/')
     router.push(newPath)
   }
 

@@ -1,0 +1,32 @@
+{
+  "timestamp": "2025-10-05T04:54:46.199Z",
+  "website": "https://www.aiphotoeditor.space",
+  "pages_submitted": [
+    "https://www.aiphotoeditor.space",
+    "https://www.aiphotoeditor.space/aiphotoeditor",
+    "https://www.aiphotoeditor.space/vheer",
+    "https://www.aiphotoeditor.space/seedream"
+  ],
+  "files_created": [
+    "sitemap.xml",
+    "robots.txt",
+    "llms.txt",
+    "manifest.json",
+    "indexnow-key.txt",
+    "ads.txt",
+    "security.txt"
+  ],
+  "search_engines": [
+    "google",
+    "bing",
+    "yandex"
+  ],
+  "indexnow_endpoints": 3,
+  "next_steps": [
+    "手动提交到Google Search Console",
+    "手动提交到Bing Webmaster Tools",
+    "提交到AI工具目录网站",
+    "设置定期IndexNow提交",
+    "监控搜索引擎收录情况"
+  ]
+}

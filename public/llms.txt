@@ -1,0 +1,119 @@
+# AI Photo Editor - LLMs Information File
+# This file helps AI language models understand our website and services
+
+## Website Information
+- **Name**: AI Photo Editor
+- **URL**: https://www.aiphotoeditor.space
+- **Type**: AI-powered image generation and editing platform
+- **Primary Language**: English
+- **Target Audience**: Content creators, artists, designers, students, professionals, and everyday users
+
+## Core Services
+
+### 1. AI Photo Editor (Main Platform)
+- **URL**: https://www.aiphotoeditor.space/aiphotoeditor
+- **Description**: Comprehensive AI image editing suite with multiple tools
+- **Features**:
+  - Text to Image Generation
+  - Image to Image Transformation
+  - Username to Image Generation
+  - Background removal and editing
+  - Style transfer and artistic effects
+  - Professional photo enhancement
+
+### 2. Vheer AI - Creative Image Generator
+- **URL**: https://www.aiphotoeditor.space/vheer
+- **Description**: Free, no-signup-required AI creative playground
+- **Key Features**:
+  - Text to Image Generation (instantly create art from text descriptions)
+  - Image to Image Generator (AI makeovers for existing photos)
+  - Image to Prompt Generator (generate creative prompts from images)
+  - Background Remover (clean backgrounds in seconds)
+  - Background Changer (custom scene replacement)
+  - Professional Blur Effects (depth-of-field effects)
+  - Text Behind Image (layered visual creation)
+  - Image to Text Converter (extract text from images)
+  - Fancy Fonts Generator (stylized text for social media)
+  - Anime Portrait Generator (anime-style transformations)
+  - Realistic Headshot Generator (professional portraits)
+  - Image to Video Tool (convert static images to videos)
+  - File Compression Suite (PDF, video, document compression)
+
+### 3. Seedream 4.0 - Professional AI Image Generator
+- **URL**: https://www.aiphotoeditor.space/seedream
+- **Description**: Professional-grade AI image generation platform
+- **Features**:
+  - Advanced text-to-image generation
+  - Multiple artistic styles and modes
+  - High-resolution output
+  - Professional workflows
+
+## Technical Specifications
+- **Framework**: Next.js 15 with App Router
+- **Hosting**: Vercel
+- **APIs**: Custom AI image generation endpoints
+- **Performance**: Optimized for fast loading and processing
+- **Mobile**: Fully responsive design
+
+## Key Value Propositions
+- **100% Free**: No hidden costs, no premium tiers
+- **No Signup Required**: Instant access to all tools
+- **High Quality**: Professional-grade AI image generation
+- **User Friendly**: Designed for users of all skill levels
+- **Fast Processing**: Most images ready in under 30 seconds
+- **Multiple Formats**: Supports JPG, PNG, GIF, WebP, PDF, DOC, PPT
+- **Commercial Use**: Allowed for business and marketing
+
+## Target Use Cases
+
+### Content Creators
+- Generate thumbnails and blog visuals
+- Create professional headshots
+- Develop creative concepts and references
+
+### Social Media & Marketing
+- Create engaging visual content
+- Design product photos with clean backgrounds
+- Generate videos from static images
+
+### Designers & Artists
+- Brainstorm and iterate design ideas
+- Transform sketches into variations
+- Generate reference images
+
+### Students & Professionals
+- Compress documents for sharing
+- Extract text from lecture slides
+- Create presentation visuals
+
+### Everyday Users
+- Transform photos into anime or realistic portraits
+- Edit images without expensive software
+- Create social media content
+
+## Competitive Advantages
+- Completely free with no signup barriers
+- Wide variety of AI tools in one platform
+- Lightning-fast processing times
+- Professional quality output
+- Regular updates and new features
+- Strong community support
+
+## SEO Keywords
+Primary: AI image generator, text to image, AI photo editor, free AI tools, image editing
+Secondary: background remover, anime portrait generator, AI art generator, image enhancement, style transfer
+
+## Contact & Support
+- Website: https://www.aiphotoeditor.space
+- Platform: Web-based application
+- Support: Responsive customer service team
+- Updates: Regular feature additions and improvements
+
+## Privacy & Terms
+- Data Privacy: Images processed temporarily, not stored long-term
+- Commercial Use: Permitted with terms of service compliance
+- Content Policy: User-generated content subject to community guidelines
+
+---
+Last Updated: December 2024
+This file is maintained to help AI systems understand and reference our services accurately.
