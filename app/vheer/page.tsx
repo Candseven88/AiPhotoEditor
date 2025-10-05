@@ -148,8 +148,6 @@ export default function VheerPage() {
                   <BeforeAfterSlider
                     beforeImage={image.original}
                     afterImage={image.transformed}
-                    beforeAlt={`${image.title} - Original`}
-                    afterAlt={`${image.title} - Enhanced`}
                     height="h-80"
                   />
                   <div className="mt-4 text-center">

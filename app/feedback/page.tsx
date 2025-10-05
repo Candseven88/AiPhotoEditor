@@ -70,8 +70,8 @@ export default function FeedbackPage() {
       title="Feedback"
       subtitle="Help Us Improve Your AI Photo Editing Experience"
       description="Your feedback helps us make our AI photo editing tools better. Share your thoughts, suggestions, or report issues to help us serve you better."
-      icon={<MessageSquare className="w-8 h-8 text-pink-600" />}
-      backgroundVariant="pink"
+      icon={<MessageSquare className="w-8 h-8 text-purple-600" />}
+      backgroundVariant="purple"
     >
       <div className="container mx-auto px-4 py-8">
         {/* Feedback Form */}
@@ -99,16 +99,16 @@ export default function FeedbackPage() {
                       onClick={() => setSelectedType(type.id)}
                       className={`p-4 rounded-xl border-2 transition-all duration-200 text-left ${
                         selectedType === type.id
-                          ? 'border-pink-500 bg-pink-50'
-                          : 'border-gray-200 bg-white hover:border-pink-300 hover:bg-pink-25'
+                          ? 'border-purple-500 bg-purple-50'
+                          : 'border-gray-200 bg-white hover:border-purple-300 hover:bg-purple-25'
                       }`}
                     >
                       <div className="flex items-center mb-2">
                         <type.icon className={`w-5 h-5 mr-2 ${
-                          selectedType === type.id ? 'text-pink-600' : 'text-gray-600'
+                          selectedType === type.id ? 'text-purple-600' : 'text-gray-600'
                         }`} />
                         <span className={`font-medium ${
-                          selectedType === type.id ? 'text-pink-800' : 'text-gray-800'
+                          selectedType === type.id ? 'text-purple-800' : 'text-gray-800'
                         }`}>
                           {type.label}
                         </span>
@@ -159,7 +159,7 @@ export default function FeedbackPage() {
                   <input
                     type="text"
                     id="subject"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-pink-500"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-purple-500"
                     placeholder="Brief description of your feedback"
                     required
                   />
@@ -172,7 +172,7 @@ export default function FeedbackPage() {
                   <textarea
                     id="message"
                     rows={6}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-pink-500"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-purple-500"
                     placeholder="Please share your detailed feedback, suggestions, or describe any issues you've encountered..."
                     required
                   ></textarea>
@@ -185,7 +185,7 @@ export default function FeedbackPage() {
                   <input
                     type="email"
                     id="email"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-pink-500"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-purple-500"
                     placeholder="your.email@example.com (if you'd like a response)"
                   />
                 </div>
@@ -231,7 +231,7 @@ export default function FeedbackPage() {
 
         {/* Contact Information */}
         <section>
-          <div className="bg-gradient-to-r from-pink-50 to-rose-50 rounded-2xl p-8 text-center">
+          <div className="bg-gradient-to-r from-purple-50 to-pink-50 rounded-2xl p-8 text-center">
             <h3 className="text-2xl font-bold text-gray-800 mb-4">Other Ways to Reach Us</h3>
             <p className="text-gray-600 mb-6">
               Have urgent issues or prefer direct contact? We're here to help!
